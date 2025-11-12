@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../index.css';
+
+// Componentes sin dependencias
+import NebulaEffect from '../components/ui/NebulaEffect';
+import ScrollProgressIndicator from '../components/ui/ScrollProgressIndicator';
+
+// Componente wrapper con todos los componentes que necesitan LanguageProvider
+import AppContent from '../components/AppContent';
+---
+
+<Layout title="Portfolio Asir-Daniel Fonov ">
+  <div class="relative min-h-screen bg-background text-foreground">
+    <!-- Efecto de fondo nebulosa -->
+    <NebulaEffect client:load />
+    
+    <div class="relative z-10">
+      <!-- Indicador de progreso de scroll -->
+      <ScrollProgressIndicator client:load />
+      
+      <!-- Todo el contenido con LanguageProvider -->
+      <AppContent client:load />
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Scroll al inicio al cargar
+  window.scrollTo(0, 0);
+</script>

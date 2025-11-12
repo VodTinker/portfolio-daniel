@@ -1,0 +1,134 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+.output/
+.vercel/
+.netlify/
+
+# Astro
+.astro/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+.env*.local
+.dev.vars
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDE - WebStorm/IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+.temp/
+.tmp/
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+.eslintcache
+.stylelintcache
+node_modules/.vite
+node_modules/.cache
+
+# Serverless
+.serverless/
+
+# Cloudflare
+.wrangler/
+wrangler.toml.backup
+
+# Optional npm cache directory
+.npm
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Turbo
+.turbo
+
+# Backup files
+*.bak
+*.backup
+*_backup
+*_old
+README_OLD.md
+
+# Generated files
+sitemap.xml
+robots.txt.backup
+
+# Local development
+.local/
+*.local
+
+# Certificates
+*.pem
+*.key
+*.crt
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets
+secrets/
+*.secret
+
+# API keys (should be in .env, but just in case)
+*apikey*
+*api-key*
+*api_key*
+SYSTEM_PROMPT_PRIVATE.txt

@@ -1,0 +1,14 @@
+name = "vodtinker-portfolio"
+compatibility_date = "2024-11-01"
+
+# Configuración para Cloudflare Pages
+pages_build_output_dir = "dist"
+
+# Variables de entorno (configúralas en el dashboard de Cloudflare)
+# OPENAI_API_KEY = "tu_clave_aqui"
+
+[env.production]
+# Variables específicas de producción
+
+[env.preview]
+# Variables específicas de preview
