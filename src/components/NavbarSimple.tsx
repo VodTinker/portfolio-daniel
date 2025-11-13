@@ -128,7 +128,7 @@ const NavbarSimple = () => {
               {/* Brillo de fondo sutil para que destaque */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
               <img
-                src="/Vodtinker-removebg-preview.png"
+                src="/Vodtinker-removebg-preview.webp"
                 alt="VodTinker"
                 className="relative h-16 w-16 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]"
                 onError={(e) => {

@@ -70,7 +70,7 @@ const BotCommands = () => {
                 src="/recording_20251026_14-13-19.mp4"
                 controls
                 className="w-full rounded-xl"
-                poster="/VODGPT.png"
+                poster="/VODGPT.webp"
               >
                 {t.videoNotSupported}
               </video>

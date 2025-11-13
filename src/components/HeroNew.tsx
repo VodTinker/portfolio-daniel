@@ -24,7 +24,7 @@ const HeroNew = () => {
               <div className="absolute inset-0 rounded-full animate-glow" style={{ boxShadow: 'rgba(139, 92, 246, 0.4) 0px 0px 80px 40px' }}></div>
               <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 overflow-hidden rounded-full border-4 border-purple-500/60 dark:border-purple-400/60 bg-gradient-to-br from-white/10 to-white/20 dark:from-black/20 dark:to-black/40 shadow-2xl group-hover:border-purple-400/80 transition-all duration-500">
                 <img 
-                  src="Menhera-removebg-preview.png" 
+                  src="Menhera-removebg-preview.webp" 
                   alt="Daniel Fonov García" 
                   className="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />

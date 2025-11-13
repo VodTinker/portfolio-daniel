@@ -114,7 +114,7 @@ const BotCommandsModal = ({ isOpen, onClose }: BotCommandsModalProps) => {
                         src="/recording_20251026_14-13-19.mp4"
                         controls
                         className="w-full rounded-lg"
-                        poster="/VODGPT.png"
+                        poster="/VODGPT.webp"
                       >
                         {t.videoNotSupported}
                       </video>

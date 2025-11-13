@@ -26,7 +26,7 @@ export const projects: Project[] = [
       en: "A Discord bot that uses the OpenAI API to provide interactive responses and maintain conversations with users.",
       es: "Un bot de Discord que utiliza la API de OpenAI para proporcionar respuestas interactivas y mantener conversaciones con los usuarios."
     },
-    image: "/VODGPT.png", 
+    image: "/VODGPT.webp", 
     tags: ["Node.js", "OpenAI API", "Discord.js"],
     liveLink: "https://discord.com/oauth2/authorize?client_id=780039002198638592&permissions=8&integration_type=0&scope=bot", 
     githubLink: "https://github.com/VodTinker",
@@ -58,7 +58,7 @@ export const projects: Project[] = [
       en: "Automated system with n8n that monitors virtual classrooms for new notifications and sends instant alerts to Discord when updates are detected.",
       es: "Sistema automatizado con n8n que monitorea las aulas virtuales en busca de nuevas notificaciones y envía alertas instantáneas a Discord cuando se detectan actualizaciones."
     },
-    image: "/n8n.png", 
+    image: "/n8n.webp", 
     tags: ["n8n", "Discord", "JavaScript", "Automation"],
     githubLink: "https://github.com/VodTinker",
     category: "automation",

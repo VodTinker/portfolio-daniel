@@ -117,7 +117,7 @@ const Hero = () => {
               
               {/* Imagen de perfil */}
               <div className="relative h-40 w-40 md:h-64 md:w-64 overflow-hidden rounded-full border-4 border-primary/60 backdrop-blur-sm dark:border-purple-500/60 bg-gradient-to-br from-white/10 to-white/20 dark:from-black/10 dark:to-black/30 shadow-2xl z-10 group-hover:border-purple-400/80 transition-all duration-500">
-                <img src="Menhera-removebg-preview.png" alt="Imagen de Perfil" className="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
+                <img src="Menhera-removebg-preview.webp" alt="Imagen de Perfil" className="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
               </div>
               
               {/* Resplandor hover */}
