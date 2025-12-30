@@ -27,7 +27,7 @@ export const projects: Project[] = [
       en: "Modern mail and DNS infrastructure powered by Stalwart Mail Server (Rust). Features JMAP/IMAP/SMTP protocols, encrypted DNS (DoH/DoQ), automated backups, and advanced security with optimal memory efficiency.",
       es: "Infraestructura moderna de correo y DNS impulsada por Stalwart Mail Server (Rust). Incluye protocolos JMAP/IMAP/SMTP, DNS encriptado (DoH/DoQ), backups automatizados y seguridad avanzada con eficiencia óptima de memoria."
     },
-    image: "/mail_dns_architecture.png",
+    image: "/mail_dns_architecture.webp",
     tags: ["Stalwart Mail", "Rust", "JMAP", "DNS over HTTPS", "Tailscale", "Caddy", "Sieve"],
     liveLink: "https://mail.vodtinker.dev",
     githubLink: "https://github.com/VodTinker",

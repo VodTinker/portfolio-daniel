@@ -14,6 +14,10 @@ function ImageCarousel({ language }: { language: 'en' | 'es' }) {
 
     const images = [
         {
+            src: "/mail_dns_architecture.webp",
+            caption: { en: "Infrastructure Architecture Diagram", es: "Diagrama de Arquitectura de la Infraestructura" }
+        },
+        {
             src: "/Mail_Private.webp",
             caption: { en: "Stalwart Mail Server - Private Dashboard", es: "Servidor Stalwart Mail - Panel Privado" }
         },
@@ -89,8 +93,8 @@ function ImageCarousel({ language }: { language: 'en' | 'es' }) {
                         key={index}
                         onClick={() => setCurrentIndex(index)}
                         className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                ? 'w-8 bg-blue-600 dark:bg-blue-400'
-                                : 'w-2 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-500'
+                            ? 'w-8 bg-blue-600 dark:bg-blue-400'
+                            : 'w-2 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-500'
                             }`}
                     />
                 ))}
