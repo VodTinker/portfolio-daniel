@@ -9,7 +9,7 @@ export const translations = {
       contact: "Contact",
       cta: "Let's talk",
     },
-    
+
     // Hero
     hero: {
       available: "Available for work",
@@ -37,7 +37,7 @@ export const translations = {
         title: "// Stack",
       },
     },
-    
+
     // About
     about: {
       number: "001",
@@ -96,7 +96,7 @@ export const translations = {
         years: "Years",
       },
     },
-    
+
     // Projects
     projects: {
       number: "002",
@@ -105,9 +105,9 @@ export const translations = {
       viewLive: "View live",
       github: "GitHub",
       viewAll: "View all projects",
-      clickToViewDemo: "Click to view demo",
+      clickToViewDemo: "View details",
     },
-    
+
     // Skills
     skills: {
       number: "003",
@@ -127,7 +127,7 @@ export const translations = {
         note: "Continuous learning connects systems with development",
       },
     },
-    
+
     // Contact
     contact: {
       number: "004",
@@ -159,7 +159,7 @@ export const translations = {
         note: "Prefer another method? Choose one above",
       },
     },
-    
+
     // Footer
     footer: {
       brand: {
@@ -200,7 +200,7 @@ export const translations = {
       },
     },
   },
-  
+
   es: {
     // Navbar
     nav: {
@@ -211,7 +211,7 @@ export const translations = {
       contact: "Contacto",
       cta: "Hablemos",
     },
-    
+
     // Hero
     hero: {
       available: "Disponible para trabajar",
@@ -239,7 +239,7 @@ export const translations = {
         title: "// Stack",
       },
     },
-    
+
     // About
     about: {
       number: "001",
@@ -298,7 +298,7 @@ export const translations = {
         years: "Años",
       },
     },
-    
+
     // Projects
     projects: {
       number: "002",
@@ -307,9 +307,9 @@ export const translations = {
       viewLive: "Ver en vivo",
       github: "GitHub",
       viewAll: "Ver todos los proyectos",
-      clickToViewDemo: "Haz click para ver demostración",
+      clickToViewDemo: "Ver detalles",
     },
-    
+
     // Skills
     skills: {
       number: "003",
@@ -329,7 +329,7 @@ export const translations = {
         note: "El aprendizaje continuo conecta sistemas con desarrollo",
       },
     },
-    
+
     // Contact
     contact: {
       number: "004",
@@ -361,7 +361,7 @@ export const translations = {
         note: "¿Prefieres otro método? Elige uno arriba",
       },
     },
-    
+
     // Footer
     footer: {
       brand: {
