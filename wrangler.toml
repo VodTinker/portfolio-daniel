@@ -1,5 +1,5 @@
 # wrangler.toml
-name = 'portfolio-website'
+name = 'portfolio-daniel'
 compatibility_date = "2024-11-01"
 
 # Configuración para Cloudflare Pages
