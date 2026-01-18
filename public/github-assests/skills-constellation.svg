@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="50%" style="stop-color:#1a1025"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="lineGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&amp;display=swap');
+    
+    .bg { fill: url(#skyGradient); }
+    
+    .star {
+      fill: #fff;
+      filter: url(#starGlow);
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    .skill-star {
+      filter: url(#starGlow);
+      animation: skillPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes skillPulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+    
+    .constellation-line {
+      stroke-width: 1;
+      fill: none;
+      filter: url(#lineGlow);
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawLine 2s ease-out forwards;
+    }
+    
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    .skill-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      fill: #c9d1d9;
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    /* Staggered delays */
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+    .delay-5 { animation-delay: 1s; }
+    .delay-6 { animation-delay: 1.2s; }
+    .delay-7 { animation-delay: 1.4s; }
+    .delay-8 { animation-delay: 1.6s; }
+    .delay-9 { animation-delay: 1.8s; }
+    .delay-10 { animation-delay: 2s; }
+  </style>
+  
+  <!-- Background -->
+  <rect class="bg" x="0" y="0" width="800" height="300" rx="8"/>
+  
+  <!-- Background stars -->
+  <g class="background-stars">
+    <circle class="star" cx="50" cy="30" r="1" style="animation-delay: 0s"/>
+    <circle class="star" cx="150" cy="50" r="0.8" style="animation-delay: 0.5s"/>
+    <circle class="star" cx="250" cy="20" r="1.2" style="animation-delay: 1s"/>
+    <circle class="star" cx="350" cy="40" r="0.6" style="animation-delay: 1.5s"/>
+    <circle class="star" cx="450" cy="25" r="1" style="animation-delay: 2s"/>
+    <circle class="star" cx="550" cy="45" r="0.8" style="animation-delay: 0.3s"/>
+    <circle class="star" cx="650" cy="35" r="1.1" style="animation-delay: 0.8s"/>
+    <circle class="star" cx="750" cy="55" r="0.7" style="animation-delay: 1.3s"/>
+    <circle class="star" cx="100" cy="260" r="0.9" style="animation-delay: 1.8s"/>
+    <circle class="star" cx="200" cy="270" r="1" style="animation-delay: 0.2s"/>
+    <circle class="star" cx="600" cy="265" r="0.8" style="animation-delay: 0.7s"/>
+    <circle class="star" cx="700" cy="250" r="1.2" style="animation-delay: 1.2s"/>
+  </g>
+  
+  <!-- Constellation Lines -->
+  <g class="lines">
+    <!-- Linux cluster -->
+    <path class="constellation-line delay-1" d="M100,150 L180,100" stroke="#1793D1"/>
+    <path class="constellation-line delay-2" d="M180,100 L200,180" stroke="#1793D1"/>
+    <path class="constellation-line delay-3" d="M200,180 L100,150" stroke="#1793D1"/>
+    
+    <!-- Networking cluster -->
+    <path class="constellation-line delay-2" d="M300,80 L350,150" stroke="#7BA3C9"/>
+    <path class="constellation-line delay-3" d="M350,150 L280,180" stroke="#7BA3C9"/>
+    <path class="constellation-line delay-4" d="M280,180 L300,80" stroke="#7BA3C9"/>
+    
+    <!-- Cloud cluster -->
+    <path class="constellation-line delay-3" d="M450,100 L520,80" stroke="#E8B4C8"/>
+    <path class="constellation-line delay-4" d="M520,80 L550,150" stroke="#E8B4C8"/>
+    <path class="constellation-line delay-5" d="M550,150 L480,180" stroke="#E8B4C8"/>
+    <path class="constellation-line delay-6" d="M480,180 L450,100" stroke="#E8B4C8"/>
+    
+    <!-- Dev cluster -->
+    <path class="constellation-line delay-4" d="M650,90 L700,150" stroke="#3FB950"/>
+    <path class="constellation-line delay-5" d="M700,150 L650,200" stroke="#3FB950"/>
+    <path class="constellation-line delay-6" d="M650,200 L620,140" stroke="#3FB950"/>
+    <path class="constellation-line delay-7" d="M620,140 L650,90" stroke="#3FB950"/>
+    
+    <!-- Inter-cluster connections -->
+    <path class="constellation-line delay-8" d="M200,180 L280,180" stroke="#9B8AAC" stroke-opacity="0.5"/>
+    <path class="constellation-line delay-9" d="M350,150 L450,100" stroke="#9B8AAC" stroke-opacity="0.5"/>
+    <path class="constellation-line delay-10" d="M550,150 L620,140" stroke="#9B8AAC" stroke-opacity="0.5"/>
+  </g>
+  
+  <!-- Skill Stars -->
+  <g class="skill-nodes">
+    <!-- Linux -->
+    <circle class="skill-star delay-1" cx="100" cy="150" r="6" fill="#1793D1"/>
+    <circle class="skill-star delay-2" cx="180" cy="100" r="5" fill="#1793D1"/>
+    <circle class="skill-star delay-3" cx="200" cy="180" r="4" fill="#1793D1"/>
+    <text class="skill-label delay-3" x="100" y="175" text-anchor="middle">Linux</text>
+    
+    <!-- Networking -->
+    <circle class="skill-star delay-2" cx="300" cy="80" r="5" fill="#7BA3C9"/>
+    <circle class="skill-star delay-3" cx="350" cy="150" r="6" fill="#7BA3C9"/>
+    <circle class="skill-star delay-4" cx="280" cy="180" r="4" fill="#7BA3C9"/>
+    <text class="skill-label delay-4" x="310" y="205" text-anchor="middle">Networking</text>
+    
+    <!-- Cloud -->
+    <circle class="skill-star delay-3" cx="450" cy="100" r="5" fill="#E8B4C8"/>
+    <circle class="skill-star delay-4" cx="520" cy="80" r="4" fill="#E8B4C8"/>
+    <circle class="skill-star delay-5" cx="550" cy="150" r="6" fill="#E8B4C8"/>
+    <circle class="skill-star delay-6" cx="480" cy="180" r="5" fill="#E8B4C8"/>
+    <text class="skill-label delay-6" x="500" y="205" text-anchor="middle">Cloud</text>
+    
+    <!-- Development -->
+    <circle class="skill-star delay-4" cx="650" cy="90" r="5" fill="#3FB950"/>
+    <circle class="skill-star delay-5" cx="700" cy="150" r="6" fill="#3FB950"/>
+    <circle class="skill-star delay-6" cx="650" cy="200" r="4" fill="#3FB950"/>
+    <circle class="skill-star delay-7" cx="620" cy="140" r="5" fill="#3FB950"/>
+    <text class="skill-label delay-7" x="660" y="225" text-anchor="middle">Dev</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="270" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#9B8AAC" opacity="0.8">
+    ✧ skills_constellation.map() ✧
+  </text>
+</svg>

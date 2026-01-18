@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 60" width="800" height="60">
+  <defs>
+    <linearGradient id="petalGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8B4C8"/>
+      <stop offset="100%" style="stop-color:#f5d5e0"/>
+    </linearGradient>
+    
+    <linearGradient id="petalGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B8AAC"/>
+      <stop offset="100%" style="stop-color:#c4b8d0"/>
+    </linearGradient>
+  </defs>
+  
+  <style>
+    .petal {
+      animation: fall linear infinite;
+    }
+    
+    @keyframes fall {
+      0% {
+        opacity: 0;
+        transform: translateY(-15px) translateX(0) rotate(0deg);
+      }
+      10% {
+        opacity: 0.9;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(75px) translateX(25px) rotate(360deg);
+      }
+    }
+    
+    /* Center line */
+    .center-line {
+      stroke: #9B8AAC;
+      stroke-width: 1;
+      opacity: 0.3;
+      stroke-dasharray: 5 5;
+    }
+    
+    /* Glow dots */
+    .glow-dot {
+      fill: #E8B4C8;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.9; }
+    }
+  </style>
+  
+  <!-- Subtle center line -->
+  <line class="center-line" x1="50" y1="30" x2="750" y2="30"/>
+  
+  <!-- Glow dots on line -->
+  <circle class="glow-dot" cx="100" cy="30" r="3" style="animation-delay: 0s"/>
+  <circle class="glow-dot" cx="200" cy="30" r="2.5" style="animation-delay: 0.3s"/>
+  <circle class="glow-dot" cx="300" cy="30" r="3" style="animation-delay: 0.6s"/>
+  <circle class="glow-dot" cx="400" cy="30" r="2.5" style="animation-delay: 0.9s"/>
+  <circle class="glow-dot" cx="500" cy="30" r="3" style="animation-delay: 1.2s"/>
+  <circle class="glow-dot" cx="600" cy="30" r="2.5" style="animation-delay: 1.5s"/>
+  <circle class="glow-dot" cx="700" cy="30" r="3" style="animation-delay: 1.8s"/>
+  
+  <!-- Sakura petals - direct paths -->
+  <path class="petal" d="M50,5 C52,7 54,11 54,13 C54,15 52,17 50,19 C48,17 46,15 46,13 C46,11 48,7 50,5 Z" fill="url(#petalGradient1)" style="animation-duration: 4s; animation-delay: 0s;"/>
+  <path class="petal" d="M130,3 C131.5,4.5 133,7.5 133,9 C133,10.5 131.5,12 130,13.5 C128.5,12 127,10.5 127,9 C127,7.5 128.5,4.5 130,3 Z" fill="url(#petalGradient2)" style="animation-duration: 5s; animation-delay: 0.5s;"/>
+  <path class="petal" d="M200,6 C202,8 204,12 204,14 C204,16 202,18 200,20 C198,18 196,16 196,14 C196,12 198,8 200,6 Z" fill="url(#petalGradient1)" style="animation-duration: 4.5s; animation-delay: 1s;"/>
+  <path class="petal" d="M280,2 C281,3 282,5.5 282,6.5 C282,7.5 281,8.5 280,9.5 C279,8.5 278,7.5 278,6.5 C278,5.5 279,3 280,2 Z" fill="url(#petalGradient2)" style="animation-duration: 5.5s; animation-delay: 1.5s;"/>
+  <path class="petal" d="M350,5 C352,7 354,11 354,13 C354,15 352,17 350,19 C348,17 346,15 346,13 C346,11 348,7 350,5 Z" fill="url(#petalGradient1)" style="animation-duration: 4s; animation-delay: 2s;"/>
+  <path class="petal" d="M420,4 C421.5,5.5 423,8.5 423,10 C423,11.5 421.5,13 420,14.5 C418.5,13 417,11.5 417,10 C417,8.5 418.5,5.5 420,4 Z" fill="url(#petalGradient2)" style="animation-duration: 5s; animation-delay: 2.5s;"/>
+  <path class="petal" d="M500,3 C502,5 504,9 504,11 C504,13 502,15 500,17 C498,15 496,13 496,11 C496,9 498,5 500,3 Z" fill="url(#petalGradient1)" style="animation-duration: 4.5s; animation-delay: 3s;"/>
+  <path class="petal" d="M570,6 C571,7 572,9.5 572,10.5 C572,11.5 571,12.5 570,13.5 C569,12.5 568,11.5 568,10.5 C568,9.5 569,7 570,6 Z" fill="url(#petalGradient2)" style="animation-duration: 5.5s; animation-delay: 3.5s;"/>
+  <path class="petal" d="M640,4 C642,6 644,10 644,12 C644,14 642,16 640,18 C638,16 636,14 636,12 C636,10 638,6 640,4 Z" fill="url(#petalGradient1)" style="animation-duration: 4s; animation-delay: 0.3s;"/>
+  <path class="petal" d="M720,3 C721.5,4.5 723,7.5 723,9 C723,10.5 721.5,12 720,13.5 C718.5,12 717,10.5 717,9 C717,7.5 718.5,4.5 720,3 Z" fill="url(#petalGradient2)" style="animation-duration: 5s; animation-delay: 0.8s;"/>
+  
+  <!-- Second row offset -->
+  <path class="petal" d="M80,8 C81,9 82,11.5 82,12.5 C82,13.5 81,14.5 80,15.5 C79,14.5 78,13.5 78,12.5 C78,11.5 79,9 80,8 Z" fill="url(#petalGradient2)" style="animation-duration: 5.5s; animation-delay: 1.3s;"/>
+  <path class="petal" d="M160,5 C162,7 164,11 164,13 C164,15 162,17 160,19 C158,17 156,15 156,13 C156,11 158,7 160,5 Z" fill="url(#petalGradient1)" style="animation-duration: 4s; animation-delay: 1.8s;"/>
+  <path class="petal" d="M240,4 C241.5,5.5 243,8.5 243,10 C243,11.5 241.5,13 240,14.5 C238.5,13 237,11.5 237,10 C237,8.5 238.5,5.5 240,4 Z" fill="url(#petalGradient2)" style="animation-duration: 4.5s; animation-delay: 2.3s;"/>
+  <path class="petal" d="M320,6 C322,8 324,12 324,14 C324,16 322,18 320,20 C318,18 316,16 316,14 C316,12 318,8 320,6 Z" fill="url(#petalGradient1)" style="animation-duration: 5s; animation-delay: 2.8s;"/>
+  <path class="petal" d="M390,3 C391,4 392,6.5 392,7.5 C392,8.5 391,9.5 390,10.5 C389,9.5 388,8.5 388,7.5 C388,6.5 389,4 390,3 Z" fill="url(#petalGradient2)" style="animation-duration: 5.5s; animation-delay: 0.2s;"/>
+  <path class="petal" d="M460,5 C462,7 464,11 464,13 C464,15 462,17 460,19 C458,17 456,15 456,13 C456,11 458,7 460,5 Z" fill="url(#petalGradient1)" style="animation-duration: 4s; animation-delay: 0.7s;"/>
+  <path class="petal" d="M540,7 C541.5,8.5 543,11.5 543,13 C543,14.5 541.5,16 540,17.5 C538.5,16 537,14.5 537,13 C537,11.5 538.5,8.5 540,7 Z" fill="url(#petalGradient2)" style="animation-duration: 4.5s; animation-delay: 1.2s;"/>
+  <path class="petal" d="M610,4 C612,6 614,10 614,12 C614,14 612,16 610,18 C608,16 606,14 606,12 C606,10 608,6 610,4 Z" fill="url(#petalGradient1)" style="animation-duration: 5s; animation-delay: 1.7s;"/>
+  <path class="petal" d="M680,6 C681,7 682,9.5 682,10.5 C682,11.5 681,12.5 680,13.5 C679,12.5 678,11.5 678,10.5 C678,9.5 679,7 680,6 Z" fill="url(#petalGradient2)" style="animation-duration: 5.5s; animation-delay: 2.2s;"/>
+  <path class="petal" d="M760,3 C762,5 764,9 764,11 C764,13 762,15 760,17 C758,15 756,13 756,11 C756,9 758,5 760,3 Z" fill="url(#petalGradient1)" style="animation-duration: 4s; animation-delay: 2.7s;"/>
+</svg>

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="800" height="120" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2D1B4E"/>
+      <stop offset="50%" style="stop-color:#9B8AAC"/>
+      <stop offset="100%" style="stop-color:#7BA3C9"/>
+    </linearGradient>
+    
+    <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9B8AAC"/>
+      <stop offset="50%" style="stop-color:#E8B4C8"/>
+      <stop offset="100%" style="stop-color:#2D1B4E"/>
+    </linearGradient>
+    
+    <linearGradient id="waveGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7BA3C9"/>
+      <stop offset="50%" style="stop-color:#2D1B4E"/>
+      <stop offset="100%" style="stop-color:#E8B4C8"/>
+    </linearGradient>
+    
+    <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#E8B4C8;stop-opacity:0.3"/>
+    </linearGradient>
+  </defs>
+  
+  <style>
+    .wave1 {
+      animation: wave1Move 8s ease-in-out infinite;
+    }
+    
+    .wave2 {
+      animation: wave2Move 6s ease-in-out infinite;
+      animation-delay: -2s;
+    }
+    
+    .wave3 {
+      animation: wave3Move 10s ease-in-out infinite;
+      animation-delay: -4s;
+    }
+    
+    @keyframes wave1Move {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-25px); }
+    }
+    
+    @keyframes wave2Move {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+    }
+    
+    @keyframes wave3Move {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-15px); }
+    }
+    
+    .sparkle {
+      fill: url(#sparkleGradient);
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    .sparkle:nth-child(1) { animation-delay: 0s; }
+    .sparkle:nth-child(2) { animation-delay: 0.3s; }
+    .sparkle:nth-child(3) { animation-delay: 0.6s; }
+    .sparkle:nth-child(4) { animation-delay: 0.9s; }
+    .sparkle:nth-child(5) { animation-delay: 1.2s; }
+  </style>
+  
+  <!-- Wave layers -->
+  <g class="wave1">
+    <path d="M0,60 C100,40 200,80 300,60 C400,40 500,80 600,60 C700,40 800,60 800,60 L800,120 L0,120 Z" 
+          fill="url(#waveGradient1)" opacity="0.6"/>
+  </g>
+  
+  <g class="wave2">
+    <path d="M0,70 C80,50 160,90 240,70 C320,50 400,90 480,70 C560,50 640,90 720,70 C800,50 800,70 800,70 L800,120 L0,120 Z" 
+          fill="url(#waveGradient2)" opacity="0.5"/>
+  </g>
+  
+  <g class="wave3">
+    <path d="M0,80 C120,65 240,95 360,80 C480,65 600,95 720,80 C840,65 800,80 800,80 L800,120 L0,120 Z" 
+          fill="url(#waveGradient3)" opacity="0.7"/>
+  </g>
+  
+  <!-- Sparkles on waves -->
+  <circle class="sparkle" cx="100" cy="55" r="2"/>
+  <circle class="sparkle" cx="250" cy="65" r="1.5"/>
+  <circle class="sparkle" cx="400" cy="50" r="2"/>
+  <circle class="sparkle" cx="550" cy="70" r="1.5"/>
+  <circle class="sparkle" cx="700" cy="55" r="2"/>
+  
+  <!-- Bottom solid fill -->
+  <rect x="0" y="100" width="800" height="20" fill="#2D1B4E"/>
+</svg>

@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <defs>
+    <!-- Gradientes -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1025;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1117;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="borderGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9B8AAC" />
+      <stop offset="50%" style="stop-color:#7BA3C9" />
+      <stop offset="100%" style="stop-color:#E8B4C8" />
+    </linearGradient>
+    
+    <!-- Glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="textGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;display=swap');
+    
+    .terminal-bg {
+      fill: url(#bgGradient);
+    }
+    
+    .terminal-border {
+      fill: none;
+      stroke: url(#borderGlow);
+      stroke-width: 2;
+      opacity: 0.6;
+    }
+    
+    .prompt {
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 16px;
+      fill: #9B8AAC;
+      filter: url(#textGlow);
+    }
+    
+    .command {
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 16px;
+      fill: #3FB950;
+      filter: url(#textGlow);
+    }
+    
+    .output {
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 14px;
+      fill: #7BA3C9;
+    }
+    
+    .highlight {
+      fill: #E8B4C8;
+    }
+    
+    .cursor {
+      fill: #3FB950;
+      animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    /* Typing animations */
+    .line1 { 
+      animation: typing1 2s steps(30) forwards;
+      clip-path: inset(0 100% 0 0);
+    }
+    
+    .line2 { 
+      animation: typing2 1.5s steps(25) 2.5s forwards;
+      clip-path: inset(0 100% 0 0);
+    }
+    
+    .line3 { 
+      animation: typing3 2s steps(30) 4.5s forwards;
+      clip-path: inset(0 100% 0 0);
+    }
+    
+    .line4 { 
+      animation: typing4 1.8s steps(28) 7s forwards;
+      clip-path: inset(0 100% 0 0);
+    }
+    
+    @keyframes typing1 {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    
+    @keyframes typing2 {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    
+    @keyframes typing3 {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    
+    @keyframes typing4 {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    
+    /* Window buttons */
+    .btn-close { fill: #ff5f56; }
+    .btn-minimize { fill: #ffbd2e; }
+    .btn-maximize { fill: #27c93f; }
+    
+    .window-btn {
+      opacity: 0.8;
+    }
+    
+    .window-btn:hover {
+      opacity: 1;
+    }
+    
+    /* Floating particles */
+    .particle {
+      fill: #9B8AAC;
+      opacity: 0.3;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .particle:nth-child(2) { animation-delay: -2s; }
+    .particle:nth-child(3) { animation-delay: -4s; }
+    .particle:nth-child(4) { animation-delay: -6s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      50% { transform: translateY(-10px) rotate(180deg); opacity: 0.6; }
+    }
+  </style>
+  
+  <!-- Background -->
+  <rect class="terminal-bg" x="0" y="0" width="800" height="200" rx="12" ry="12"/>
+  
+  <!-- Border glow -->
+  <rect class="terminal-border" x="1" y="1" width="798" height="198" rx="12" ry="12"/>
+  
+  <!-- Floating particles -->
+  <circle class="particle" cx="750" cy="30" r="2"/>
+  <circle class="particle" cx="720" cy="60" r="1.5"/>
+  <circle class="particle" cx="770" cy="90" r="1"/>
+  <circle class="particle" cx="740" cy="150" r="1.5"/>
+  
+  <!-- Window title bar -->
+  <g class="title-bar">
+    <!-- Window buttons -->
+    <circle class="window-btn btn-close" cx="25" cy="18" r="6"/>
+    <circle class="window-btn btn-minimize" cx="45" cy="18" r="6"/>
+    <circle class="window-btn btn-maximize" cx="65" cy="18" r="6"/>
+    
+    <!-- Title -->
+    <text x="400" y="22" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#6e7681">
+      void@arch: ~/projects
+    </text>
+  </g>
+  
+  <!-- Terminal lines separator -->
+  <line x1="15" y1="35" x2="785" y2="35" stroke="#30363d" stroke-width="1"/>
+  
+  <!-- Terminal content -->
+  <g transform="translate(25, 60)">
+    <!-- Line 1: whoami -->
+    <g class="line1">
+      <text class="prompt" x="0" y="0">void@arch</text>
+      <text class="prompt" x="85" y="0" fill="#6e7681">~$</text>
+      <text class="command" x="110" y="0">echo "SYSTEM BREACH DETECTED..."</text>
+    </g>
+    
+    <!-- Line 2: Output -->
+    <g class="line2">
+      <text class="output" x="0" y="30">SYSTEM BREACH DETECTED...</text>
+    </g>
+    
+    <!-- Line 3: User info -->
+    <g class="line3">
+      <text class="prompt" x="0" y="60">void@arch</text>
+      <text class="prompt" x="85" y="60" fill="#6e7681">~$</text>
+      <text class="command" x="110" y="60">cat /etc/profile</text>
+    </g>
+    
+    <!-- Line 4: Profile output -->
+    <g class="line4">
+      <text class="output" x="0" y="90">USER=</text>
+      <text class="output highlight" x="50" y="90">Daniel Fonov</text>
+      <text class="output" x="170" y="90">| ROLE=</text>
+      <text class="output highlight" x="235" y="90">SysAdmin</text>
+      <text class="output" x="320" y="90">| OS=</text>
+      <text class="output" x="365" y="90" fill="#1793D1">Arch Linux</text>
+    </g>
+    
+    <!-- Cursor -->
+    <rect class="cursor" x="0" y="110" width="10" height="18" rx="1"/>
+    
+    <!-- Prompt for next command -->
+    <text class="prompt" x="0" y="125" opacity="0.5">void@arch</text>
+    <text class="prompt" x="85" y="125" fill="#6e7681" opacity="0.5">~$</text>
+  </g>
+  
+  <!-- Decorative corner elements -->
+  <path d="M780 180 L780 190 L790 190" stroke="#9B8AAC" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M10 180 L10 190 L20 190" stroke="#9B8AAC" stroke-width="1" fill="none" opacity="0.4" transform="scale(-1,1) translate(-30,0)"/>
+</svg>
