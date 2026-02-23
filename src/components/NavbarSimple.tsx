@@ -46,7 +46,9 @@ export default function NavbarSimple() {
         <a
           href="#home"
           onClick={(e) => scrollTo(e, "#home")}
-          className="font-serif text-lg text-ink hover:opacity-70 transition-opacity"
+          className={`font-serif text-lg transition-opacity hover:opacity-70 ${
+            isScrolled ? "text-ink" : "text-[hsl(var(--bg))]"
+          }`}
         >
           Daniel Fonov
         </a>
@@ -63,8 +65,8 @@ export default function NavbarSimple() {
                 onClick={(e) => scrollTo(e, link.href)}
                 className={`text-sm transition-colors duration-200 ${
                   isActive
-                    ? "text-ink font-medium"
-                    : "text-muted hover:text-ink"
+                    ? (isScrolled ? "text-ink font-medium" : "text-[hsl(var(--bg))] font-medium")
+                    : (isScrolled ? "text-muted hover:text-ink" : "text-[hsl(var(--bg))]/60 hover:text-[hsl(var(--bg))]")
                 }`}
               >
                 {label}
@@ -79,16 +81,20 @@ export default function NavbarSimple() {
             <button
               onClick={() => setLanguage("en")}
               className={`px-1.5 py-0.5 transition-colors ${
-                language === "en" ? "text-ink font-medium" : "text-muted hover:text-ink"
+                language === "en"
+                  ? (isScrolled ? "text-ink font-medium" : "text-[hsl(var(--bg))] font-medium")
+                  : (isScrolled ? "text-muted hover:text-ink" : "text-[hsl(var(--bg))]/60 hover:text-[hsl(var(--bg))]")
               }`}
             >
               EN
             </button>
-            <span className="text-faint">·</span>
+            <span className={isScrolled ? "text-faint" : "text-[hsl(var(--bg))]/40"}>·</span>
             <button
               onClick={() => setLanguage("es")}
               className={`px-1.5 py-0.5 transition-colors ${
-                language === "es" ? "text-ink font-medium" : "text-muted hover:text-ink"
+                language === "es"
+                  ? (isScrolled ? "text-ink font-medium" : "text-[hsl(var(--bg))] font-medium")
+                  : (isScrolled ? "text-muted hover:text-ink" : "text-[hsl(var(--bg))]/60 hover:text-[hsl(var(--bg))]")
               }`}
             >
               ES
@@ -101,9 +107,9 @@ export default function NavbarSimple() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-5 h-px bg-ink transition-opacity ${isMenuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px transition-transform origin-center ${isScrolled ? "bg-ink" : "bg-[hsl(var(--bg))]"} ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px transition-opacity ${isScrolled ? "bg-ink" : "bg-[hsl(var(--bg))]"} ${isMenuOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-px transition-transform origin-center ${isScrolled ? "bg-ink" : "bg-[hsl(var(--bg))]"} ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
       </div>
