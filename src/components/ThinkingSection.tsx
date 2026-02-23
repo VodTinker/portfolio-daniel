@@ -9,16 +9,16 @@ const clusterSkills = [
 ];
 
 const clusterAccent = [
-  "border-terracotta/40",
-  "border-sage/40",
-  "border-lavender/40",
+  "border-terracotta/50",
+  "border-sage/50",
+  "border-lavender/50",
 ] as const;
 
 export default function ThinkingSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="thinking" className="px-6 sm:px-10 lg:px-16 py-24 sm:py-32">
+    <section id="thinking" className="dark-grain bg-ink px-6 sm:px-10 lg:px-16 py-24 sm:py-32">
       <div className="max-w-6xl mx-auto">
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-16 lg:gap-20">
@@ -30,7 +30,7 @@ export default function ThinkingSection() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono text-muted tracking-widest uppercase mb-4"
+              className="text-xs font-mono text-[hsl(var(--bg))]/50 tracking-widest uppercase mb-4"
             >
               {t.thinking.label}
             </motion.p>
@@ -40,7 +40,7 @@ export default function ThinkingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className="font-serif text-4xl sm:text-5xl font-light text-ink mb-10"
+              className="font-serif text-4xl sm:text-5xl font-light text-[hsl(var(--bg))] mb-10"
             >
               {t.thinking.title}
             </motion.h2>
@@ -53,7 +53,7 @@ export default function ThinkingSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.55, delay: 0.1 + i * 0.08 }}
-                  className="text-base text-muted leading-relaxed"
+                  className="text-base text-[hsl(var(--bg))]/60 leading-relaxed"
                 >
                   {para}
                 </motion.p>
@@ -68,10 +68,10 @@ export default function ThinkingSection() {
               transition={{ duration: 0.5, delay: 0.35 }}
               className="flex gap-4 mt-10 pt-10 border-t border-[hsl(var(--border))]"
             >
-              <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm">
+              <span className="text-xs font-mono text-[hsl(var(--bg))]/50 px-3 py-1.5 border border-white/15 rounded-sm">
                 {t.thinking.since2022}
               </span>
-              <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm">
+              <span className="text-xs font-mono text-[hsl(var(--bg))]/50 px-3 py-1.5 border border-white/15 rounded-sm">
                 {t.thinking.since2024}
               </span>
             </motion.div>
@@ -86,13 +86,13 @@ export default function ThinkingSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-                className={`border ${clusterAccent[i]} rounded-sm p-5 bg-[hsl(var(--surface))]`}
+                className={`border ${clusterAccent[i]} rounded-sm p-5 bg-white/5`}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="text-muted">
+                  <div className="text-[hsl(var(--bg))]/50">
                     <ClusterIllustration variant={i as 0 | 1 | 2} />
                   </div>
-                  <span className="text-sm font-mono text-ink">
+                  <span className="text-sm font-mono text-[hsl(var(--bg))]">
                     {t.thinking.clusters[key]}
                   </span>
                 </div>
@@ -100,7 +100,7 @@ export default function ThinkingSection() {
                   {clusterSkills[i].map((skill) => (
                     <span
                       key={skill}
-                      className="px-2 py-0.5 text-xs font-mono text-muted border border-[hsl(var(--border))] rounded-sm"
+                      className="px-2 py-0.5 text-xs font-mono text-[hsl(var(--bg))]/60 border border-white/20 rounded-sm"
                     >
                       {skill}
                     </span>
