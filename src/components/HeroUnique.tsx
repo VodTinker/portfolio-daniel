@@ -17,13 +17,13 @@ export default function HeroUnique() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center px-6 sm:px-10 lg:px-16 pt-28 pb-20"
+      className="dark-grain bg-ink min-h-screen flex items-center px-6 sm:px-10 lg:px-16 pt-28 pb-20"
     >
       <div className="w-full max-w-6xl mx-auto">
 
         {/* Available badge */}
         <motion.div {...fadeUp(0)} className="mb-10">
-          <span className="inline-flex items-center gap-2 text-xs font-mono text-muted">
+          <span className="inline-flex items-center gap-2 text-xs font-mono text-[hsl(var(--bg))]/60">
             <span className="w-1.5 h-1.5 rounded-full bg-sage inline-block" />
             {t.hero.available}
           </span>
@@ -36,16 +36,16 @@ export default function HeroUnique() {
           <div>
             <motion.h1
               {...fadeUp(0.1)}
-              className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light leading-[1.05] tracking-tight text-ink mb-6"
+              className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light leading-[1.05] tracking-tight text-[hsl(var(--bg))] mb-6"
             >
               {t.hero.headline1}
               <br />
-              <em className="not-italic text-muted">{t.hero.headline2}</em>
+              <em className="not-italic text-[hsl(var(--bg))]/60">{t.hero.headline2}</em>
             </motion.h1>
 
             <motion.p
               {...fadeUp(0.2)}
-              className="text-base sm:text-lg text-muted leading-relaxed max-w-md mb-10"
+              className="text-base sm:text-lg text-[hsl(var(--bg))]/60 leading-relaxed max-w-md mb-10"
             >
               {t.hero.description}
             </motion.p>
@@ -59,7 +59,7 @@ export default function HeroUnique() {
               </a>
               <a
                 href="#thinking"
-                className="inline-flex items-center px-5 py-2.5 rounded-sm border border-[hsl(var(--border))] text-ink text-sm font-medium hover:border-ink transition-colors"
+                className="inline-flex items-center px-5 py-2.5 rounded-sm border border-white/30 text-[hsl(var(--bg))] text-sm font-medium hover:border-white/60 transition-colors"
               >
                 {t.hero.ctaAlt}
               </a>
@@ -73,7 +73,7 @@ export default function HeroUnique() {
             transition={{ duration: 1, delay: 0.4 }}
             className="flex items-center justify-center lg:justify-end"
           >
-            <div className="w-full max-w-sm lg:max-w-none text-[hsl(var(--ink))]">
+            <div className="w-full max-w-sm lg:max-w-none text-[hsl(var(--bg))]">
               <HeroIllustration />
             </div>
           </motion.div>
