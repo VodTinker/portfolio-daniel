@@ -6,8 +6,8 @@ const contactMethods = [
   {
     icon: FiMail,
     title: "Email",
-    value: "danielfonov71@proton.me",
-    href: "mailto:danielfonov71@proton.me",
+    value: "danielfonov71@vodtinker.dev",
+    href: "mailto:danielfonov71@vodtinker.dev",
     description: "Respondo en 24h",
     gradient: "from-purple-500 to-pink-500",
   },
@@ -120,7 +120,7 @@ const ContactMinimal = () => {
             me encantaría escucharte.
           </p>
           <a
-            href="mailto:danielfonov71@proton.me"
+            href="mailto:danielfonov71@vodtinker.dev"
             className="inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background rounded-full font-medium transition-all duration-300 hover:gap-4"
           >
             <FiMail className="w-5 h-5" />

@@ -60,7 +60,7 @@ export const projects: Project[] = [
       en: "Automated web scraping scripts using Selenium to collect data from various websites.",
       es: "Scripts automatizados de web scraping utilizando Selenium para recopilar datos de diversos sitios web."
     },
-    image: "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fthepracticaldev.s3.amazonaws.com%2Fi%2Febvsckbzby4jzb5du8og.png",
+    image: "/Server_Specs.webp",
     tags: ["Python", "Selenium", "Web Scraping"],
     liveLink: "https://www.selenium.dev/",
     githubLink: "https://github.com/VodTinker",

@@ -6,7 +6,7 @@ const draw = {
     pathLength: 1,
     opacity: 1,
     transition: {
-      pathLength: { delay: i * 0.15, duration: 1.8, ease: "easeInOut" },
+      pathLength: { delay: i * 0.15, duration: 1.8, ease: "easeInOut" as const },
       opacity:    { delay: i * 0.15, duration: 0.4 },
     },
   }),

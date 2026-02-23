@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
-const draw = {
+const draw: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: {
     pathLength: 1,
     opacity: 1,
     transition: {
-      pathLength: { duration: 1.4, ease: "easeInOut" },
+      pathLength: { duration: 1.4, ease: "easeInOut" as const },
       opacity:    { duration: 0.3 },
     },
   },

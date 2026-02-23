@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
+import type { Transition } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import HeroIllustration from "./ui/illustrations/HeroIllustration";
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.6, delay, ease: EASE } as Transition,
 });
 
 export default function HeroUnique() {
