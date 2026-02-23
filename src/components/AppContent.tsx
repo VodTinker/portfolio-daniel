@@ -2,9 +2,8 @@
 import { LanguageProvider } from '../contexts/LanguageContext';
 import NavbarSimple from './NavbarSimple';
 import HeroUnique from './HeroUnique';
-import AboutUnique from './AboutUnique';
 import ProjectsUnique from './ProjectsUnique';
-import SkillsUnique from './SkillsUnique';
+import ThinkingSection from './ThinkingSection';
 import ContactUnique from './ContactUnique';
 import FooterMinimal from './FooterMinimal';
 import ChatWidget from './ChatWidget';
@@ -14,15 +13,14 @@ export default function AppContent() {
   return (
     <LanguageProvider>
       <NavbarSimple />
-      
+
       <main>
         <HeroUnique />
-        <AboutUnique />
         <ProjectsUnique />
-        <SkillsUnique />
+        <ThinkingSection />
         <ContactUnique />
       </main>
-      
+
       <FooterMinimal />
       <ChatWidget />
       <BackToTop />
