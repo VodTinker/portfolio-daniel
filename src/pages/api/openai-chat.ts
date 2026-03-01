@@ -20,7 +20,11 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const { message } = await request.json();
+    const body = await request.json();
+    const message = typeof body?.message === 'string' ? body.message.trim() : '';
+    if (!message) {
+      return new Response(JSON.stringify({ error: 'message is required' }), { status: 400, headers });
+    }
 
     const detectionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -55,7 +59,7 @@ Responde de forma cercana, profesional y práctica.`;
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }
