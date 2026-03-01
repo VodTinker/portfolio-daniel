@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "../utils/navigationConfig";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function NavbarSimple() {
   const [isScrolled, setIsScrolled]       = useState(false);
   const [isMenuOpen, setIsMenuOpen]       = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const { language, setLanguage, t }      = useLanguage();
+  const { theme, toggleTheme }            = useTheme();
 
   useEffect(() => {
     const onScroll = () => {
@@ -73,6 +75,23 @@ export default function NavbarSimple() {
 
         {/* Right: lang toggle + CTA */}
         <div className="flex items-center gap-4">
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+            className="hidden md:flex items-center justify-center w-8 h-8 text-muted hover:text-ink transition-colors"
+          >
+            {theme === "dark" ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            )}
+          </button>
           <div className="hidden md:flex items-center gap-1 text-xs font-mono">
             <button
               onClick={() => setLanguage("en")}
@@ -137,6 +156,22 @@ export default function NavbarSimple() {
             <div className="flex gap-3 pt-2 border-t border-[hsl(var(--border))]">
               <button onClick={() => setLanguage("en")} className={`text-xs font-mono ${language === "en" ? "text-ink font-medium" : "text-muted"}`}>EN</button>
               <button onClick={() => setLanguage("es")} className={`text-xs font-mono ${language === "es" ? "text-ink font-medium" : "text-muted"}`}>ES</button>
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle dark mode"
+                className="text-muted hover:text-ink transition-colors ml-auto"
+              >
+                {theme === "dark" ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                )}
+              </button>
             </div>
           </motion.div>
         )}
