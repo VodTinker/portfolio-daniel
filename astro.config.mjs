@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
+// output: 'static' (default) — páginas estáticas puras
+// La API /api/openai-chat corre como Cloudflare Pages Function (functions/api/openai-chat.ts)
+// Cloudflare Pages detecta el directorio functions/ automáticamente, sin adapter
 export default defineConfig({
   integrations: [
     react(),
@@ -11,10 +13,6 @@ export default defineConfig({
       applyBaseStyles: false, // Usaremos nuestro index.css
     }),
   ],
-  // Modo híbrido — páginas estáticas pero la API corre como Cloudflare Pages Function
-  // En Astro 5, output: 'hybrid' fue eliminado; output: 'static' + adapter es el equivalente
-  output: 'static',
-  adapter: cloudflare(),
   vite: {
     resolve: {
       alias: {

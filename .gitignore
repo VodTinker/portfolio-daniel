@@ -132,3 +132,6 @@ secrets/
 *api-key*
 *api_key*
 SYSTEM_PROMPT_PRIVATE.txt
+
+# Plans 
+docs/
