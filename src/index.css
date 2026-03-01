@@ -34,6 +34,7 @@
 
 /* ─── Dark Mode Tokens ───────────────────────────────── */
 .dark {
+  color-scheme: dark;
   --bg:      25 18%  8%;   /* #1A1410 — warm near-black */
   --surface: 25 15% 13%;   /* #242018 — dark surface */
   --border:  25 12% 22%;   /* #3A3228 — subtle dark border */

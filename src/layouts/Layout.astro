@@ -20,6 +20,14 @@ const { title, description = "Portfolio Asir-Daniel Fonov " } = Astro.props;
   <!-- Fallback SVG (mantener si ya existía) -->
   <link rel="icon" type="image/svg+xml" href="/logo-option-1.svg" />
     <meta name="generator" content={Astro.generator} />
+<script is:inline>
+  (function() {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark') document.documentElement.classList.add('dark');
+    } catch(e) {}
+  })();
+</script>
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
