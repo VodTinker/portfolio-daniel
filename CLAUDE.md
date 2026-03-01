@@ -46,7 +46,7 @@ Tailwind: `darkMode: ["class"]` — añadir clase `dark` a `<html>`, NO media qu
   esperados. React recupera solo, es cosmético.
 - **Componentes legacy**: `src/components/` tiene ~30 componentes de versiones anteriores.
   Los activos son: `AppContent`, `NavbarSimple`, `HeroUnique`, `ProjectsUnique`,
-  `ThinkingSection`, `ContactUnique`, `FooterMinimal`, `TechMarquee`, `ChatWidget`, `BackToTop`.
+  `ThinkingSection`, `ContactUnique`, `FooterMinimal`, `TechMarquee`, `BackToTop`.
 - **Anti-FOUC dark mode**: `<script is:inline>` en `Layout.astro` lee localStorage antes del
   primer render para evitar el flash blanco al recargar con dark mode activo.
 

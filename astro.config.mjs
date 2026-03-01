@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-// import cloudflare from '@astrojs/cloudflare'; // Solo necesario para output: 'server'
+import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,9 +11,10 @@ export default defineConfig({
       applyBaseStyles: false, // Usaremos nuestro index.css
     }),
   ],
-  // Modo estático - todo se genera en build time
+  // Modo híbrido — páginas estáticas pero la API corre como Cloudflare Pages Function
+  // En Astro 5, output: 'hybrid' fue eliminado; output: 'static' + adapter es el equivalente
   output: 'static',
-  // adapter: cloudflare(), // No necesario para static
+  adapter: cloudflare(),
   vite: {
     resolve: {
       alias: {
@@ -24,7 +25,6 @@ export default defineConfig({
       include: ['react', 'react-dom', 'framer-motion'],
     },
     build: {
-      // Mantener optimizaciones similares a tu config de Vite
       target: 'esnext',
       cssCodeSplit: true,
       rollupOptions: {

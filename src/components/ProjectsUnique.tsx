@@ -66,7 +66,7 @@ export default function ProjectsUnique() {
           </motion.p>
           <motion.h2
             variants={shouldReduceMotion ? {} : headerAccentVariants}
-            className="font-serif text-4xl sm:text-5xl font-light text-ink"
+            className="font-serif text-5xl sm:text-6xl font-light text-ink"
           >
             {t.work.title}
             <br />
@@ -163,7 +163,7 @@ export default function ProjectsUnique() {
                           color: isHovered ? "hsl(var(--coral))" : "hsl(var(--ink))",
                         }}
                         transition={{ duration: 0.35, ease: EASE_SOFT }}
-                        className="font-serif text-xl sm:text-2xl font-light mb-3 leading-snug"
+                        className="font-serif text-2xl sm:text-3xl font-light mb-3 leading-snug"
                       >
                         {project.title[language]}
                       </motion.h3>

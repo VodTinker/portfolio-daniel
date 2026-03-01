@@ -1,3 +1,154 @@
+# Hero Chat Funcional — Implementation Plan
+
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+
+**Goal:** Convertir el mock decorativo del chat en el hero en un chat real funcional con IA, y eliminar el widget flotante de la esquina.
+
+**Architecture:** Astro hybrid mode + Cloudflare Pages Function para la API. La lógica de chat (estado, fetch, TypewriterText, ChatDots) se mueve inline a HeroUnique.tsx. ChatWidget y sus dependencias (ChatWidget.css, ChatButton, ChatLoader) se eliminan. Sin archivos nuevos.
+
+**Tech Stack:** React, TypeScript, Tailwind CSS, Framer Motion, Astro hybrid, @astrojs/cloudflare, OpenAI API (gpt-4o-mini)
+
+---
+
+## Task 1: Activar API — Astro hybrid mode + renombrar endpoint
+
+**Files:**
+- Modify: `astro.config.mjs` (líneas 4, 15, 16)
+- Rename: `src/pages/api/_openai-chat.ts.disabled` → `src/pages/api/openai-chat.ts`
+
+**Step 1: Leer astro.config.mjs**
+
+Lee `astro.config.mjs` para confirmar la estructura actual (cloudflare import comentado, output: 'static').
+
+**Step 2: Actualizar astro.config.mjs**
+
+Reemplazar el contenido completo con:
+
+```mjs
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import cloudflare from '@astrojs/cloudflare';
+
+// https://astro.build/config
+export default defineConfig({
+  integrations: [
+    react(),
+    tailwind({
+      applyBaseStyles: false, // Usaremos nuestro index.css
+    }),
+  ],
+  // Modo híbrido — páginas estáticas pero la API corre como Cloudflare Pages Function
+  output: 'hybrid',
+  adapter: cloudflare(),
+  vite: {
+    resolve: {
+      alias: {
+        '@': '/src',
+      },
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'framer-motion'],
+    },
+    build: {
+      target: 'esnext',
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'react-vendor';
+              }
+              if (id.includes('framer-motion')) {
+                return 'framer-motion';
+              }
+              if (id.includes('react-icons')) {
+                return 'icons';
+              }
+              return 'vendor';
+            }
+          },
+        },
+      },
+    },
+  },
+});
+```
+
+**Step 3: Renombrar el endpoint**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+mv src/pages/api/_openai-chat.ts.disabled src/pages/api/openai-chat.ts
+```
+
+El archivo ya tiene `export const prerender = false;` — correcto para hybrid mode.
+
+**Step 4: Verificar que el build pasa**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro && bun run build 2>&1 | tail -15
+```
+
+Expected: build exitoso. Si hay error de cloudflare adapter, verificar que `@astrojs/cloudflare` está en devDependencies con `cat package.json | grep cloudflare`.
+
+**Step 5: Commit**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+git add astro.config.mjs src/pages/api/openai-chat.ts
+git commit -m "feat: enable hybrid mode + activate openai-chat API endpoint"
+```
+
+---
+
+## Task 2: Añadir cursor blink a index.css
+
+**Files:**
+- Modify: `src/index.css` (al final del archivo)
+
+**Step 1: Leer el final de index.css**
+
+Lee `src/index.css` líneas 134–149 para confirmar que termina con `.marquee-track:hover`.
+
+**Step 2: Añadir la utilidad de cursor**
+
+Al final de `src/index.css`, después de `.marquee-track:hover { ... }`, añadir:
+
+```css
+
+/* ─── Chat cursor blink ──────────────────────────────────── */
+@keyframes chat-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.chat-cursor {
+  animation: chat-blink 1s step-end infinite;
+}
+```
+
+**Step 3: Commit**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+git add src/index.css
+git commit -m "feat: add chat-cursor blink utility to index.css"
+```
+
+---
+
+## Task 3: Reescribir HeroUnique con chat funcional
+
+**Files:**
+- Modify: `src/components/HeroUnique.tsx` (reescribir completo)
+
+**Step 1: Reemplazar HeroUnique.tsx con el siguiente contenido**
+
+Usar Write tool para reemplazar el archivo completo:
+
+```tsx
 import { useState, useRef, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Transition } from "framer-motion";
@@ -114,13 +265,6 @@ export default function HeroUnique() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Auto-focus input after assistant responds
-  useEffect(() => {
-    if (!isLoading) {
-      inputRef.current?.focus();
-    }
-  }, [isLoading]);
-
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -136,7 +280,6 @@ export default function HeroUnique() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (data.reply) {
         const newId = ++messageIdRef.current;
@@ -149,7 +292,7 @@ export default function HeroUnique() {
       const errId = ++messageIdRef.current;
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: t.chat.errorMessage, id: errId },
+        { role: "assistant", content: "Lo siento, hubo un error. Inténtalo de nuevo.", id: errId },
       ]);
       setLatestAssistantId(errId);
     } finally {
@@ -327,7 +470,7 @@ export default function HeroUnique() {
               onClick={handleSendMessage}
               disabled={isLoading || !inputValue.trim()}
               className="text-muted hover:text-ink transition-colors disabled:opacity-30 flex-shrink-0"
-              aria-label={t.chat.sendLabel}
+              aria-label="Enviar mensaje"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <line x1="22" y1="2" x2="11" y2="13" />
@@ -340,3 +483,142 @@ export default function HeroUnique() {
     </section>
   );
 }
+```
+
+**Step 2: Verificar build TypeScript**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro && bun run build 2>&1 | tail -15
+```
+
+Expected: build exitoso, sin errores TypeScript.
+
+**Step 3: Commit**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+git add src/components/HeroUnique.tsx
+git commit -m "feat: hero — functional chat with TypewriterText and ChatDots inline"
+```
+
+---
+
+## Task 4: Limpiar AppContent + eliminar archivos obsoletos
+
+**Files:**
+- Modify: `src/components/AppContent.tsx` (eliminar ChatWidget)
+- Delete: `src/components/ChatWidget.tsx`
+- Delete: `src/components/ChatWidget.css`
+- Delete: `src/components/ChatButton.tsx`
+- Delete: `src/components/ChatLoader.tsx`
+
+**Step 1: Editar AppContent.tsx**
+
+Leer `src/components/AppContent.tsx` y hacer dos cambios:
+
+1. Eliminar la línea `import ChatWidget from './ChatWidget';`
+2. Eliminar la línea `<ChatWidget />` del JSX
+
+Resultado esperado de AppContent.tsx:
+
+```tsx
+// Wrapper para todos los componentes que necesitan LanguageProvider
+import { LanguageProvider } from '../contexts/LanguageContext';
+import { ThemeProvider } from '../contexts/ThemeContext';
+import NavbarSimple from './NavbarSimple';
+import HeroUnique from './HeroUnique';
+import TechMarquee from './TechMarquee';
+import ProjectsUnique from './ProjectsUnique';
+import ThinkingSection from './ThinkingSection';
+import ContactUnique from './ContactUnique';
+import FooterMinimal from './FooterMinimal';
+import BackToTop from './BackToTop';
+
+export default function AppContent() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <NavbarSimple />
+
+        <main>
+          <HeroUnique />
+          <TechMarquee />
+          <ProjectsUnique />
+          <ThinkingSection />
+          <ContactUnique />
+        </main>
+
+        <FooterMinimal />
+        <BackToTop />
+      </LanguageProvider>
+    </ThemeProvider>
+  );
+}
+```
+
+**Step 2: Eliminar los archivos obsoletos**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+rm src/components/ChatWidget.tsx
+rm src/components/ChatWidget.css
+rm src/components/ChatButton.tsx
+rm src/components/ChatLoader.tsx
+```
+
+**Step 3: Verificar que no quedan referencias**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+grep -r "ChatWidget\|ChatButton\|ChatLoader" src/ --include="*.tsx" --include="*.ts" --include="*.astro"
+```
+
+Expected: sin output (ningún archivo referencia los componentes eliminados).
+
+**Step 4: Build final**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro && bun run build 2>&1 | tail -10
+```
+
+Expected: build exitoso.
+
+**Step 5: Commit**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+git add src/components/AppContent.tsx
+git rm src/components/ChatWidget.tsx src/components/ChatWidget.css src/components/ChatButton.tsx src/components/ChatLoader.tsx
+git commit -m "feat: remove floating ChatWidget, chat lives in hero only"
+```
+
+---
+
+## Task 5: Verificación final
+
+**Step 1: Build de producción limpio**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro && bun run build 2>&1 | tail -10
+```
+
+Expected: 2 páginas construidas sin errores.
+
+**Step 2: Verificar checklist**
+
+- [ ] `astro.config.mjs`: `output: 'hybrid'`, cloudflare adapter activo
+- [ ] `src/pages/api/openai-chat.ts` existe (sin el underscore)
+- [ ] `HeroUnique.tsx`: input real, burbujas de mensajes, ChatDots al cargar
+- [ ] `ChatWidget.tsx`, `ChatWidget.css`, `ChatButton.tsx`, `ChatLoader.tsx` eliminados
+- [ ] `AppContent.tsx`: sin ChatWidget import ni JSX
+- [ ] No referencias a ChatWidget en el codebase
+
+**Step 3: Verificar OPENAI_API_KEY en .env**
+
+```bash
+cd /home/void/Escritorio/portfolio-website-astro
+grep "OPENAI_API_KEY" .env 2>/dev/null && echo "KEY FOUND" || echo "KEY MISSING — add OPENAI_API_KEY to .env"
+```
+
+Si falta: añadir `OPENAI_API_KEY=sk-...` al `.env` para que funcione en dev local.
+En producción (Cloudflare Pages) debe estar configurada en el dashboard de Cloudflare.

@@ -33,7 +33,7 @@ export default function ContactUnique() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex flex-col items-center text-center px-4 sm:px-8 py-6 sm:py-0"
             >
-              <span className="font-serif italic text-4xl sm:text-5xl lg:text-6xl text-ink mb-2">
+              <span className="font-serif italic text-6xl sm:text-7xl lg:text-8xl text-coral mb-2">
                 {stat.value}
               </span>
               <span className="text-xs font-mono text-muted uppercase tracking-widest">
@@ -65,7 +65,7 @@ export default function ContactUnique() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.05 }}
-                className="font-serif text-3xl sm:text-5xl lg:text-7xl font-light text-ink mb-4 leading-[1.05]"
+                className="font-serif text-5xl sm:text-7xl lg:text-[9rem] font-light text-ink mb-4 leading-[1.02]"
               >
                 {t.contact.title}
                 <br />
