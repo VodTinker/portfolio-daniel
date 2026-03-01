@@ -12,20 +12,23 @@ export const translations = {
       headline2: "and code.",
       description:
         "ASIR student who bridges Linux infrastructure and modern web development. I build systems that work quietly so people can focus on what matters.",
-      cta:     "See my work",
-      ctaAlt:  "About me",
+      cta:          "See my work",
+      ctaAlt:       "About me",
+      ctaSecondary: "Contact",
     },
 
     work: {
-      label:    "002 / WORK",
-      title:    "Things I've built",
-      viewDemo: "View demo →",
-      github:   "GitHub →",
+      label:       "002 / WORK",
+      title:       "Things I've built",
+      titleAccent: "built.",
+      viewDemo:    "View demo →",
+      github:      "GitHub →",
     },
 
     thinking: {
-      label:   "003 / THINKING",
-      title:   "How I think",
+      label:       "003 / THINKING",
+      title:       "How I think",
+      titleAccent: "seriously.",
       prose: [
         "It started in 2022 with a simple question: how do the systems we use every day actually work? That question sent me down two parallel paths — ASIR (network and systems administration) and web development — and I've been walking both ever since.",
         "What I find compelling is the intersection. A web app without reliable infrastructure is fragile. A well-configured server with no useful software running on it is just a warm box. I'm interested in the whole stack: from a Linux kernel parameter that makes Nginx behave differently, to the React component that the user finally sees.",
@@ -41,8 +44,9 @@ export const translations = {
     },
 
     contact: {
-      label:    "004 / CONTACT",
-      title:    "Let's talk.",
+      label:       "004 / CONTACT",
+      title:       "Let's talk.",
+      titleAccent: "let's talk.",
       subtitle:
         "Open to collaborations, technical conversations, and new opportunities. Usually respond within 24 hours.",
       email:    "Send an email",
@@ -55,6 +59,8 @@ export const translations = {
       tagline:   "Bridging systems and the web.",
       copyright: "Daniel Fonov.",
       built:     "Built with Astro + React",
+      colNav:    "Portfolio",
+      colSocial: "Links",
     },
 
     chat: {
@@ -96,20 +102,23 @@ export const translations = {
       headline2: "y código.",
       description:
         "Estudiante ASIR que conecta infraestructura Linux con desarrollo web moderno. Construyo sistemas que funcionan en silencio para que las personas se centren en lo que importa.",
-      cta:    "Ver mi trabajo",
-      ctaAlt: "Sobre mí",
+      cta:          "Ver mi trabajo",
+      ctaAlt:       "Sobre mí",
+      ctaSecondary: "Contactar",
     },
 
     work: {
-      label:    "002 / TRABAJO",
-      title:    "Cosas que he construido",
-      viewDemo: "Ver demo →",
-      github:   "GitHub →",
+      label:       "002 / TRABAJO",
+      title:       "Cosas que he construido",
+      titleAccent: "construido.",
+      viewDemo:    "Ver demo →",
+      github:      "GitHub →",
     },
 
     thinking: {
-      label:   "003 / PENSAMIENTO",
-      title:   "Cómo pienso",
+      label:       "003 / PENSAMIENTO",
+      title:       "Cómo pienso",
+      titleAccent: "en serio.",
       prose: [
         "Empezó en 2022 con una pregunta sencilla: ¿cómo funcionan realmente los sistemas que usamos cada día? Esa pregunta me llevó por dos caminos paralelos —ASIR y desarrollo web— y desde entonces camino por los dos.",
         "Lo que me resulta fascinante es la intersección. Una aplicación web sin infraestructura fiable es frágil. Un servidor bien configurado sin software útil ejecutándose es solo una caja caliente. Me interesa el stack completo: desde un parámetro del kernel Linux que hace que Nginx se comporte diferente, hasta el componente React que el usuario finalmente ve.",
@@ -125,8 +134,9 @@ export const translations = {
     },
 
     contact: {
-      label:    "004 / CONTACTO",
-      title:    "Hablamos.",
+      label:       "004 / CONTACTO",
+      title:       "Hablamos.",
+      titleAccent: "hablemos.",
       subtitle:
         "Abierto a colaboraciones, conversaciones técnicas y nuevas oportunidades. Normalmente respondo en 24 horas.",
       email:    "Enviar un email",
@@ -139,6 +149,8 @@ export const translations = {
       tagline:   "Uniendo sistemas y la web.",
       copyright: "Daniel Fonov.",
       built:     "Hecho con Astro + React",
+      colNav:    "Portfolio",
+      colSocial: "Links",
     },
 
     chat: {
