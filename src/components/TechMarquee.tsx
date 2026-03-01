@@ -26,7 +26,7 @@ const ROW_2: TechItem[] = [
 ];
 
 function MarqueeRow({ items, reverse = false }: { items: TechItem[]; reverse?: boolean }) {
-  const doubled = [...items, ...items];
+  const doubled = [...items, ...items, ...items, ...items];
   return (
     <div className="overflow-hidden">
       <div
