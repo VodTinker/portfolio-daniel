@@ -19,7 +19,7 @@ export const translations = {
 
     work: {
       label:       "002 / WORK",
-      title:       "Things I've built",
+      title:       "Things I've",
       titleAccent: "built.",
       viewDemo:    "View demo →",
       github:      "GitHub →",
@@ -45,8 +45,8 @@ export const translations = {
 
     contact: {
       label:       "004 / CONTACT",
-      title:       "Let's talk.",
-      titleAccent: "let's talk.",
+      title:       "Let's",
+      titleAccent: "talk.",
       subtitle:
         "Open to collaborations, technical conversations, and new opportunities. Usually respond within 24 hours.",
       email:    "Send an email",
@@ -109,7 +109,7 @@ export const translations = {
 
     work: {
       label:       "002 / TRABAJO",
-      title:       "Cosas que he construido",
+      title:       "Cosas que he",
       titleAccent: "construido.",
       viewDemo:    "Ver demo →",
       github:      "GitHub →",
