@@ -1,8 +1,17 @@
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Transition } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const TYPEWRITER_DELAY_MS = 18;
+const TYPEWRITER_SNAP_THRESHOLD = 120;
+
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+  id: number;
+}
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -10,8 +19,142 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, delay, ease: EASE } as Transition,
 });
 
+function TypewriterText({ text, isNew }: { text: string; isNew: boolean }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!isNew || shouldReduceMotion) {
+      setDisplayed(text);
+      setDone(true);
+      return;
+    }
+    let i = 0;
+    setDisplayed("");
+    setDone(false);
+    const interval = setInterval(() => {
+      i++;
+      if (i >= text.length || i > TYPEWRITER_SNAP_THRESHOLD) {
+        setDisplayed(text);
+        setDone(true);
+        clearInterval(interval);
+        return;
+      }
+      setDisplayed(text.slice(0, i));
+    }, TYPEWRITER_DELAY_MS);
+    return () => clearInterval(interval);
+  }, [text, shouldReduceMotion, isNew]);
+
+  return (
+    <span className="whitespace-pre-line">
+      {displayed}
+      {!done && <span className="chat-cursor">|</span>}
+    </span>
+  );
+}
+
+function ChatDots() {
+  const shouldReduceMotion = useReducedMotion();
+  if (shouldReduceMotion) {
+    return (
+      <div className="flex gap-2 items-center py-2">
+        {[0, 1, 2].map((i) => (
+          <span key={i} className="w-2 h-2 rounded-full bg-coral opacity-60 inline-block" />
+        ))}
+      </div>
+    );
+  }
+  return (
+    <div className="flex gap-2 items-center h-10">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="w-2.5 h-2.5 rounded-full bg-coral block flex-shrink-0"
+          animate={{ y: [0, -10, 0] }}
+          transition={{
+            type: "spring",
+            stiffness: 600,
+            damping: 10,
+            repeat: Infinity,
+            repeatType: "loop",
+            delay: i * 0.12,
+            duration: 0.6,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function HeroUnique() {
   const { t } = useLanguage();
+  const [messages, setMessages] = useState<Message[]>([
+    { role: "assistant", content: t.chat.initialMessage, id: 0 },
+  ]);
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [latestAssistantId, setLatestAssistantId] = useState<number | null>(0);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const messageIdRef = useRef(0);
+
+  // Actualizar mensaje inicial cuando cambie el idioma
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 1 && prev[0].role === "assistant") {
+        return [{ role: "assistant", content: t.chat.initialMessage, id: 0 }];
+      }
+      return prev;
+    });
+  }, [t.chat.initialMessage]);
+
+  // Auto-scroll al último mensaje
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
+
+    const text = inputValue;
+    const userMsg: Message = { role: "user", content: text, id: ++messageIdRef.current };
+    setMessages((prev) => [...prev, userMsg]);
+    setInputValue("");
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/openai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+      });
+      const data = await res.json();
+      if (data.reply) {
+        const newId = ++messageIdRef.current;
+        setMessages((prev) => [...prev, { role: "assistant", content: data.reply, id: newId }]);
+        setLatestAssistantId(newId);
+      } else {
+        throw new Error("No reply");
+      }
+    } catch {
+      const errId = ++messageIdRef.current;
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Lo siento, hubo un error. Inténtalo de nuevo.", id: errId },
+      ]);
+      setLatestAssistantId(errId);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
 
   return (
     <section
@@ -96,7 +239,7 @@ export default function HeroUnique() {
         </a>
       </motion.div>
 
-      {/* Chat IA mock — decorativo, sin interacción */}
+      {/* Chat funcional */}
       <motion.div
         {...fadeUp(0.45)}
         className="w-full max-w-2xl rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] overflow-hidden"
@@ -112,34 +255,77 @@ export default function HeroUnique() {
         </div>
 
         {/* Messages */}
-        <div className="px-4 pt-5 pb-4 space-y-4">
-          {/* AI bubble */}
-          <div className="flex gap-3 items-start">
+        <div className="px-4 pt-4 pb-2 max-h-[350px] overflow-y-auto space-y-3">
+          {messages.map((msg) => (
             <div
-              aria-hidden="true"
-              className="w-7 h-7 rounded-full border border-[hsl(var(--coral)/0.25)] flex-shrink-0 flex items-center justify-center"
-              style={{ background: "hsl(var(--coral) / 0.1)" }}
+              key={msg.id}
+              className={`flex gap-3 items-start ${msg.role === "user" ? "flex-row-reverse" : ""}`}
             >
-              <span className="text-[9px] font-mono text-coral">AI</span>
+              {msg.role === "assistant" && (
+                <div
+                  aria-hidden="true"
+                  className="w-7 h-7 rounded-full border border-[hsl(var(--coral)/0.25)] flex-shrink-0 flex items-center justify-center"
+                  style={{ background: "hsl(var(--coral) / 0.1)" }}
+                >
+                  <span className="text-[9px] font-mono text-coral">AI</span>
+                </div>
+              )}
+              <div
+                className={`rounded-lg px-4 py-3 text-sm leading-relaxed text-left max-w-sm ${
+                  msg.role === "user"
+                    ? "bg-ink text-[hsl(var(--bg))]"
+                    : "bg-[hsl(var(--bg))] border border-[hsl(var(--border))] text-ink"
+                }`}
+              >
+                {msg.role === "assistant" ? (
+                  <TypewriterText text={msg.content} isNew={msg.id === latestAssistantId} />
+                ) : (
+                  <span className="whitespace-pre-line">{msg.content}</span>
+                )}
+              </div>
             </div>
-            <div className="bg-[hsl(var(--bg))] border border-[hsl(var(--border))] rounded-lg px-4 py-3 text-sm text-ink leading-relaxed text-left max-w-sm">
-              Hola, soy el asistente IA de Daniel. ¿Sobre qué proyecto quieres saber más?
+          ))}
+          {isLoading && (
+            <div className="flex gap-3 items-start">
+              <div
+                aria-hidden="true"
+                className="w-7 h-7 rounded-full border border-[hsl(var(--coral)/0.25)] flex-shrink-0 flex items-center justify-center"
+                style={{ background: "hsl(var(--coral) / 0.1)" }}
+              >
+                <span className="text-[9px] font-mono text-coral">AI</span>
+              </div>
+              <div className="bg-[hsl(var(--bg))] border border-[hsl(var(--border))] rounded-lg px-4 py-1">
+                <ChatDots />
+              </div>
             </div>
-          </div>
+          )}
+          <div ref={messagesEndRef} />
         </div>
 
-        {/* Input row */}
-        <div className="px-4 pb-4">
+        {/* Input */}
+        <div className="px-4 py-3 border-t border-[hsl(var(--border))]">
           <div className="flex items-center gap-2 border border-[hsl(var(--border))] rounded-md bg-[hsl(var(--bg))] px-3 py-2">
-            <span className="flex-1 text-sm text-muted select-none" aria-hidden="true">
-              Escribe tu pregunta...
-            </span>
-            <span aria-hidden="true" className="text-muted opacity-40 flex-shrink-0">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <input
+              ref={inputRef}
+              type="text"
+              className="flex-1 text-sm text-ink bg-transparent outline-none placeholder:text-muted"
+              placeholder={t.chat.placeholder}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              disabled={isLoading}
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={isLoading || !inputValue.trim()}
+              className="text-muted hover:text-ink transition-colors disabled:opacity-30 flex-shrink-0"
+              aria-label="Enviar mensaje"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <line x1="22" y1="2" x2="11" y2="13" />
                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
-            </span>
+            </button>
           </div>
         </div>
       </motion.div>
