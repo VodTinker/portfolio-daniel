@@ -1,22 +1,6 @@
 import { motion } from "framer-motion";
 import { projects } from "../utils/projectsData";
 import { useLanguage } from "../contexts/LanguageContext";
-import ProjectIllustration from "./ui/illustrations/ProjectIllustration";
-
-// Color accent per project (matches illustration variants)
-const accents = [
-  "bg-terracotta",   // 0 — Mail/DNS
-  "bg-lavender",     // 1 — Discord bot
-  "bg-sage",         // 2 — Web scraping
-  "bg-slate-blue",   // 3 — Automation/n8n
-] as const;
-
-const textAccents = [
-  "text-terracotta",
-  "text-[hsl(var(--lavender))]",
-  "text-[hsl(var(--sage))]",
-  "text-slate-blue",
-] as const;
 
 export default function ProjectsUnique() {
   const { t, language } = useLanguage();
@@ -44,84 +28,75 @@ export default function ProjectsUnique() {
             className="font-serif text-4xl sm:text-5xl font-light text-ink"
           >
             {t.work.title}
+            <br />
+            <em className="italic text-coral">{(t.work as any).titleAccent ?? "built."}</em>
           </motion.h2>
         </div>
 
-        {/* Cards */}
-        <div className="space-y-6">
+        {/* Numbered rows */}
+        <div>
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: index * 0.08 }}
-              className="group border border-[hsl(var(--border))] rounded-sm overflow-hidden bg-[hsl(var(--surface))] hover:border-[hsl(var(--muted))] transition-colors duration-300"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: index * 0.07 }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] min-h-[180px]">
+              {/* Top separator */}
+              <div className="h-px bg-[hsl(var(--border))]" />
 
-                {/* Color block with illustration */}
-                <div
-                  className={`${accents[index as keyof typeof accents] ?? "bg-sage"} flex items-center justify-center p-10 opacity-80`}
-                >
-                  <div className="text-white opacity-70">
-                    <ProjectIllustration variant={(index % 4) as 0 | 1 | 2 | 3} />
-                  </div>
-                </div>
+              <div className="grid grid-cols-[48px_1fr] sm:grid-cols-[64px_1fr_auto] gap-x-6 sm:gap-x-10 py-8 items-start group">
+
+                {/* Number */}
+                <span className="font-mono text-xs text-muted pt-1 tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
                 {/* Content */}
-                <div className="flex flex-col justify-between p-7 sm:p-8">
-                  <div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs font-mono text-muted uppercase tracking-wider">
                       {project.category}
                     </span>
-                    <h3 className="font-serif text-xl sm:text-2xl font-light text-ink mt-2 mb-3 leading-snug">
-                      {project.title[language]}
-                    </h3>
-                    <p className="text-sm text-muted leading-relaxed line-clamp-2 max-w-lg">
-                      {project.description[language]}
-                    </p>
                   </div>
+                  <h3 className="font-serif text-xl sm:text-2xl font-light text-ink mb-3 leading-snug group-hover:text-coral transition-colors duration-300">
+                    {project.title[language]}
+                  </h3>
+                  <p className="text-sm text-muted leading-relaxed max-w-xl">
+                    {project.description[language]}
+                  </p>
+                  <p className="mt-3 text-xs font-mono text-coral uppercase tracking-wide">
+                    {project.tags.slice(0, 3).join(" · ")}
+                  </p>
+                </div>
 
-                  <div className="flex flex-wrap items-end justify-between gap-4 mt-6">
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tags.slice(0, 4).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 text-xs font-mono rounded-sm border border-[hsl(var(--border))] text-muted"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Links */}
-                    <div className="flex items-center gap-4 shrink-0">
-                      {project.liveLink && (
-                        <a
-                          href={project.liveLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`text-xs font-mono ${textAccents[index as keyof typeof textAccents] ?? "text-muted"} hover:opacity-70 transition-opacity`}
-                        >
-                          {t.work.viewDemo}
-                        </a>
-                      )}
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs font-mono text-muted hover:text-ink transition-colors"
-                      >
-                        {t.work.github}
-                      </a>
-                    </div>
-                  </div>
+                {/* Links */}
+                <div className="hidden sm:flex flex-col items-end gap-2 pt-1">
+                  {project.liveLink && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono text-muted hover:text-ink transition-colors"
+                    >
+                      {t.work.viewDemo} ↗
+                    </a>
+                  )}
+                  <a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono text-muted hover:text-ink transition-colors"
+                  >
+                    GitHub ↗
+                  </a>
                 </div>
               </div>
             </motion.article>
           ))}
+          {/* Bottom separator */}
+          <div className="h-px bg-[hsl(var(--border))]" />
         </div>
       </div>
     </section>
