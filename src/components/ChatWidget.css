@@ -276,4 +276,7 @@
   .status-dot {
     animation: none;
   }
+  .typewriter-cursor {
+    animation: none;
+  }
 }

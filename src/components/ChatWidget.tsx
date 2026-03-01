@@ -210,7 +210,7 @@ export default function ChatWidget() {
             <div className="chat-messages">
               {messages.map((msg, idx) => (
                 <motion.div
-                  key={idx}
+                  key={msg.id}
                   className={`message ${msg.role}`}
                   initial={
                     shouldReduceMotion
@@ -269,7 +269,7 @@ export default function ChatWidget() {
                 placeholder={t.chat.placeholder}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 disabled={isLoading}
               />
               <button
