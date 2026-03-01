@@ -73,12 +73,6 @@
       radial-gradient(50% 35% at 100% 100%, hsl(264 20% 79% / 0.12) 0%, transparent 60%);
   }
 
-  /* Remove the old nebula/gradient pseudo-elements */
-  body::before,
-  body::after {
-    content: none;
-  }
-
   h1, h2, h3, h4 {
     font-family: 'Instrument Serif', Georgia, serif;
   }
