@@ -6,37 +6,57 @@ const FooterMinimal = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-ink text-[hsl(var(--bg))] px-6 sm:px-10 lg:px-16 py-14">
+    <footer className="bg-[#0D0D0D] text-[hsl(var(--bg))] px-6 sm:px-10 lg:px-16 py-16">
       <div className="max-w-6xl mx-auto">
 
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-10 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-12 sm:gap-16 mb-14">
+
           {/* Wordmark + tagline */}
           <div>
-            <p className="font-serif text-2xl font-light mb-2">Daniel Fonov</p>
-            <p className="text-sm text-[hsl(var(--muted))] max-w-xs leading-relaxed">
+            <p className="font-serif text-2xl font-light text-[hsl(var(--bg))] mb-3">
+              Daniel Fonov
+            </p>
+            <p className="text-sm text-white/40 max-w-xs leading-relaxed">
               {t.footer.tagline}
             </p>
           </div>
 
-          {/* Nav links */}
-          <nav className="flex flex-col sm:items-end gap-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.key}
-                href={link.href}
-                className="text-xs font-mono text-[hsl(var(--muted))] hover:text-[hsl(var(--bg))] transition-colors"
-              >
-                {t.nav[link.key as keyof typeof t.nav]}
-              </a>
-            ))}
-          </nav>
+          {/* Nav columna 1 — secciones portfolio */}
+          <div>
+            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-4">
+              {(t.footer as any).colNav ?? "Portfolio"}
+            </p>
+            <nav className="flex flex-col gap-2.5">
+              {navLinks.map((link) => (
+                <a
+                  key={link.key}
+                  href={link.href}
+                  className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors"
+                >
+                  {t.nav[link.key as keyof typeof t.nav]}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          {/* Nav columna 2 — links externos */}
+          <div>
+            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-4">
+              {(t.footer as any).colSocial ?? "Links"}
+            </p>
+            <nav className="flex flex-col gap-2.5">
+              <a href="https://github.com/VodTinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors">GitHub</a>
+              <a href="https://linkedin.com/in/daniel-fonov" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors">LinkedIn</a>
+              <a href="https://discord.com/users/vodtinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors">Discord</a>
+            </nav>
+          </div>
         </div>
 
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <p className="text-xs font-mono text-[hsl(var(--muted))]">
+          <p className="text-xs font-mono text-white/30">
             © {year} {t.footer.copyright}
           </p>
-          <p className="text-xs font-mono text-[hsl(var(--muted))]">
+          <p className="text-xs font-mono text-white/30">
             {t.footer.built}
           </p>
         </div>
