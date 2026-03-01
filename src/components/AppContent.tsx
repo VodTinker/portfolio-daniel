@@ -1,5 +1,6 @@
 // Wrapper para todos los componentes que necesitan LanguageProvider
 import { LanguageProvider } from '../contexts/LanguageContext';
+import { ThemeProvider } from '../contexts/ThemeContext';
 import NavbarSimple from './NavbarSimple';
 import HeroUnique from './HeroUnique';
 import ProjectsUnique from './ProjectsUnique';
@@ -11,19 +12,21 @@ import BackToTop from './BackToTop';
 
 export default function AppContent() {
   return (
-    <LanguageProvider>
-      <NavbarSimple />
+    <ThemeProvider>
+      <LanguageProvider>
+        <NavbarSimple />
 
-      <main>
-        <HeroUnique />
-        <ProjectsUnique />
-        <ThinkingSection />
-        <ContactUnique />
-      </main>
+        <main>
+          <HeroUnique />
+          <ProjectsUnique />
+          <ThinkingSection />
+          <ContactUnique />
+        </main>
 
-      <FooterMinimal />
-      <ChatWidget />
-      <BackToTop />
-    </LanguageProvider>
+        <FooterMinimal />
+        <ChatWidget />
+        <BackToTop />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
