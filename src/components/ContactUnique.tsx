@@ -33,7 +33,7 @@ export default function ContactUnique() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex flex-col items-center text-center px-8 py-8 sm:py-0"
             >
-              <span className="font-serif italic text-5xl sm:text-6xl text-[hsl(var(--bg))]/90 mb-2">
+              <span className="font-serif italic text-5xl sm:text-6xl text-[#F5F1E8]/90 mb-2">
                 {stat.value}
               </span>
               <span className="text-xs font-mono text-white/40 uppercase tracking-widest">

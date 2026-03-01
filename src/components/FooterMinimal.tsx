@@ -6,14 +6,14 @@ const FooterMinimal = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0D0D0D] text-[hsl(var(--bg))] px-6 sm:px-10 lg:px-16 py-16">
+    <footer className="bg-[#0D0D0D] text-[#F5F1E8] px-6 sm:px-10 lg:px-16 py-16">
       <div className="max-w-6xl mx-auto">
 
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-12 sm:gap-16 mb-14">
 
           {/* Wordmark + tagline */}
           <div>
-            <p className="font-serif text-2xl font-light text-[hsl(var(--bg))] mb-3">
+            <p className="font-serif text-2xl font-light text-[#F5F1E8] mb-3">
               Daniel Fonov
             </p>
             <p className="text-sm text-white/40 max-w-xs leading-relaxed">
@@ -31,7 +31,7 @@ const FooterMinimal = () => {
                 <a
                   key={link.key}
                   href={link.href}
-                  className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors"
+                  className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors"
                 >
                   {t.nav[link.key as keyof typeof t.nav]}
                 </a>
@@ -45,9 +45,9 @@ const FooterMinimal = () => {
               {(t.footer as any).colSocial ?? "Links"}
             </p>
             <nav className="flex flex-col gap-2.5">
-              <a href="https://github.com/VodTinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors">GitHub</a>
-              <a href="https://linkedin.com/in/daniel-fonov" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors">LinkedIn</a>
-              <a href="https://discord.com/users/vodtinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[hsl(var(--bg))] transition-colors">Discord</a>
+              <a href="https://github.com/VodTinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">GitHub</a>
+              <a href="https://linkedin.com/in/daniel-fonov" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">LinkedIn</a>
+              <a href="https://discord.com/users/vodtinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">Discord</a>
             </nav>
           </div>
         </div>
