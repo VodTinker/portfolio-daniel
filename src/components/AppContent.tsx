@@ -3,6 +3,7 @@ import { LanguageProvider } from '../contexts/LanguageContext';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import NavbarSimple from './NavbarSimple';
 import HeroUnique from './HeroUnique';
+import TechMarquee from './TechMarquee';
 import ProjectsUnique from './ProjectsUnique';
 import ThinkingSection from './ThinkingSection';
 import ContactUnique from './ContactUnique';
@@ -18,6 +19,7 @@ export default function AppContent() {
 
         <main>
           <HeroUnique />
+          <TechMarquee />
           <ProjectsUnique />
           <ThinkingSection />
           <ContactUnique />
