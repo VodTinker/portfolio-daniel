@@ -17,6 +17,7 @@
   --terracotta:  18 50% 58%;    /* #C87B5F */
   --lavender:   264 20% 79%;    /* #C2BDD6 */
   --slate-blue: 196 30% 69%;    /* #9BB8C5 */
+  --coral:       4 65% 57%;     /* #D4534E kioku red-coral accent */
 
   /* Tailwind compat (used by existing shadcn components) */
   --background: var(--bg);

@@ -21,6 +21,7 @@ module.exports = {
         sage:        "hsl(var(--sage))",
         lavender:    "hsl(var(--lavender))",
         "slate-blue":"hsl(var(--slate-blue))",
+        coral:       "hsl(var(--coral))",
         primary: {
           DEFAULT:    "hsl(var(--terracotta))",
           foreground: "hsl(var(--primary-foreground))",
