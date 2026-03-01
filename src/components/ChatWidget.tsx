@@ -9,18 +9,19 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  id: number;
 }
 
 const TYPEWRITER_DELAY_MS = 18;
 const TYPEWRITER_SNAP_THRESHOLD = 120;
 
-function TypewriterText({ text }: { text: string }) {
+function TypewriterText({ text, isNew }: { text: string; isNew: boolean }) {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (shouldReduceMotion) {
+    if (!isNew || shouldReduceMotion) {
       setDisplayed(text);
       setDone(true);
       return;
@@ -30,7 +31,7 @@ function TypewriterText({ text }: { text: string }) {
     setDone(false);
     const interval = setInterval(() => {
       i++;
-      if (i >= text.length || i >= TYPEWRITER_SNAP_THRESHOLD) {
+      if (i >= text.length || i > TYPEWRITER_SNAP_THRESHOLD) {
         setDisplayed(text);
         setDone(true);
         clearInterval(interval);
@@ -39,7 +40,7 @@ function TypewriterText({ text }: { text: string }) {
       setDisplayed(text.slice(0, i));
     }, TYPEWRITER_DELAY_MS);
     return () => clearInterval(interval);
-  }, [text, shouldReduceMotion]);
+  }, [text, shouldReduceMotion, isNew]);
 
   return (
     <span className="whitespace-pre-line">
@@ -58,12 +59,15 @@ export default function ChatWidget() {
       role: "assistant",
       content: t.chat.initialMessage,
       timestamp: new Date(),
+      id: 0,
     },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [latestAssistantId, setLatestAssistantId] = useState<number | null>(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const messageIdRef = useRef(0);
 
   // Actualizar mensaje inicial cuando cambie el idioma
   useEffect(() => {
@@ -73,6 +77,7 @@ export default function ChatWidget() {
           role: "assistant",
           content: t.chat.initialMessage,
           timestamp: new Date(),
+          id: 0,
         }];
       }
       return prev;
@@ -98,6 +103,7 @@ export default function ChatWidget() {
       role: "user",
       content: inputValue,
       timestamp: new Date(),
+      id: ++messageIdRef.current,
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -117,23 +123,29 @@ export default function ChatWidget() {
       const data = await response.json();
 
       if (data.reply) {
+        const newId = ++messageIdRef.current;
         const assistantMessage: Message = {
           role: "assistant",
           content: data.reply,
           timestamp: new Date(),
+          id: newId,
         };
         setMessages((prev) => [...prev, assistantMessage]);
+        setLatestAssistantId(newId);
       } else {
         throw new Error("No reply received");
       }
     } catch (error) {
       console.error("Error al enviar mensaje:", error);
+      const newErrId = ++messageIdRef.current;
       const errorMessage: Message = {
         role: "assistant",
         content: "Lo siento, hubo un error. Inténtalo de nuevo más tarde.",
         timestamp: new Date(),
+        id: newErrId,
       };
       setMessages((prev) => [...prev, errorMessage]);
+      setLatestAssistantId(newErrId);
     } finally {
       setIsLoading(false);
     }
@@ -222,7 +234,7 @@ export default function ChatWidget() {
                 >
                   <div className="message-content">
                     {msg.role === "assistant"
-                      ? <TypewriterText text={msg.content} />
+                      ? <TypewriterText text={msg.content} isNew={msg.id === latestAssistantId} />
                       : <div className="whitespace-pre-line">{msg.content}</div>
                     }
                     <span className="message-time">
