@@ -1,193 +1,81 @@
 export const translations = {
   en: {
-    // Navbar
     nav: {
-      home: "Home",
-      about: "About",
-      projects: "Projects",
-      skills: "Skills",
+      work: "Work",
+      thinking: "Thinking",
       contact: "Contact",
-      cta: "Let's talk",
     },
 
-    // Hero
     hero: {
-      available: "Available for work",
-      location: "Gijón, Spain",
-      title: "Daniel",
-      titleGradient: "Fonov",
-      subtitle: "ASIR student passionate about",
-      subtitleBold1: "system administration",
-      subtitleAnd: "and",
-      subtitleBold2: "web development",
-      description: "Combining Linux infrastructures and networks with modern web development. Exploring DevOps, automation and cloud solutions.",
-      viewWork: "View my projects",
-      getInTouch: "Get in touch",
-      scroll: "Scroll",
-      stats: {
-        yearsLabel: "Years in IT",
-        projectsLabel: "Projects",
-      },
-      currentFocus: {
-        title: "// Currently",
-        subtitle: "ASIR + Web Development",
-        description: "Bridging systems, networks and web apps",
-      },
-      stack: {
-        title: "// Stack",
-      },
+      available: "Available · Gijón, Spain",
+      headline1: "Between servers",
+      headline2: "and code.",
+      description:
+        "ASIR student who bridges Linux infrastructure and modern web development. I build systems that work quietly so people can focus on what matters.",
+      cta: "See my work",
+      ctaAlt: "About me",
+      ctaSecondary: "Contact",
     },
 
-    // About
-    about: {
-      number: "001",
-      title: "Between servers and code",
-      paragraph1: "Started in 2022 with a question:",
-      paragraph1Bold: "how do the systems we use every day work?",
-      paragraph1Continue: "That curiosity led me to both ASIR and web development, discovering that both worlds complement each other perfectly.",
-      paragraph2: "What drives me is creating",
-      paragraph2Bold: "solid infrastructures and elegant applications",
-      paragraph2Continue: "—from configuring servers to developing interfaces that users enjoy using.",
-      paragraph3: "Currently focused on",
-      paragraph3Bold1: "DevOps and automation",
-      paragraph3And: "combining",
-      paragraph3Bold2: "Linux systems with modern web development",
-      paragraph3Continue: ", integrating the best of both worlds.",
-      paragraph4: "When I'm not configuring servers or writing code, I experiment with technology in my homelab or learn about new tools.",
-      journey: "// Journey",
-      timeline: [
-        {
-          year: "2025",
-          title: "ASIR + Web Dev Convergence",
-          desc: "Second year of ASIR, applying system knowledge to web projects. Exploring DevOps and CI/CD.",
-        },
-        {
-          year: "2024",
-          title: "ASIR Studies Begin",
-          desc: "Started ASIR learning networks, Linux and virtualization while continuing to develop web projects.",
-        },
-        {
-          year: "2022",
-          title: "First Steps in IT",
-          desc: "Discovered my passion for technology starting with web development and computer systems.",
-        },
+    work: {
+      label: "002 / WORK",
+      title: "Things I've",
+      titleAccent: "built.",
+      viewDemo: "View demo →",
+      github: "GitHub →",
+    },
+
+    thinking: {
+      label: "003 / THINKING",
+      title: "How I think",
+      titleAccent: "seriously.",
+      prose: [
+        "It started in 2022 with a simple question: how do the systems we use every day actually work? That question sent me down two parallel paths — ASIR (network and systems administration) and web development — and I've been walking both ever since.",
+        "What I find compelling is the intersection. A web app without reliable infrastructure is fragile. A well-configured server with no useful software running on it is just a warm box. I'm interested in the whole stack: from a Linux kernel parameter that makes Nginx behave differently, to the React component that the user finally sees.",
+        "Currently in my second year of ASIR, spending most of my time on automation pipelines, self-hosted services, and anything that involves making systems talk to each other intelligently.",
       ],
-      whatIDo: "// Expertise",
-      expertise: [
-        {
-          emoji: "Systems",
-          title: "System Administration",
-          description: "Managing Linux servers (Ubuntu, Debian), service installation and configuration, virtualization with Proxmox and Docker.",
-        },
-        {
-          emoji: "Networks",
-          title: "Networks & Infrastructure",
-          description: "TCP/IP network configuration, DNS, DHCP, VPN, firewalls. Deployment and maintenance of web services (Apache, Nginx).",
-        },
-        {
-          emoji: "Development",
-          title: "Web Development & DevOps",
-          description: "Development with React, TypeScript and Python. Automation with Bash, CI/CD, Docker containers and deployments.",
-        },
-      ],
-      quickStats: {
-        tech: "Technologies",
-        projects: "Projects",
-        years: "Years",
+      since2022: "Since 2022",
+      since2024: "Since 2024",
+      clusters: {
+        infra: "Infrastructure",
+        dev: "Development",
+        automation: "Automation",
       },
     },
 
-    // Projects
-    projects: {
-      number: "002",
-      title: "Featured projects",
-      subtitle: "Infrastructures, automations and web applications I've developed.",
-      viewLive: "View live",
-      github: "GitHub",
-      viewAll: "View all projects",
-      clickToViewDemo: "View details",
-    },
-
-    // Skills
-    skills: {
-      number: "003",
-      title: "Skills & expertise",
-      subtitle: "Technologies I use in both infrastructure and development.",
-      categories: {
-        frontend: "Frontend Development",
-        backend: "Systems & Networks",
-        systems: "Virtualization & DevOps",
-        ai: "Scripting & Automation",
-      },
-      learning: {
-        title: "// Currently learning",
-        label: "Currently Learning",
-        description: "Expanding towards Kubernetes, advanced CI/CD and cloud architectures to unite development with operations.",
-        badge: "In Progress",
-        note: "Continuous learning connects systems with development",
-      },
-    },
-
-    // Contact
     contact: {
-      number: "004",
-      title: "Let's work together",
-      subtitle: "Got a project in mind? I'm always open to discussing new opportunities and creative ideas.",
-      methods: {
-        email: {
-          label: "Email",
-          description: "Best for project inquiries",
-        },
-        github: {
-          label: "GitHub",
-          description: "Check out my code",
-        },
-        linkedin: {
-          label: "LinkedIn",
-          description: "Let's connect professionally",
-        },
-        discord: {
-          label: "Discord",
-          description: "For casual chats",
-        },
-      },
-      cta: {
-        title: "Ready to start a project?",
-        subtitle: "I'm open to freelance work, collaborations, and full-time opportunities. Usually respond within 24 hours.",
-        sendEmail: "Send me an email",
-        available: "Available for opportunities",
-        note: "Prefer another method? Choose one above",
-      },
+      label: "004 / CONTACT",
+      title: "Let's",
+      titleAccent: "talk.",
+      subtitle:
+        "Open to collaborations, technical conversations, and new opportunities. Usually respond within 24 hours.",
+      email: "Send an email",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      discord: "Discord",
     },
 
-    // Footer
     footer: {
-      brand: {
-        title: "Daniel Fonov",
-        role: "ASIR Student & Web Developer",
-        description: "Bridging system administration with web development.",
-      },
-      navigation: "Quick Links",
-      social: "Connect",
-      copyright: "© 2025 Daniel Fonov. All rights reserved.",
-      madeWith: "Made with ❤️ in Gijón",
+      tagline: "Bridging systems and the web.",
+      copyright: "Daniel Fonov.",
+      built: "Built with Astro + React",
+      colNav: "Portfolio",
+      colSocial: "Links",
     },
 
-    // Chat
     chat: {
       buttonOpen: "Ask the AI Assistant",
       buttonClose: "Close",
       title: "Daniel AI",
       status: "Online",
-      initialMessage: "Hi! I'm Daniel's AI assistant. How can I help you today? 🚀",
+      initialMessage: "Hi! I'm Daniel's AI assistant. How can I help you today?",
       placeholder: "Type your message...",
       typing: "Typing...",
     },
 
-    // Bot Commands
     botCommands: {
       title: "Discord Bot Commands",
-      subtitle: "Explore the available commands and see how my Discord bot works with OpenAI integration",
+      subtitle: "Explore the available commands",
       commandsTitle: "Available Commands",
       example: "Example:",
       addBot: "Add Bot to Discord",
@@ -202,194 +90,82 @@ export const translations = {
   },
 
   es: {
-    // Navbar
     nav: {
-      home: "Inicio",
-      about: "Sobre mí",
-      projects: "Proyectos",
-      skills: "Habilidades",
+      work: "Trabajo",
+      thinking: "Pensamiento",
       contact: "Contacto",
-      cta: "Hablemos",
     },
 
-    // Hero
     hero: {
-      available: "Disponible para trabajar",
-      location: "Gijón, España",
-      title: "Daniel",
-      titleGradient: "Fonov",
-      subtitle: "Estudiante ASIR con pasión por",
-      subtitleBold1: "administración de sistemas",
-      subtitleAnd: "y",
-      subtitleBold2: "desarrollo web",
-      description: "Combino infraestructuras Linux y redes con desarrollo web moderno. Explorando DevOps, automatización y soluciones cloud.",
-      viewWork: "Ver mis proyectos",
-      getInTouch: "Contáctame",
-      scroll: "Desplazar",
-      stats: {
-        yearsLabel: "Años en IT",
-        projectsLabel: "Proyectos",
-      },
-      currentFocus: {
-        title: "// Actualmente",
-        subtitle: "ASIR + Desarrollo Web",
-        description: "Uniendo sistemas, redes y aplicaciones web",
-      },
-      stack: {
-        title: "// Stack",
-      },
+      available: "Disponible · Gijón, España",
+      headline1: "Entre servidores",
+      headline2: "y código.",
+      description:
+        "Estudiante ASIR que conecta infraestructura Linux con desarrollo web moderno. Construyo sistemas que funcionan en silencio para que las personas se centren en lo que importa.",
+      cta: "Ver mi trabajo",
+      ctaAlt: "Sobre mí",
+      ctaSecondary: "Contactar",
     },
 
-    // About
-    about: {
-      number: "001",
-      title: "Entre servidores y código",
-      paragraph1: "Empecé en 2022 con una pregunta:",
-      paragraph1Bold: "¿cómo funcionan los sistemas que usamos cada día?",
-      paragraph1Continue: "Esa curiosidad me llevó tanto a ASIR como al desarrollo web, descubriendo que ambos mundos se complementan perfectamente.",
-      paragraph2: "Lo que me motiva es crear",
-      paragraph2Bold: "infraestructuras sólidas y aplicaciones elegantes",
-      paragraph2Continue: "—desde configurar servidores hasta desarrollar interfaces que los usuarios disfrutan usar.",
-      paragraph3: "Actualmente enfocado en",
-      paragraph3Bold1: "DevOps y automatización",
-      paragraph3And: "combinando",
-      paragraph3Bold2: "sistemas Linux con desarrollo web moderno",
-      paragraph3Continue: ", integrando lo mejor de ambos mundos.",
-      paragraph4: "Cuando no estoy configurando servidores o escribiendo código, experimento con tecnología en mi homelab o aprendo sobre nuevas herramientas.",
-      journey: "// Trayectoria",
-      timeline: [
-        {
-          year: "2025",
-          title: "Convergencia ASIR + Web Dev",
-          desc: "Segundo año de ASIR, aplicando conocimientos de sistemas a proyectos web. Explorando DevOps y CI/CD.",
-        },
-        {
-          year: "2024",
-          title: "Inicio de Estudios ASIR",
-          desc: "Comencé ASIR aprendiendo redes, Linux y virtualización mientras seguía desarrollando proyectos web.",
-        },
-        {
-          year: "2022",
-          title: "Primeros Pasos en IT",
-          desc: "Descubrí mi pasión por la tecnología empezando con desarrollo web y sistemas informáticos.",
-        },
+    work: {
+      label: "002 / TRABAJO",
+      title: "Cosas que he",
+      titleAccent: "construido.",
+      viewDemo: "Ver demo →",
+      github: "GitHub →",
+    },
+
+    thinking: {
+      label: "003 / PENSAMIENTO",
+      title: "Cómo pienso",
+      titleAccent: "en serio.",
+      prose: [
+        "Empezó en 2022 con una pregunta sencilla: ¿cómo funcionan realmente los sistemas que usamos cada día? Esa pregunta me llevó por dos caminos paralelos —ASIR y desarrollo web— y desde entonces camino por los dos.",
+        "Lo que me resulta fascinante es la intersección. Una aplicación web sin infraestructura fiable es frágil. Un servidor bien configurado sin software útil ejecutándose es solo una caja caliente. Me interesa el stack completo: desde un parámetro del kernel Linux que hace que Nginx se comporte diferente, hasta el componente React que el usuario finalmente ve.",
+        "Actualmente en segundo año de ASIR, dedicando la mayor parte del tiempo a pipelines de automatización, servicios auto-alojados y todo lo que implique hacer que los sistemas se comuniquen inteligentemente.",
       ],
-      whatIDo: "// Experiencia",
-      expertise: [
-        {
-          emoji: "Systems",
-          title: "Administración de Sistemas",
-          description: "Gestión de servidores Linux (Ubuntu, Debian), instalación y configuración de servicios, virtualización con Proxmox y Docker.",
-        },
-        {
-          emoji: "Networks",
-          title: "Redes e Infraestructura",
-          description: "Configuración de redes TCP/IP, DNS, DHCP, VPN, firewalls. Despliegue y mantenimiento de servicios web (Apache, Nginx).",
-        },
-        {
-          emoji: "Development",
-          title: "Desarrollo Web & DevOps",
-          description: "Desarrollo con React, TypeScript y Python. Automatización con Bash, CI/CD, contenedores Docker y despliegues.",
-        },
-      ],
-      quickStats: {
-        tech: "Tecnologías",
-        projects: "Proyectos",
-        years: "Años",
+      since2022: "Desde 2022",
+      since2024: "Desde 2024",
+      clusters: {
+        infra: "Infraestructura",
+        dev: "Desarrollo",
+        automation: "Automatización",
       },
     },
 
-    // Projects
-    projects: {
-      number: "002",
-      title: "Proyectos destacados",
-      subtitle: "Infraestructuras, automatizaciones y aplicaciones web que he desarrollado.",
-      viewLive: "Ver en vivo",
-      github: "GitHub",
-      viewAll: "Ver todos los proyectos",
-      clickToViewDemo: "Ver detalles",
-    },
-
-    // Skills
-    skills: {
-      number: "003",
-      title: "Habilidades y experiencia",
-      subtitle: "Tecnologías que uso tanto en infraestructura como en desarrollo.",
-      categories: {
-        frontend: "Desarrollo Frontend",
-        backend: "Sistemas y Redes",
-        systems: "Virtualización y DevOps",
-        ai: "Scripting y Automatización",
-      },
-      learning: {
-        title: "// Aprendiendo actualmente",
-        label: "Aprendiendo Actualmente",
-        description: "Expandiendo hacia Kubernetes, CI/CD avanzado y arquitecturas cloud para unir desarrollo con operaciones.",
-        badge: "En Progreso",
-        note: "El aprendizaje continuo conecta sistemas con desarrollo",
-      },
-    },
-
-    // Contact
     contact: {
-      number: "004",
-      title: "Trabajemos juntos",
-      subtitle: "¿Tienes un proyecto en mente? Siempre estoy abierto a discutir nuevas oportunidades e ideas creativas.",
-      methods: {
-        email: {
-          label: "Email",
-          description: "Mejor para consultas de proyectos",
-        },
-        github: {
-          label: "GitHub",
-          description: "Revisa mi código",
-        },
-        linkedin: {
-          label: "LinkedIn",
-          description: "Conectemos profesionalmente",
-        },
-        discord: {
-          label: "Discord",
-          description: "Para conversaciones casuales",
-        },
-      },
-      cta: {
-        title: "¿Listo para empezar un proyecto?",
-        subtitle: "Abierto a freelance, colaboraciones y oportunidades full-time. Normalmente respondo en 24 horas.",
-        sendEmail: "Envíame un email",
-        available: "Disponible para oportunidades",
-        note: "¿Prefieres otro método? Elige uno arriba",
-      },
+      label: "004 / CONTACTO",
+      title: "Hablamos.",
+      titleAccent: "hablemos.",
+      subtitle:
+        "Abierto a colaboraciones, conversaciones técnicas y nuevas oportunidades. Normalmente respondo en 24 horas.",
+      email: "Enviar un email",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      discord: "Discord",
     },
 
-    // Footer
     footer: {
-      brand: {
-        title: "Daniel Fonov",
-        role: "Estudiante ASIR & Web Developer",
-        description: "Uniendo administración de sistemas con desarrollo web.",
-      },
-      navigation: "Enlaces Rápidos",
-      social: "Conectar",
-      copyright: "© 2025 Daniel Fonov. Todos los derechos reservados.",
-      madeWith: "Hecho con ❤️ en Gijón",
+      tagline: "Uniendo sistemas y la web.",
+      copyright: "Daniel Fonov.",
+      built: "Hecho con Astro + React",
+      colNav: "Portfolio",
+      colSocial: "Links",
     },
 
-    // Chat
     chat: {
       buttonOpen: "Pregunta al Asistente IA",
       buttonClose: "Cerrar",
       title: "Daniel AI",
       status: "En línea",
-      initialMessage: "¡Hola! Soy el asistente IA de Daniel. ¿En qué puedo ayudarte hoy? 🚀",
+      initialMessage: "¡Hola! Soy el asistente IA de Daniel. ¿En qué puedo ayudarte hoy?",
       placeholder: "Escribe tu mensaje...",
       typing: "Escribiendo...",
     },
 
-    // Bot Commands
     botCommands: {
       title: "Comandos del Bot de Discord",
-      subtitle: "Explora los comandos disponibles y mira cómo funciona mi bot de Discord con integración de OpenAI",
+      subtitle: "Explora los comandos disponibles",
       commandsTitle: "Comandos Disponibles",
       example: "Ejemplo:",
       addBot: "Agregar Bot a Discord",

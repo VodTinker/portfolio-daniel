@@ -1,236 +1,238 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useState } from "react";
 import { projects } from "../utils/projectsData";
 import { useLanguage } from "../contexts/LanguageContext";
-import BotCommandsModal from "./BotCommandsModal";
-import MailDnsModal from "./MailDnsModal";
-import { Play, Star } from "lucide-react";
-import {
-  fadeInUp,
-  staggerContainer,
-  imageReveal,
-  buttonHover
-} from "../utils/professionalAnimations";
+
+// ─── Easing ──────────────────────────────────────────────────────────────────
+
+const EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
+const EASE_SOFT: [number, number, number, number] = [0.33, 1, 0.68, 1];
+
+// ─── Variants ────────────────────────────────────────────────────────────────
+
+const containerVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.11, delayChildren: 0.05 } },
+};
+
+// Row entrance: clip-path sweep upward
+const rowVariants: Variants = {
+  hidden: { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)", opacity: 0 },
+  visible: {
+    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+    opacity: 1,
+    transition: { duration: 0.75, ease: EASE },
+  },
+};
+
+const separatorVariants: Variants = {
+  hidden: { scaleX: 0 },
+  visible: { scaleX: 1, transition: { duration: 0.6, ease: EASE } },
+};
+
+const headerVariants: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+
+const headerAccentVariants: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE, delay: 0.08 } },
+};
+
+// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function ProjectsUnique() {
   const { t, language } = useLanguage();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const shouldReduceMotion = useReducedMotion();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [isBotModalOpen, setIsBotModalOpen] = useState(false);
-  const [isMailDnsModalOpen, setIsMailDnsModalOpen] = useState(false);
 
   return (
-    <section
-      id="projects"
-      ref={ref}
-      className="relative px-6 sm:px-12 lg:px-24 py-24 sm:py-32"
-    >
-      <div className="max-w-7xl mx-auto">
+    <section id="work" className="px-6 sm:px-10 lg:px-16 py-24 sm:py-32">
+      <div className="max-w-6xl mx-auto">
+
         {/* Section header */}
-        <div className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-4 mb-8"
-          >
-            <span className="font-mono text-sm text-neutral-500 dark:text-neutral-500">
-              {t.projects.number}
-            </span>
-            <div className="h-px flex-1 bg-gradient-to-r from-neutral-300 to-transparent dark:from-neutral-700 dark:to-transparent" />
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white mb-4"
-          >
-            {t.projects.title}
-          </motion.h2>
-
+        <motion.div
+          className="mb-10 sm:mb-14"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl"
+            variants={shouldReduceMotion ? {} : headerVariants}
+            className="text-xs font-mono text-muted tracking-widest uppercase mb-4"
           >
-            {t.projects.subtitle}
+            {t.work.label}
           </motion.p>
-        </div>
+          <motion.h2
+            variants={shouldReduceMotion ? {} : headerAccentVariants}
+            className="font-serif text-4xl sm:text-5xl font-light text-ink"
+          >
+            {t.work.title}
+            <br />
+            <em className="italic text-coral">{(t.work as any).titleAccent ?? "built."}</em>
+          </motion.h2>
+        </motion.div>
 
-        {/* Projects list */}
-        <div className="space-y-8">
-          {projects.slice(0, 4).map((project, index) => {
-            const isDiscordBot = project.id === 1;
-            const isMailDns = project.id === 0;
-            const hasModal = isDiscordBot || isMailDns;
-            const Component = hasModal ? 'button' : 'a';
-            const componentProps = hasModal
-              ? { onClick: () => isMailDns ? setIsMailDnsModalOpen(true) : setIsBotModalOpen(true), type: 'button' as const, className: "block w-full text-left" }
-              : {
-                href: project.liveLink || project.githubLink,
-                target: "_blank",
-                rel: "noopener noreferrer",
-                className: "block"
-              };
+        {/* Project rows */}
+        <motion.div
+          variants={shouldReduceMotion ? {} : containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          {projects.map((project, index) => {
+            const isHovered = hoveredId === project.id;
+            const isDimmed = hoveredId !== null && !isHovered;
 
             return (
               <motion.article
                 key={project.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                className="group"
+                variants={shouldReduceMotion ? {} : rowVariants}
+                style={{ transformOrigin: "bottom left" }}
               >
-                <Component {...componentProps}>
-                  <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 sm:p-8 rounded-3xl bg-white/80 dark:bg-neutral-900/50 border transition-all duration-500 shadow-lg backdrop-blur-sm cursor-pointer ${project.featured
-                    ? 'border-yellow-400 dark:border-yellow-600 hover:border-yellow-500 dark:hover:border-yellow-500 shadow-yellow-500/20 hover:shadow-2xl hover:shadow-yellow-500/30 ring-2 ring-yellow-400/20'
-                    : 'border-slate-200/80 dark:border-neutral-800 hover:border-blue-300 dark:hover:border-neutral-600 shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-neutral-900/50'
-                    }`}>
-                    {/* Project number */}
-                    <div className="hidden lg:block lg:col-span-1">
-                      <span className="font-mono text-5xl font-bold text-neutral-200 dark:text-neutral-800 group-hover:text-neutral-400 dark:group-hover:text-neutral-600 transition-colors">
-                        {String(index + 1).padStart(2, "0")}
+                {/* Top separator */}
+                <motion.div
+                  variants={shouldReduceMotion ? {} : separatorVariants}
+                  className="h-px bg-[hsl(var(--border))] origin-left"
+                />
+
+                {/* Row container — fixed height so image has room */}
+                <motion.div
+                  className="relative overflow-hidden"
+                  animate={{ opacity: isDimmed ? 0.42 : 1 }}
+                  transition={{ duration: 0.3 }}
+                  onMouseEnter={() => setHoveredId(project.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                >
+                  {/* ── Image panel — slides in from right on hover ── */}
+                  <motion.div
+                    className="absolute inset-y-3 right-0 w-1/2 sm:w-2/5 overflow-hidden pointer-events-none rounded-sm"
+                    style={{
+                      boxShadow: isHovered
+                        ? "0 4px 32px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06)"
+                        : "none",
+                    }}
+                    animate={{
+                      clipPath: isHovered
+                        ? "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+                        : "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)",
+                    }}
+                    transition={{ duration: 0.55, ease: EASE_SOFT }}
+                  >
+                    <motion.img
+                      src={project.image}
+                      alt={project.title[language]}
+                      className="w-full h-full object-cover"
+                      animate={{ scale: isHovered ? 1 : 1.08 }}
+                      transition={{ duration: 0.65, ease: EASE_SOFT }}
+                      style={{ filter: "saturate(1.05)" }}
+                    />
+                    {/* Left-edge fade: blends image into page background — works in both themes */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background:
+                          "linear-gradient(to right, hsl(var(--bg)) 0%, hsl(var(--bg) / 0.6) 18%, transparent 45%)",
+                      }}
+                    />
+                  </motion.div>
+
+                  {/* ── Text content ── */}
+                  <div className="relative grid grid-cols-[40px_1fr] sm:grid-cols-[64px_1fr] gap-x-4 sm:gap-x-10 py-6 sm:py-9 pr-4 sm:pr-8 items-start z-10">
+
+                    {/* Number */}
+                    <motion.span
+                      animate={{ color: isHovered ? "hsl(var(--coral))" : "hsl(var(--muted))" }}
+                      transition={{ duration: 0.25 }}
+                      className="font-mono text-xs pt-1 tabular-nums"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </motion.span>
+
+                    {/* Info */}
+                    <div>
+                      <span className="text-xs font-mono text-muted uppercase tracking-wider block mb-1">
+                        {project.category}
                       </span>
-                    </div>
 
-                    {/* Image */}
-                    <div className="lg:col-span-5">
-                      <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-200 dark:bg-neutral-800">
-                        <motion.img
-                          src={project.image}
-                          alt={project.title[language]}
-                          className="w-full h-full object-cover"
-                          initial={{ scale: 1, filter: "grayscale(20%)" }}
-                          animate={{
-                            scale: hoveredId === project.id ? 1.05 : 1,
-                            filter:
-                              hoveredId === project.id
-                                ? "grayscale(0%)"
-                                : "grayscale(20%)",
-                          }}
-                          transition={{ duration: 0.6, ease: "easeOut" }}
-                        />
-                        {/* Overlay gradient */}
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: hoveredId === project.id ? 1 : 0 }}
-                          transition={{ duration: 0.3 }}
-                        />
+                      {/* Title — slides slightly left on hover */}
+                      <motion.h3
+                        animate={{
+                          x: isHovered ? -6 : 0,
+                          color: isHovered ? "hsl(var(--coral))" : "hsl(var(--ink))",
+                        }}
+                        transition={{ duration: 0.35, ease: EASE_SOFT }}
+                        className="font-serif text-xl sm:text-2xl font-light mb-3 leading-snug"
+                      >
+                        {project.title[language]}
+                      </motion.h3>
 
-                        {/* Featured Badge */}
-                        {project.featured && (
-                          <motion.div
-                            className="absolute top-4 left-4 flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg shadow-lg backdrop-blur-sm"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <Star className="w-4 h-4" fill="white" />
-                            <span className="text-sm font-semibold">
-                              {language === 'en' ? 'Featured' : 'Destacado'}
-                            </span>
-                          </motion.div>
-                        )}
-
-                        {/* Interactive Demo Badge for Modal Projects */}
-                        {hasModal && (
-                          <motion.div
-                            className={`absolute top-4 right-4 flex items-center gap-2 px-3 py-2 text-white rounded-lg shadow-lg backdrop-blur-sm ${isMailDns
-                              ? 'bg-gradient-to-r from-purple-600 to-blue-600'
-                              : 'bg-blue-600'
-                              }`}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{
-                              opacity: 1,
-                              scale: hoveredId === project.id ? 1.1 : 1
-                            }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <Play className="w-4 h-4" fill="white" />
-                            <span className="text-sm font-semibold">
-                              {t.projects.clickToViewDemo}
-                            </span>
-                          </motion.div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
-                      <div className="flex items-center gap-3">
-                        <span className="lg:hidden font-mono text-sm text-neutral-400 dark:text-neutral-600">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                          {project.title[language]}
-                        </h3>
-                      </div>
-
-                      <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                      {/* Description — fades up on hover */}
+                      <motion.p
+                        animate={{
+                          opacity: isHovered ? 1 : 0.7,
+                          y: isHovered ? 0 : 2,
+                        }}
+                        transition={{ duration: 0.35, ease: EASE_SOFT }}
+                        className="text-sm leading-relaxed max-w-md text-muted"
+                      >
                         {project.description[language]}
-                      </p>
+                      </motion.p>
 
                       {/* Tags */}
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
+                      <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+                        {project.tags.slice(0, 4).map((tag, i) => (
                           <span
-                            key={tag}
-                            className="px-3 py-1.5 text-sm rounded-full bg-gradient-to-br from-slate-50 to-blue-50 dark:bg-neutral-800 text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700 group-hover:border-blue-400 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:to-indigo-50 dark:group-hover:border-blue-800 transition-all duration-300 shadow-sm"
+                            key={`${project.id}-${i}`}
+                            className="text-xs font-mono uppercase tracking-wide"
+                            style={{ color: "hsl(var(--coral))" }}
                           >
+                            {i > 0 && (
+                              <span className="mr-2 text-muted opacity-50">·</span>
+                            )}
                             {tag}
                           </span>
                         ))}
                       </div>
 
-
+                      {/* Links — siempre visibles en móvil, revelan en hover en desktop */}
+                      <motion.div
+                        animate={{ opacity: isHovered ? 1 : 0.55, y: isHovered ? 0 : 0 }}
+                        transition={{ duration: 0.3, ease: EASE_SOFT, delay: isHovered ? 0.1 : 0 }}
+                        className="mt-5 flex gap-5"
+                      >
+                        {project.liveLink && (
+                          <a
+                            href={project.liveLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-mono text-muted hover:text-ink transition-colors"
+                          >
+                            {t.work.viewDemo} ↗
+                          </a>
+                        )}
+                        <a
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-mono text-muted hover:text-ink transition-colors"
+                        >
+                          GitHub ↗
+                        </a>
+                      </motion.div>
                     </div>
                   </div>
-                </Component>
+                </motion.div>
               </motion.article>
             );
           })}
-        </div>
 
-        {/* Bot Commands Modal */}
-        <BotCommandsModal isOpen={isBotModalOpen} onClose={() => setIsBotModalOpen(false)} />
-
-        {/* Mail & DNS Infrastructure Modal */}
-        <MailDnsModal isOpen={isMailDnsModalOpen} onClose={() => setIsMailDnsModalOpen(false)} />
-
-        {/* View all CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16 text-center"
-        >
-          <a
-            href="https://github.com/VodTinker"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-neutral-900 dark:bg-neutral-800 text-white dark:text-white font-medium hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300"
-          >
-            {t.projects.viewAll}
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </a>
+          {/* Bottom separator */}
+          <motion.div
+            variants={shouldReduceMotion ? {} : separatorVariants}
+            className="h-px bg-[hsl(var(--border))] origin-left"
+          />
         </motion.div>
       </div>
     </section>
