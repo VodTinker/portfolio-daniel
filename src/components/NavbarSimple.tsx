@@ -36,25 +36,23 @@ export default function NavbarSimple() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[hsl(var(--surface))] backdrop-blur-sm border-b border-[hsl(var(--border))]"
+          ? "bg-[hsl(var(--bg))]/90 backdrop-blur-md border-b border-[hsl(var(--border))]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-4 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
 
         {/* Wordmark */}
         <a
           href="#home"
           onClick={(e) => scrollTo(e, "#home")}
-          className={`font-serif text-lg transition-opacity hover:opacity-70 ${
-            isScrolled ? "text-ink" : "text-[hsl(var(--bg))]"
-          }`}
+          className="font-serif text-lg text-ink hover:opacity-70 transition-opacity"
         >
           Daniel Fonov
         </a>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop links — centrados */}
+        <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => {
             const label = t.nav[link.key as keyof typeof t.nav];
             const isActive = activeSection === link.href.replace("#", "");
@@ -64,9 +62,7 @@ export default function NavbarSimple() {
                 href={link.href}
                 onClick={(e) => scrollTo(e, link.href)}
                 className={`text-sm transition-colors duration-200 ${
-                  isActive
-                    ? (isScrolled ? "text-ink font-medium" : "text-[hsl(var(--bg))] font-medium")
-                    : (isScrolled ? "text-muted hover:text-ink" : "text-[hsl(var(--bg))]/60 hover:text-[hsl(var(--bg))]")
+                  isActive ? "text-ink font-medium" : "text-muted hover:text-ink"
                 }`}
               >
                 {label}
@@ -75,31 +71,35 @@ export default function NavbarSimple() {
           })}
         </div>
 
-        {/* Language toggle + mobile hamburger */}
+        {/* Right: lang toggle + CTA */}
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 text-sm font-mono">
+          <div className="hidden md:flex items-center gap-1 text-xs font-mono">
             <button
               onClick={() => setLanguage("en")}
               className={`px-1.5 py-0.5 transition-colors ${
-                language === "en"
-                  ? (isScrolled ? "text-ink font-medium" : "text-[hsl(var(--bg))] font-medium")
-                  : (isScrolled ? "text-muted hover:text-ink" : "text-[hsl(var(--bg))]/60 hover:text-[hsl(var(--bg))]")
+                language === "en" ? "text-ink font-medium" : "text-muted hover:text-ink"
               }`}
             >
               EN
             </button>
-            <span className={isScrolled ? "text-faint" : "text-[hsl(var(--bg))]/40"}>·</span>
+            <span className="text-faint">·</span>
             <button
               onClick={() => setLanguage("es")}
               className={`px-1.5 py-0.5 transition-colors ${
-                language === "es"
-                  ? (isScrolled ? "text-ink font-medium" : "text-[hsl(var(--bg))] font-medium")
-                  : (isScrolled ? "text-muted hover:text-ink" : "text-[hsl(var(--bg))]/60 hover:text-[hsl(var(--bg))]")
+                language === "es" ? "text-ink font-medium" : "text-muted hover:text-ink"
               }`}
             >
               ES
             </button>
           </div>
+
+          <a
+            href="#contact"
+            onClick={(e) => scrollTo(e, "#contact")}
+            className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-sm hover:opacity-85 transition-opacity"
+          >
+            {t.nav.contact} →
+          </a>
 
           {/* Mobile hamburger */}
           <button
@@ -107,9 +107,9 @@ export default function NavbarSimple() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-5 h-px transition-transform origin-center ${isScrolled ? "bg-ink" : "bg-[hsl(var(--bg))]"} ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-5 h-px transition-opacity ${isScrolled ? "bg-ink" : "bg-[hsl(var(--bg))]"} ${isMenuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-px transition-transform origin-center ${isScrolled ? "bg-ink" : "bg-[hsl(var(--bg))]"} ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-px bg-ink transition-opacity ${isMenuOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function NavbarSimple() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-[hsl(var(--surface))] border-t border-[hsl(var(--border))] px-6 py-4 space-y-3"
+            className="md:hidden bg-[hsl(var(--bg))] border-t border-[hsl(var(--border))] px-6 py-4 space-y-3"
           >
             {navLinks.map((link) => (
               <a
@@ -134,6 +134,10 @@ export default function NavbarSimple() {
                 {t.nav[link.key as keyof typeof t.nav]}
               </a>
             ))}
+            <div className="flex gap-3 pt-2 border-t border-[hsl(var(--border))]">
+              <button onClick={() => setLanguage("en")} className={`text-xs font-mono ${language === "en" ? "text-ink font-medium" : "text-muted"}`}>EN</button>
+              <button onClick={() => setLanguage("es")} className={`text-xs font-mono ${language === "es" ? "text-ink font-medium" : "text-muted"}`}>ES</button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
