@@ -54,13 +54,13 @@ export default function HeroUnique() {
       <motion.div {...fadeUp(0.3)} className="flex flex-wrap gap-3 justify-center">
         <a
           href="#work"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-sm hover:opacity-85 transition-opacity"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-lg hover:opacity-85 transition-opacity"
         >
           {t.hero.cta} →
         </a>
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 px-5 py-2.5 border border-[hsl(var(--border))] text-ink text-sm font-medium rounded-sm hover:border-muted transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 border border-[hsl(var(--border))] text-ink text-sm font-medium rounded-lg hover:border-muted transition-colors"
         >
           {(t.hero as any).ctaSecondary ?? "Contact"}
         </a>

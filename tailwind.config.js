@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans:   ["DM Sans", "system-ui", "sans-serif"],
-        serif:  ["Fraunces", "Georgia", "serif"],
+        sans:   ["Inter", "system-ui", "sans-serif"],
+        serif:  ["Instrument Serif", "Georgia", "serif"],
         mono:   ["JetBrains Mono", "monospace"],
       },
       colors: {

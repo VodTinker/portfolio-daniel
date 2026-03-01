@@ -96,7 +96,7 @@ export default function NavbarSimple() {
           <a
             href="#contact"
             onClick={(e) => scrollTo(e, "#contact")}
-            className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-sm hover:opacity-85 transition-opacity"
+            className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-lg hover:opacity-85 transition-opacity"
           >
             {t.nav.contact} →
           </a>
