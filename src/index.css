@@ -32,6 +32,16 @@
   --ring: var(--terracotta);
 }
 
+/* ─── Dark Mode Tokens ───────────────────────────────── */
+.dark {
+  --bg:      25 18%  8%;   /* #1A1410 — warm near-black */
+  --surface: 25 15% 13%;   /* #242018 — dark surface */
+  --border:  25 12% 22%;   /* #3A3228 — subtle dark border */
+  --ink:     36 30% 93%;   /* #F5F1E8 — cream (inverted from light bg) */
+  --muted:   25  9% 56%;   /* #9A8E80 */
+  --faint:   25  6% 40%;   /* #6E6560 */
+}
+
 /* ─── Base ───────────────────────────────────────────────── */
 @layer base {
   html {
