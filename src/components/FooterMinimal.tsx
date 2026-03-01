@@ -6,17 +6,17 @@ const FooterMinimal = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0D0D0D] text-[#F5F1E8] px-6 sm:px-10 lg:px-16 py-16">
+    <footer className="bg-[#0D0D0D] text-[#F5F1E8] px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
       <div className="max-w-6xl mx-auto">
 
-        <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-12 sm:gap-16 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-8 sm:gap-12 lg:gap-16 mb-10 sm:mb-14">
 
           {/* Wordmark + tagline */}
           <div>
-            <p className="font-serif text-2xl font-light text-[#F5F1E8] mb-3">
+            <p className="font-serif text-xl sm:text-2xl font-light text-[#F5F1E8] mb-3">
               Daniel Fonov
             </p>
-            <p className="text-sm text-white/40 max-w-xs leading-relaxed">
+            <p className="text-sm text-white/40 leading-relaxed">
               {t.footer.tagline}
             </p>
           </div>

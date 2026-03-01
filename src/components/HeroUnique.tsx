@@ -16,7 +16,7 @@ export default function HeroUnique() {
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 pt-24 pb-20 text-center relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 pt-20 pb-16 sm:pt-24 sm:pb-20 text-center relative overflow-hidden"
     >
       {/* Soft rose gradient corner — como kioku */}
       <div
@@ -36,7 +36,7 @@ export default function HeroUnique() {
       {/* Headline */}
       <motion.h1
         {...fadeUp(0.1)}
-        className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light leading-[1.08] tracking-tight text-ink mb-6 max-w-4xl"
+        className="font-serif text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-light leading-[1.08] tracking-tight text-ink mb-6 max-w-4xl"
       >
         {t.hero.headline1}
         <br />
@@ -51,16 +51,16 @@ export default function HeroUnique() {
       </motion.p>
 
       {/* CTAs */}
-      <motion.div {...fadeUp(0.3)} className="flex flex-wrap gap-3 justify-center">
+      <motion.div {...fadeUp(0.3)} className="flex flex-col sm:flex-row gap-3 justify-center w-full sm:w-auto">
         <a
           href="#work"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-lg hover:opacity-85 transition-opacity"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-ink text-[hsl(var(--bg))] text-sm font-medium rounded-lg hover:opacity-85 transition-opacity"
         >
           {t.hero.cta} →
         </a>
         <a
           href="#contact"
-          className="inline-flex items-center gap-2 px-5 py-2.5 border border-[hsl(var(--border))] text-ink text-sm font-medium rounded-lg hover:border-muted transition-colors"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-[hsl(var(--border))] text-ink text-sm font-medium rounded-lg hover:border-muted transition-colors"
         >
           {(t.hero as any).ctaSecondary ?? "Contact"}
         </a>

@@ -1,9 +1,9 @@
 export const translations = {
   en: {
     nav: {
-      work:     "Work",
+      work: "Work",
       thinking: "Thinking",
-      contact:  "Contact",
+      contact: "Contact",
     },
 
     hero: {
@@ -12,22 +12,22 @@ export const translations = {
       headline2: "and code.",
       description:
         "ASIR student who bridges Linux infrastructure and modern web development. I build systems that work quietly so people can focus on what matters.",
-      cta:          "See my work",
-      ctaAlt:       "About me",
+      cta: "See my work",
+      ctaAlt: "About me",
       ctaSecondary: "Contact",
     },
 
     work: {
-      label:       "002 / WORK",
-      title:       "Things I've",
+      label: "002 / WORK",
+      title: "Things I've",
       titleAccent: "built.",
-      viewDemo:    "View demo →",
-      github:      "GitHub →",
+      viewDemo: "View demo →",
+      github: "GitHub →",
     },
 
     thinking: {
-      label:       "003 / THINKING",
-      title:       "How I think",
+      label: "003 / THINKING",
+      title: "How I think",
       titleAccent: "seriously.",
       prose: [
         "It started in 2022 with a simple question: how do the systems we use every day actually work? That question sent me down two parallel paths — ASIR (network and systems administration) and web development — and I've been walking both ever since.",
@@ -37,63 +37,63 @@ export const translations = {
       since2022: "Since 2022",
       since2024: "Since 2024",
       clusters: {
-        infra:      "Infrastructure",
-        dev:        "Development",
+        infra: "Infrastructure",
+        dev: "Development",
         automation: "Automation",
       },
     },
 
     contact: {
-      label:       "004 / CONTACT",
-      title:       "Let's",
+      label: "004 / CONTACT",
+      title: "Let's",
       titleAccent: "talk.",
       subtitle:
         "Open to collaborations, technical conversations, and new opportunities. Usually respond within 24 hours.",
-      email:    "Send an email",
-      github:   "GitHub",
+      email: "Send an email",
+      github: "GitHub",
       linkedin: "LinkedIn",
-      discord:  "Discord",
+      discord: "Discord",
     },
 
     footer: {
-      tagline:   "Bridging systems and the web.",
+      tagline: "Bridging systems and the web.",
       copyright: "Daniel Fonov.",
-      built:     "Built with Astro + React",
-      colNav:    "Portfolio",
+      built: "Built with Astro + React",
+      colNav: "Portfolio",
       colSocial: "Links",
     },
 
     chat: {
-      buttonOpen:     "Ask the AI Assistant",
-      buttonClose:    "Close",
-      title:          "Daniel AI",
-      status:         "Online",
+      buttonOpen: "Ask the AI Assistant",
+      buttonClose: "Close",
+      title: "Daniel AI",
+      status: "Online",
       initialMessage: "Hi! I'm Daniel's AI assistant. How can I help you today?",
-      placeholder:    "Type your message...",
-      typing:         "Typing...",
+      placeholder: "Type your message...",
+      typing: "Typing...",
     },
 
     botCommands: {
-      title:          "Discord Bot Commands",
-      subtitle:       "Explore the available commands",
-      commandsTitle:  "Available Commands",
-      example:        "Example:",
-      addBot:         "Add Bot to Discord",
+      title: "Discord Bot Commands",
+      subtitle: "Explore the available commands",
+      commandsTitle: "Available Commands",
+      example: "Example:",
+      addBot: "Add Bot to Discord",
       videoNotSupported: "Your browser does not support the video element.",
       commands: {
-        chat:   "Chat with the AI assistant",
+        chat: "Chat with the AI assistant",
         wallet: "Check your wallet balance",
-        image:  "Generate images with DALL-E",
-        help:   "Show all available commands",
+        image: "Generate images with DALL-E",
+        help: "Show all available commands",
       },
     },
   },
 
   es: {
     nav: {
-      work:     "Trabajo",
+      work: "Trabajo",
       thinking: "Pensamiento",
-      contact:  "Contacto",
+      contact: "Contacto",
     },
 
     hero: {
@@ -102,22 +102,22 @@ export const translations = {
       headline2: "y código.",
       description:
         "Estudiante ASIR que conecta infraestructura Linux con desarrollo web moderno. Construyo sistemas que funcionan en silencio para que las personas se centren en lo que importa.",
-      cta:          "Ver mi trabajo",
-      ctaAlt:       "Sobre mí",
+      cta: "Ver mi trabajo",
+      ctaAlt: "Sobre mí",
       ctaSecondary: "Contactar",
     },
 
     work: {
-      label:       "002 / TRABAJO",
-      title:       "Cosas que he",
+      label: "002 / TRABAJO",
+      title: "Cosas que he",
       titleAccent: "construido.",
-      viewDemo:    "Ver demo →",
-      github:      "GitHub →",
+      viewDemo: "Ver demo →",
+      github: "GitHub →",
     },
 
     thinking: {
-      label:       "003 / PENSAMIENTO",
-      title:       "Cómo pienso",
+      label: "003 / PENSAMIENTO",
+      title: "Cómo pienso",
       titleAccent: "en serio.",
       prose: [
         "Empezó en 2022 con una pregunta sencilla: ¿cómo funcionan realmente los sistemas que usamos cada día? Esa pregunta me llevó por dos caminos paralelos —ASIR y desarrollo web— y desde entonces camino por los dos.",
@@ -127,54 +127,54 @@ export const translations = {
       since2022: "Desde 2022",
       since2024: "Desde 2024",
       clusters: {
-        infra:      "Infraestructura",
-        dev:        "Desarrollo",
+        infra: "Infraestructura",
+        dev: "Desarrollo",
         automation: "Automatización",
       },
     },
 
     contact: {
-      label:       "004 / CONTACTO",
-      title:       "Hablamos.",
+      label: "004 / CONTACTO",
+      title: "Hablamos.",
       titleAccent: "hablemos.",
       subtitle:
         "Abierto a colaboraciones, conversaciones técnicas y nuevas oportunidades. Normalmente respondo en 24 horas.",
-      email:    "Enviar un email",
-      github:   "GitHub",
+      email: "Enviar un email",
+      github: "GitHub",
       linkedin: "LinkedIn",
-      discord:  "Discord",
+      discord: "Discord",
     },
 
     footer: {
-      tagline:   "Uniendo sistemas y la web.",
+      tagline: "Uniendo sistemas y la web.",
       copyright: "Daniel Fonov.",
-      built:     "Hecho con Astro + React",
-      colNav:    "Portfolio",
+      built: "Hecho con Astro + React",
+      colNav: "Portfolio",
       colSocial: "Links",
     },
 
     chat: {
-      buttonOpen:     "Pregunta al Asistente IA",
-      buttonClose:    "Cerrar",
-      title:          "Daniel AI",
-      status:         "En línea",
+      buttonOpen: "Pregunta al Asistente IA",
+      buttonClose: "Cerrar",
+      title: "Daniel AI",
+      status: "En línea",
       initialMessage: "¡Hola! Soy el asistente IA de Daniel. ¿En qué puedo ayudarte hoy?",
-      placeholder:    "Escribe tu mensaje...",
-      typing:         "Escribiendo...",
+      placeholder: "Escribe tu mensaje...",
+      typing: "Escribiendo...",
     },
 
     botCommands: {
-      title:         "Comandos del Bot de Discord",
-      subtitle:      "Explora los comandos disponibles",
+      title: "Comandos del Bot de Discord",
+      subtitle: "Explora los comandos disponibles",
       commandsTitle: "Comandos Disponibles",
-      example:       "Ejemplo:",
-      addBot:        "Agregar Bot a Discord",
+      example: "Ejemplo:",
+      addBot: "Agregar Bot a Discord",
       videoNotSupported: "Tu navegador no soporta el elemento de video.",
       commands: {
-        chat:   "Chatea con el asistente IA",
+        chat: "Chatea con el asistente IA",
         wallet: "Consulta tu saldo de wallet",
-        image:  "Genera imágenes con DALL-E",
-        help:   "Muestra todos los comandos disponibles",
+        image: "Genera imágenes con DALL-E",
+        help: "Muestra todos los comandos disponibles",
       },
     },
   },

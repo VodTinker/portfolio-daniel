@@ -22,8 +22,8 @@ export default function ContactUnique() {
   return (
     <>
       {/* Stats band */}
-      <div className="bg-[#0D0D0D] px-6 sm:px-10 lg:px-16 py-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+      <div className="px-6 sm:px-10 lg:px-16 py-14 sm:py-20 border-t border-b border-[hsl(var(--border))]">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[hsl(var(--border))]">
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -31,12 +31,12 @@ export default function ContactUnique() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="flex flex-col items-center text-center px-8 py-8 sm:py-0"
+              className="flex flex-col items-center text-center px-4 sm:px-8 py-6 sm:py-0"
             >
-              <span className="font-serif italic text-5xl sm:text-6xl text-[#F5F1E8]/90 mb-2">
+              <span className="font-serif italic text-4xl sm:text-5xl lg:text-6xl text-ink mb-2">
                 {stat.value}
               </span>
-              <span className="text-xs font-mono text-white/40 uppercase tracking-widest">
+              <span className="text-xs font-mono text-muted uppercase tracking-widest">
                 {stat.label}
               </span>
             </motion.div>
@@ -45,7 +45,7 @@ export default function ContactUnique() {
       </div>
 
       {/* Contact CTA section */}
-      <section id="contact" className="px-6 sm:px-10 lg:px-16 py-24 sm:py-32">
+      <section id="contact" className="px-6 sm:px-10 lg:px-16 py-16 sm:py-24 lg:py-32">
         <div className="max-w-6xl mx-auto">
 
           <motion.p
@@ -65,7 +65,7 @@ export default function ContactUnique() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.05 }}
-                className="font-serif text-5xl sm:text-6xl lg:text-7xl font-light text-ink mb-4 leading-[1.05]"
+                className="font-serif text-3xl sm:text-5xl lg:text-7xl font-light text-ink mb-4 leading-[1.05]"
               >
                 {t.contact.title}
                 <br />

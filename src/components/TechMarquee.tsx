@@ -38,7 +38,7 @@ function MarqueeRow({ items, reverse = false }: { items: TechItem[]; reverse?: b
           return (
             <span
               key={i}
-              className="inline-flex items-center gap-2 px-6 text-xs font-mono text-muted select-none shrink-0"
+              className="inline-flex items-center gap-2 px-4 sm:px-6 text-xs font-mono text-muted select-none shrink-0"
             >
               <Icon size={16} aria-hidden />
               {item.name}
@@ -53,8 +53,8 @@ function MarqueeRow({ items, reverse = false }: { items: TechItem[]; reverse?: b
 
 export default function TechMarquee() {
   return (
-    <div className="border-t border-b border-[hsl(var(--border))] py-8 overflow-hidden">
-      <div className="flex flex-col gap-5">
+    <div className="border-t border-b border-[hsl(var(--border))] py-5 sm:py-8 overflow-hidden">
+      <div className="flex flex-col gap-3 sm:gap-5">
         <MarqueeRow items={ROW_1} />
         <MarqueeRow items={ROW_2} reverse />
       </div>

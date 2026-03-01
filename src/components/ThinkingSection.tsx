@@ -13,10 +13,10 @@ export default function ThinkingSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="thinking" className="px-6 sm:px-10 lg:px-16 py-24 sm:py-32 bg-[hsl(var(--surface))]">
+    <section id="thinking" className="px-6 sm:px-10 lg:px-16 py-16 sm:py-24 lg:py-32">
       <div className="max-w-6xl mx-auto">
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-16 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 sm:gap-16 lg:gap-20">
 
           {/* Left: prose */}
           <div>
@@ -35,7 +35,7 @@ export default function ThinkingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className="font-serif text-4xl sm:text-5xl font-light text-ink mb-10"
+              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-ink mb-10"
             >
               {t.thinking.title}
               <br />
@@ -63,7 +63,7 @@ export default function ThinkingSection() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.35 }}
-              className="flex gap-4 mt-10 pt-10 border-t border-[hsl(var(--border))]"
+              className="flex flex-wrap gap-3 mt-8 sm:mt-10 pt-10 border-t border-[hsl(var(--border))]"
             >
               <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm">
                 {t.thinking.since2022}
@@ -83,7 +83,7 @@ export default function ThinkingSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-                className="border border-[hsl(var(--border))] rounded-sm p-5 bg-[hsl(var(--bg))]"
+                className="border border-[hsl(var(--border))] rounded-sm p-5 bg-[hsl(var(--surface))]"
               >
                 <span className="text-xs font-mono text-muted uppercase tracking-wider block mb-3">
                   {t.thinking.clusters[key]}
