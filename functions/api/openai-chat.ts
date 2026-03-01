@@ -1,21 +1,39 @@
-import type { APIRoute } from 'astro';
+// Cloudflare Pages Function — handles /api/openai-chat
+// No Astro adapter needed — Cloudflare Pages detects functions/ automatically
 
-export const prerender = false;
+interface Env {
+  OPENAI_API_KEY: string;
+}
 
-export const POST: APIRoute = async ({ request }) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json',
-  };
+const HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Content-Type': 'application/json',
+};
 
-  const apiKey = import.meta.env.OPENAI_API_KEY;
-  
+export const onRequestOptions = () =>
+  new Response(null, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+
+export const onRequestPost = async ({
+  request,
+  env,
+}: {
+  request: Request;
+  env: Env;
+}) => {
+  const apiKey = env.OPENAI_API_KEY;
+
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: 'ERROR: OPENAI_API_KEY no está definida' }), 
-      { status: 500, headers }
+      JSON.stringify({ error: 'ERROR: OPENAI_API_KEY no está definida' }),
+      { status: 500, headers: HEADERS }
     );
   }
 
@@ -23,9 +41,13 @@ export const POST: APIRoute = async ({ request }) => {
     const body = await request.json();
     const message = typeof body?.message === 'string' ? body.message.trim() : '';
     if (!message) {
-      return new Response(JSON.stringify({ error: 'message is required' }), { status: 400, headers });
+      return new Response(
+        JSON.stringify({ error: 'message is required' }),
+        { status: 400, headers: HEADERS }
+      );
     }
 
+    // Language detection
     const detectionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -37,9 +59,10 @@ export const POST: APIRoute = async ({ request }) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a language detection assistant. Detect the language of the user input and respond with the ISO 639-1 language code only (e.g., "en" for English, "es" for Spanish).'
+            content:
+              'You are a language detection assistant. Detect the language of the user input and respond with the ISO 639-1 language code only (e.g., "en" for English, "es" for Spanish).',
           },
-          { role: 'user', content: message }
+          { role: 'user', content: message },
         ],
       }),
     });
@@ -62,7 +85,7 @@ Responde de forma cercana, profesional y práctica.`;
         model: 'gpt-5-mini',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
+          { role: 'user', content: message },
         ],
       }),
     });
@@ -70,25 +93,12 @@ Responde de forma cercana, profesional y práctica.`;
     const completion = await completionResponse.json();
     const reply = completion.choices?.[0]?.message?.content ?? '';
 
-    return new Response(
-      JSON.stringify({ reply }),
-      { status: 200, headers }
-    );
+    return new Response(JSON.stringify({ reply }), { status: 200, headers: HEADERS });
   } catch (error) {
     console.error('OpenAI Error:', error);
     return new Response(
       JSON.stringify({ error: 'Error al llamar a OpenAI' }),
-      { status: 500, headers }
+      { status: 500, headers: HEADERS }
     );
   }
-};
-
-export const OPTIONS: APIRoute = async () => {
-  return new Response(null, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
 };
