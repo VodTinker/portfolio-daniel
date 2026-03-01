@@ -50,7 +50,7 @@ export default function NavbarSimple() {
           onClick={(e) => scrollTo(e, "#home")}
           className="font-serif text-lg text-ink hover:opacity-70 transition-opacity"
         >
-          Daniel Fonov
+          Daniel Fonov<span className="font-mono text-xs text-muted ml-1.5 opacity-70">df</span>
         </a>
 
         {/* Desktop links — centrados */}
