@@ -18,6 +18,7 @@
   --lavender:   264 20% 79%;    /* #C2BDD6 */
   --slate-blue: 196 30% 69%;    /* #9BB8C5 */
   --coral:       5 77% 61%;     /* rgb(232,93,78) kioku exact coral */
+  --online:    142 70% 58%;     /* #4ade80 online/status indicator green */
 
   /* Tailwind compat (used by existing shadcn components) */
   --background: var(--bg);

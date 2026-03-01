@@ -75,14 +75,14 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #4ade80;
+  background: hsl(var(--online));
   animation: status-pulse 2.5s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 @keyframes status-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
-  50%       { opacity: 0.75; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 hsl(var(--online) / 0.4); }
+  50%       { opacity: 0.75; box-shadow: 0 0 0 4px hsl(var(--online) / 0); }
 }
 
 /* ── Área de mensajes ── */
