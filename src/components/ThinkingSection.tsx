@@ -35,7 +35,7 @@ export default function ThinkingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-ink mb-10"
+              className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-ink mb-10"
             >
               {t.thinking.title}
               <br />
@@ -65,10 +65,12 @@ export default function ThinkingSection() {
               transition={{ duration: 0.5, delay: 0.35 }}
               className="flex flex-wrap gap-3 mt-8 sm:mt-10 pt-10 border-t border-[hsl(var(--border))]"
             >
-              <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm">
+              <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm inline-flex items-center gap-1.5">
+                <span className="text-coral text-[10px]" aria-hidden="true">·</span>
                 {t.thinking.since2022}
               </span>
-              <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm">
+              <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm inline-flex items-center gap-1.5">
+                <span className="text-coral text-[10px]" aria-hidden="true">·</span>
                 {t.thinking.since2024}
               </span>
             </motion.div>
@@ -83,7 +85,7 @@ export default function ThinkingSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-                className="border border-[hsl(var(--border))] rounded-sm p-5 bg-[hsl(var(--surface))]"
+                className="border border-[hsl(var(--border))] hover:border-[hsl(var(--coral)/0.35)] rounded-sm p-5 bg-[hsl(var(--surface))] transition-colors duration-200"
               >
                 <span className="text-xs font-mono text-muted uppercase tracking-wider block mb-3">
                   {t.thinking.clusters[key]}
