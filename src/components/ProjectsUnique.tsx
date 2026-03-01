@@ -38,10 +38,10 @@ export default function ProjectsUnique() {
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -32, y: 16 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: index * 0.07 }}
+              transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Top separator */}
               <div className="h-px bg-[hsl(var(--border))]" />
@@ -49,7 +49,7 @@ export default function ProjectsUnique() {
               <div className="grid grid-cols-[48px_1fr] sm:grid-cols-[64px_1fr_auto] gap-x-6 sm:gap-x-10 py-8 items-start group">
 
                 {/* Number */}
-                <span className="font-mono text-xs text-muted pt-1 tabular-nums">
+                <span className="font-mono text-xs text-muted pt-1 tabular-nums group-hover:text-coral transition-colors duration-300">
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
