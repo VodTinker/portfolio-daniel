@@ -114,6 +114,13 @@ export default function HeroUnique() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Auto-focus input after assistant responds
+  useEffect(() => {
+    if (!isLoading) {
+      inputRef.current?.focus();
+    }
+  }, [isLoading]);
+
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -129,6 +136,7 @@ export default function HeroUnique() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (data.reply) {
         const newId = ++messageIdRef.current;
@@ -141,7 +149,7 @@ export default function HeroUnique() {
       const errId = ++messageIdRef.current;
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Lo siento, hubo un error. Inténtalo de nuevo.", id: errId },
+        { role: "assistant", content: t.chat.errorMessage, id: errId },
       ]);
       setLatestAssistantId(errId);
     } finally {
@@ -319,7 +327,7 @@ export default function HeroUnique() {
               onClick={handleSendMessage}
               disabled={isLoading || !inputValue.trim()}
               className="text-muted hover:text-ink transition-colors disabled:opacity-30 flex-shrink-0"
-              aria-label="Enviar mensaje"
+              aria-label={t.chat.sendLabel}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <line x1="22" y1="2" x2="11" y2="13" />

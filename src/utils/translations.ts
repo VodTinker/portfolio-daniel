@@ -71,6 +71,8 @@ export const translations = {
       initialMessage: "Hi! I'm Daniel's AI assistant. How can I help you today?",
       placeholder: "Type your message...",
       typing: "Typing...",
+      errorMessage: "Sorry, something went wrong. Please try again.",
+      sendLabel: "Send message",
     },
 
     botCommands: {
@@ -161,6 +163,8 @@ export const translations = {
       initialMessage: "¡Hola! Soy el asistente IA de Daniel. ¿En qué puedo ayudarte hoy?",
       placeholder: "Escribe tu mensaje...",
       typing: "Escribiendo...",
+      errorMessage: "Lo siento, hubo un error. Inténtalo de nuevo.",
+      sendLabel: "Enviar mensaje",
     },
 
     botCommands: {
