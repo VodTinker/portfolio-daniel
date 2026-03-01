@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ChatButton from "./ChatButton";
 import ChatLoader from "./ChatLoader";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -11,8 +11,47 @@ interface Message {
   timestamp: Date;
 }
 
+const TYPEWRITER_DELAY_MS = 18;
+const TYPEWRITER_SNAP_THRESHOLD = 120;
+
+function TypewriterText({ text }: { text: string }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setDisplayed(text);
+      setDone(true);
+      return;
+    }
+    let i = 0;
+    setDisplayed("");
+    setDone(false);
+    const interval = setInterval(() => {
+      i++;
+      if (i >= text.length || i >= TYPEWRITER_SNAP_THRESHOLD) {
+        setDisplayed(text);
+        setDone(true);
+        clearInterval(interval);
+        return;
+      }
+      setDisplayed(text.slice(0, i));
+    }, TYPEWRITER_DELAY_MS);
+    return () => clearInterval(interval);
+  }, [text, shouldReduceMotion]);
+
+  return (
+    <span className="whitespace-pre-line">
+      {displayed}
+      {!done && <span className="typewriter-cursor">|</span>}
+    </span>
+  );
+}
+
 export default function ChatWidget() {
   const { t } = useLanguage();
+  const shouldReduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -124,10 +163,10 @@ export default function ChatWidget() {
         {isOpen && (
           <motion.div
             className="chat-widget-window"
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0% 0% 100% round 28px)", opacity: 0 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { clipPath: "inset(0% 0% 0% 0% round 4px)", opacity: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0% 0% 100% round 28px)", opacity: 0 }}
+            transition={shouldReduceMotion ? { duration: 0.2 } : { clipPath: { type: "spring", stiffness: 300, damping: 28 }, opacity: { duration: 0.15 } }}
           >
             {/* Header */}
             <div className="chat-header">
@@ -161,14 +200,31 @@ export default function ChatWidget() {
                 <motion.div
                   key={idx}
                   className={`message ${msg.role}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : msg.role === "user"
+                        ? { opacity: 0, x: 40, scale: 0.95 }
+                        : { opacity: 0 }
+                  }
+                  animate={
+                    shouldReduceMotion
+                      ? { opacity: 1 }
+                      : msg.role === "user"
+                        ? { opacity: 1, x: 0, scale: 1 }
+                        : { opacity: 1 }
+                  }
+                  transition={
+                    msg.role === "user" && !shouldReduceMotion
+                      ? { type: "spring", stiffness: 400, damping: 22 }
+                      : { duration: 0.12 }
+                  }
                 >
                   <div className="message-content">
-                    <div className="whitespace-pre-line">
-                      {msg.content}
-                    </div>
+                    {msg.role === "assistant"
+                      ? <TypewriterText text={msg.content} />
+                      : <div className="whitespace-pre-line">{msg.content}</div>
+                    }
                     <span className="message-time">
                       {msg.timestamp.toLocaleTimeString("es-ES", {
                         hour: "2-digit",
