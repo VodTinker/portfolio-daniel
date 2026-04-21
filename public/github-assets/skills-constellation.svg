@@ -1,172 +1,228 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300">
   <defs>
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#0d1117"/>
-      <stop offset="50%" style="stop-color:#1a1025"/>
-      <stop offset="100%" style="stop-color:#0d1117"/>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="50%" stop-color="#1a1025"/>
+      <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
-    
-    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    
-    <filter id="lineGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="1" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glowS" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+
+    <path id="la1" d="M100,150 L180,100" pathLength="100"/>
+    <path id="la2" d="M180,100 L200,180" pathLength="100"/>
+    <path id="la3" d="M200,180 L100,150" pathLength="100"/>
+    <path id="lb1" d="M300,80 L350,150" pathLength="100"/>
+    <path id="lb2" d="M350,150 L280,180" pathLength="100"/>
+    <path id="lb3" d="M280,180 L300,80" pathLength="100"/>
+    <path id="lc1" d="M450,100 L520,80" pathLength="100"/>
+    <path id="lc2" d="M520,80 L550,150" pathLength="100"/>
+    <path id="lc3" d="M550,150 L480,180" pathLength="100"/>
+    <path id="lc4" d="M480,180 L450,100" pathLength="100"/>
+    <path id="ld1" d="M650,90 L700,150" pathLength="100"/>
+    <path id="ld2" d="M700,150 L650,200" pathLength="100"/>
+    <path id="ld3" d="M650,200 L620,140" pathLength="100"/>
+    <path id="ld4" d="M620,140 L650,90" pathLength="100"/>
+    <path id="x1"  d="M200,180 L280,180" pathLength="100"/>
+    <path id="x2"  d="M350,150 L450,100" pathLength="100"/>
+    <path id="x3"  d="M550,150 L620,140" pathLength="100"/>
   </defs>
-  
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&amp;display=swap');
-    
-    .bg { fill: url(#skyGradient); }
-    
+    .bg { fill: url(#sky); }
+
     .star {
       fill: #fff;
-      filter: url(#starGlow);
-      animation: twinkle 3s ease-in-out infinite;
+      filter: url(#glowS);
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: twinkle 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     }
-    
     @keyframes twinkle {
       0%, 100% { opacity: 0.3; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
+      50%      { opacity: 1;   transform: scale(1.2); }
     }
-    
-    .skill-star {
-      filter: url(#starGlow);
-      animation: skillPulse 2s ease-in-out infinite;
+
+    .sk {
+      filter: url(#glow);
+      transform-box: fill-box;
+      transform-origin: center;
+      opacity: 0;
+      animation:
+        skEnter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+        skPulse 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     }
-    
-    @keyframes skillPulse {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
+    @keyframes skEnter {
+      0%   { opacity: 0; transform: scale(0); }
+      100% { opacity: 1; transform: scale(1); }
     }
-    
-    .constellation-line {
-      stroke-width: 1;
+    @keyframes skPulse {
+      0%, 100% { opacity: 0.85; }
+      50%      { opacity: 1; }
+    }
+
+    .ld {
       fill: none;
-      filter: url(#lineGlow);
+      stroke-width: 1;
+      filter: url(#glowS);
       stroke-dasharray: 100;
       stroke-dashoffset: 100;
-      animation: drawLine 2s ease-out forwards;
+      animation: draw 1.2s cubic-bezier(0.87, 0, 0.13, 1) forwards;
     }
-    
-    @keyframes drawLine {
-      to { stroke-dashoffset: 0; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    .signal {
+      filter: url(#glow);
+      opacity: 0;
+      animation: signalOn 0.4s forwards;
     }
-    
-    .skill-label {
+    @keyframes signalOn { to { opacity: 1; } }
+
+    .label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       fill: #c9d1d9;
       opacity: 0;
-      animation: fadeIn 0.5s ease-out forwards;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: labelIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
-    
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    @keyframes labelIn {
+      0%   { opacity: 0; transform: scale(0.9) translateY(4px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
-    
-    /* Staggered delays */
-    .delay-1 { animation-delay: 0.2s; }
-    .delay-2 { animation-delay: 0.4s; }
-    .delay-3 { animation-delay: 0.6s; }
-    .delay-4 { animation-delay: 0.8s; }
-    .delay-5 { animation-delay: 1s; }
-    .delay-6 { animation-delay: 1.2s; }
-    .delay-7 { animation-delay: 1.4s; }
-    .delay-8 { animation-delay: 1.6s; }
-    .delay-9 { animation-delay: 1.8s; }
-    .delay-10 { animation-delay: 2s; }
+
+    .title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      fill: #9B8AAC;
+      opacity: 0;
+      animation: titleIn 0.8s cubic-bezier(0.87, 0, 0.13, 1) forwards 3s;
+    }
+    @keyframes titleIn {
+      0%   { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 0.8; transform: translateY(0); }
+    }
+
+    .e1 { animation-delay: 0.2s, 1.2s; }
+    .e2 { animation-delay: 0.3s, 1.3s; }
+    .e3 { animation-delay: 0.4s, 1.4s; }
+    .e4 { animation-delay: 0.5s, 1.5s; }
+    .e5 { animation-delay: 0.6s, 1.6s; }
+    .e6 { animation-delay: 0.7s, 1.7s; }
+    .e7 { animation-delay: 0.8s, 1.8s; }
+
+    .d1 { animation-delay: 0.3s; }
+    .d2 { animation-delay: 0.5s; }
+    .d3 { animation-delay: 0.7s; }
+    .d4 { animation-delay: 0.9s; }
+    .d5 { animation-delay: 1.1s; }
+    .d6 { animation-delay: 1.3s; }
+
+    .lb1 { animation-delay: 2.4s; }
+    .lb2 { animation-delay: 2.5s; }
+    .lb3 { animation-delay: 2.6s; }
+    .lb4 { animation-delay: 2.7s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .sk, .label, .title { opacity: 1 !important; transform: none !important; }
+      .ld { stroke-dashoffset: 0 !important; }
+      .signal, animateMotion { display: none !important; opacity: 0 !important; }
+    }
   </style>
-  
-  <!-- Background -->
+
   <rect class="bg" x="0" y="0" width="800" height="300" rx="8"/>
-  
-  <!-- Background stars -->
-  <g class="background-stars">
-    <circle class="star" cx="50" cy="30" r="1" style="animation-delay: 0s"/>
-    <circle class="star" cx="150" cy="50" r="0.8" style="animation-delay: 0.5s"/>
-    <circle class="star" cx="250" cy="20" r="1.2" style="animation-delay: 1s"/>
-    <circle class="star" cx="350" cy="40" r="0.6" style="animation-delay: 1.5s"/>
-    <circle class="star" cx="450" cy="25" r="1" style="animation-delay: 2s"/>
-    <circle class="star" cx="550" cy="45" r="0.8" style="animation-delay: 0.3s"/>
-    <circle class="star" cx="650" cy="35" r="1.1" style="animation-delay: 0.8s"/>
-    <circle class="star" cx="750" cy="55" r="0.7" style="animation-delay: 1.3s"/>
+
+  <g>
+    <circle class="star" cx="50"  cy="30"  r="1"   style="animation-delay: 0s"/>
+    <circle class="star" cx="150" cy="50"  r="0.8" style="animation-delay: 0.5s"/>
+    <circle class="star" cx="250" cy="20"  r="1.2" style="animation-delay: 1s"/>
+    <circle class="star" cx="350" cy="40"  r="0.6" style="animation-delay: 1.5s"/>
+    <circle class="star" cx="450" cy="25"  r="1"   style="animation-delay: 2s"/>
+    <circle class="star" cx="550" cy="45"  r="0.8" style="animation-delay: 0.3s"/>
+    <circle class="star" cx="650" cy="35"  r="1.1" style="animation-delay: 0.8s"/>
+    <circle class="star" cx="750" cy="55"  r="0.7" style="animation-delay: 1.3s"/>
     <circle class="star" cx="100" cy="260" r="0.9" style="animation-delay: 1.8s"/>
-    <circle class="star" cx="200" cy="270" r="1" style="animation-delay: 0.2s"/>
+    <circle class="star" cx="200" cy="270" r="1"   style="animation-delay: 0.2s"/>
+    <circle class="star" cx="420" cy="250" r="0.9" style="animation-delay: 0.4s"/>
+    <circle class="star" cx="500" cy="285" r="0.7" style="animation-delay: 0.9s"/>
     <circle class="star" cx="600" cy="265" r="0.8" style="animation-delay: 0.7s"/>
     <circle class="star" cx="700" cy="250" r="1.2" style="animation-delay: 1.2s"/>
   </g>
-  
-  <!-- Constellation Lines -->
-  <g class="lines">
-    <!-- Linux cluster -->
-    <path class="constellation-line delay-1" d="M100,150 L180,100" stroke="#1793D1"/>
-    <path class="constellation-line delay-2" d="M180,100 L200,180" stroke="#1793D1"/>
-    <path class="constellation-line delay-3" d="M200,180 L100,150" stroke="#1793D1"/>
-    
-    <!-- Networking cluster -->
-    <path class="constellation-line delay-2" d="M300,80 L350,150" stroke="#7BA3C9"/>
-    <path class="constellation-line delay-3" d="M350,150 L280,180" stroke="#7BA3C9"/>
-    <path class="constellation-line delay-4" d="M280,180 L300,80" stroke="#7BA3C9"/>
-    
-    <!-- Cloud cluster -->
-    <path class="constellation-line delay-3" d="M450,100 L520,80" stroke="#E8B4C8"/>
-    <path class="constellation-line delay-4" d="M520,80 L550,150" stroke="#E8B4C8"/>
-    <path class="constellation-line delay-5" d="M550,150 L480,180" stroke="#E8B4C8"/>
-    <path class="constellation-line delay-6" d="M480,180 L450,100" stroke="#E8B4C8"/>
-    
-    <!-- Dev cluster -->
-    <path class="constellation-line delay-4" d="M650,90 L700,150" stroke="#3FB950"/>
-    <path class="constellation-line delay-5" d="M700,150 L650,200" stroke="#3FB950"/>
-    <path class="constellation-line delay-6" d="M650,200 L620,140" stroke="#3FB950"/>
-    <path class="constellation-line delay-7" d="M620,140 L650,90" stroke="#3FB950"/>
-    
-    <!-- Inter-cluster connections -->
-    <path class="constellation-line delay-8" d="M200,180 L280,180" stroke="#9B8AAC" stroke-opacity="0.5"/>
-    <path class="constellation-line delay-9" d="M350,150 L450,100" stroke="#9B8AAC" stroke-opacity="0.5"/>
-    <path class="constellation-line delay-10" d="M550,150 L620,140" stroke="#9B8AAC" stroke-opacity="0.5"/>
+
+  <g>
+    <use href="#la1" class="ld d1" stroke="#1793D1"/>
+    <use href="#la2" class="ld d2" stroke="#1793D1"/>
+    <use href="#la3" class="ld d3" stroke="#1793D1"/>
+    <use href="#lb1" class="ld d2" stroke="#7BA3C9"/>
+    <use href="#lb2" class="ld d3" stroke="#7BA3C9"/>
+    <use href="#lb3" class="ld d4" stroke="#7BA3C9"/>
+    <use href="#lc1" class="ld d3" stroke="#E8B4C8"/>
+    <use href="#lc2" class="ld d4" stroke="#E8B4C8"/>
+    <use href="#lc3" class="ld d5" stroke="#E8B4C8"/>
+    <use href="#lc4" class="ld d6" stroke="#E8B4C8"/>
+    <use href="#ld1" class="ld d4" stroke="#3FB950"/>
+    <use href="#ld2" class="ld d5" stroke="#3FB950"/>
+    <use href="#ld3" class="ld d6" stroke="#3FB950"/>
+    <use href="#ld4" class="ld d6" stroke="#3FB950"/>
+    <use href="#x1"  class="ld d6" stroke="#9B8AAC" stroke-opacity="0.5"/>
+    <use href="#x2"  class="ld d6" stroke="#9B8AAC" stroke-opacity="0.5"/>
+    <use href="#x3"  class="ld d6" stroke="#9B8AAC" stroke-opacity="0.5"/>
   </g>
-  
-  <!-- Skill Stars -->
-  <g class="skill-nodes">
-    <!-- Linux -->
-    <circle class="skill-star delay-1" cx="100" cy="150" r="6" fill="#1793D1"/>
-    <circle class="skill-star delay-2" cx="180" cy="100" r="5" fill="#1793D1"/>
-    <circle class="skill-star delay-3" cx="200" cy="180" r="4" fill="#1793D1"/>
-    <text class="skill-label delay-3" x="100" y="175" text-anchor="middle">Linux</text>
-    
-    <!-- Networking -->
-    <circle class="skill-star delay-2" cx="300" cy="80" r="5" fill="#7BA3C9"/>
-    <circle class="skill-star delay-3" cx="350" cy="150" r="6" fill="#7BA3C9"/>
-    <circle class="skill-star delay-4" cx="280" cy="180" r="4" fill="#7BA3C9"/>
-    <text class="skill-label delay-4" x="310" y="205" text-anchor="middle">Networking</text>
-    
-    <!-- Cloud -->
-    <circle class="skill-star delay-3" cx="450" cy="100" r="5" fill="#E8B4C8"/>
-    <circle class="skill-star delay-4" cx="520" cy="80" r="4" fill="#E8B4C8"/>
-    <circle class="skill-star delay-5" cx="550" cy="150" r="6" fill="#E8B4C8"/>
-    <circle class="skill-star delay-6" cx="480" cy="180" r="5" fill="#E8B4C8"/>
-    <text class="skill-label delay-6" x="500" y="205" text-anchor="middle">Cloud</text>
-    
-    <!-- Development -->
-    <circle class="skill-star delay-4" cx="650" cy="90" r="5" fill="#3FB950"/>
-    <circle class="skill-star delay-5" cx="700" cy="150" r="6" fill="#3FB950"/>
-    <circle class="skill-star delay-6" cx="650" cy="200" r="4" fill="#3FB950"/>
-    <circle class="skill-star delay-7" cx="620" cy="140" r="5" fill="#3FB950"/>
-    <text class="skill-label delay-7" x="660" y="225" text-anchor="middle">Dev</text>
+
+  <g>
+    <circle class="signal lb1" r="2.5" fill="#1793D1">
+      <animateMotion dur="2.5s" repeatCount="indefinite" begin="2.4s"><mpath href="#la1"/></animateMotion>
+    </circle>
+    <circle class="signal lb2" r="2.5" fill="#7BA3C9">
+      <animateMotion dur="2.5s" repeatCount="indefinite" begin="2.5s"><mpath href="#lb1"/></animateMotion>
+    </circle>
+    <circle class="signal lb3" r="2.5" fill="#E8B4C8">
+      <animateMotion dur="2.8s" repeatCount="indefinite" begin="2.6s"><mpath href="#lc1"/></animateMotion>
+    </circle>
+    <circle class="signal lb4" r="2.5" fill="#3FB950">
+      <animateMotion dur="2.5s" repeatCount="indefinite" begin="2.7s"><mpath href="#ld1"/></animateMotion>
+    </circle>
+    <circle class="signal lb4" r="2" fill="#9B8AAC">
+      <animateMotion dur="3s" repeatCount="indefinite" begin="3s"><mpath href="#x1"/></animateMotion>
+    </circle>
+    <circle class="signal lb4" r="2" fill="#9B8AAC">
+      <animateMotion dur="3s" repeatCount="indefinite" begin="3.3s"><mpath href="#x2"/></animateMotion>
+    </circle>
+    <circle class="signal lb4" r="2" fill="#9B8AAC">
+      <animateMotion dur="3s" repeatCount="indefinite" begin="3.6s"><mpath href="#x3"/></animateMotion>
+    </circle>
   </g>
-  
-  <!-- Title -->
-  <text x="400" y="270" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#9B8AAC" opacity="0.8">
-    ✧ skills_constellation.map() ✧
-  </text>
+
+  <g>
+    <circle class="sk e1" cx="100" cy="150" r="6" fill="#1793D1"/>
+    <circle class="sk e2" cx="180" cy="100" r="5" fill="#1793D1"/>
+    <circle class="sk e3" cx="200" cy="180" r="4" fill="#1793D1"/>
+    <circle class="sk e2" cx="300" cy="80"  r="5" fill="#7BA3C9"/>
+    <circle class="sk e3" cx="350" cy="150" r="6" fill="#7BA3C9"/>
+    <circle class="sk e4" cx="280" cy="180" r="4" fill="#7BA3C9"/>
+    <circle class="sk e3" cx="450" cy="100" r="5" fill="#E8B4C8"/>
+    <circle class="sk e4" cx="520" cy="80"  r="4" fill="#E8B4C8"/>
+    <circle class="sk e5" cx="550" cy="150" r="6" fill="#E8B4C8"/>
+    <circle class="sk e6" cx="480" cy="180" r="5" fill="#E8B4C8"/>
+    <circle class="sk e4" cx="650" cy="90"  r="5" fill="#3FB950"/>
+    <circle class="sk e5" cx="700" cy="150" r="6" fill="#3FB950"/>
+    <circle class="sk e6" cx="650" cy="200" r="4" fill="#3FB950"/>
+    <circle class="sk e7" cx="620" cy="140" r="5" fill="#3FB950"/>
+  </g>
+
+  <g>
+    <text class="label" x="100" y="175" text-anchor="middle" style="animation-delay: 2.4s">Linux</text>
+    <text class="label" x="310" y="205" text-anchor="middle" style="animation-delay: 2.55s">Networking</text>
+    <text class="label" x="500" y="205" text-anchor="middle" style="animation-delay: 2.7s">Cloud</text>
+    <text class="label" x="660" y="225" text-anchor="middle" style="animation-delay: 2.85s">Dev</text>
+  </g>
+
+  <text class="title" x="400" y="270" text-anchor="middle">✧ skills_constellation.map() ✧</text>
 </svg>
