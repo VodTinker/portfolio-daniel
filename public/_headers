@@ -1,3 +1,10 @@
+# profile card and avatar should refresh quickly on GitHub/Camo
+/github-assets/profile-card.svg
+  Cache-Control: public, max-age=0, must-revalidate
+
+/github-assets/profile-avatar.jpg
+  Cache-Control: public, max-age=0, must-revalidate
+
 # Cloudflare Pages - Custom Headers
 
 # SVG files in github-assets folder (correct spelling)
