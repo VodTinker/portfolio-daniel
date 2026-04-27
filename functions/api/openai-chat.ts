@@ -1,8 +1,11 @@
 // Cloudflare Pages Function — handles /api/openai-chat
 // No Astro adapter needed — Cloudflare Pages detects functions/ automatically
 
+const NVIDIA_BASE_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
+const MODEL = 'deepseek-ai/deepseek-v4-flash';
+
 interface Env {
-  OPENAI_API_KEY: string;
+  NVIDIA_API_KEY: string; // nvapi-... from build.nvidia.com
 }
 
 const HEADERS = {
@@ -28,11 +31,11 @@ export const onRequestPost = async ({
   request: Request;
   env: Env;
 }) => {
-  const apiKey = env.OPENAI_API_KEY;
+  const apiKey = env.NVIDIA_API_KEY;
 
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: 'ERROR: OPENAI_API_KEY no está definida' }),
+      JSON.stringify({ error: 'ERROR: NVIDIA_API_KEY no está definida' }),
       { status: 500, headers: HEADERS }
     );
   }
@@ -48,22 +51,23 @@ export const onRequestPost = async ({
     }
 
     // Language detection
-    const detectionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    const detectionResponse = await fetch(NVIDIA_BASE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini',
+        model: MODEL,
         messages: [
           {
             role: 'system',
             content:
-              'You are a language detection assistant. Detect the language of the user input and respond with the ISO 639-1 language code only (e.g., "en" for English, "es" for Spanish).',
+              'You are a language detection assistant. Detect the language of the user input and respond with the ISO 639-1 language code only (e.g., "en" for English, "es" for Spanish). Reply with the code only, nothing else.',
           },
           { role: 'user', content: message },
         ],
+        max_tokens: 5,
       }),
     });
 
@@ -75,18 +79,19 @@ export const onRequestPost = async ({
 Eres un asistente de la página web personal de Daniel, desarrollador frontend y estudiante de ASIR.
 Responde de forma cercana, profesional y práctica.`;
 
-    const completionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    const completionResponse = await fetch(NVIDIA_BASE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini',
+        model: MODEL,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message },
         ],
+        max_tokens: 1024,
       }),
     });
 
@@ -95,9 +100,9 @@ Responde de forma cercana, profesional y práctica.`;
 
     return new Response(JSON.stringify({ reply }), { status: 200, headers: HEADERS });
   } catch (error) {
-    console.error('OpenAI Error:', error);
+    console.error('NVIDIA API Error:', error);
     return new Response(
-      JSON.stringify({ error: 'Error al llamar a OpenAI' }),
+      JSON.stringify({ error: 'Error al llamar a la API de NVIDIA' }),
       { status: 500, headers: HEADERS }
     );
   }
