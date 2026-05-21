@@ -1,4 +1,13 @@
 ---
+import '@fontsource/press-start-2p';
+import '@fontsource/vt323';
+import '@fontsource/pixelify-sans';
+import '@fontsource/silkscreen';
+import '@fontsource/silkscreen/700.css';
+import '@fontsource/jetbrains-mono';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
+
 interface Props {
   title: string;
   description?: string;
@@ -62,9 +71,6 @@ const { title, description = "Portfolio Asir-Daniel Fonov " } = Astro.props;
   })();
 </script>
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <slot />
