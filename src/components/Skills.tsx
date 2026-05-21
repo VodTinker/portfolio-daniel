@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { motion } from "framer-motion";
 import {
   FiCode,
@@ -18,7 +19,7 @@ import {
   SiJavascript, 
   SiTypescript, 
   SiHtml5, 
-  SiCss3, 
+  SiCss, 
   SiMysql, 
   SiPython,
   SiReact,
@@ -61,7 +62,7 @@ const Skills = () => {
   // Mapeo de iconos para las habilidades
   const skillIconMap: Record<string, JSX.Element> = {
     "HTML5": <SiHtml5 className="text-orange-500" />,
-    "CSS3": <SiCss3 className="text-blue-500" />,
+    "CSS3": <SiCss className="text-blue-500" />,
     "JavaScript (ES6+)": <SiJavascript className="text-yellow-500" />,
     "TypeScript": <SiTypescript className="text-blue-600" />,
     "React": <SiReact className="text-cyan-400" />,
