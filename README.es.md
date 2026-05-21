@@ -1,279 +1,204 @@
-# 🚀 VodTinker - Sitio Web Portfolio
+```
+ __      __        _ _____ _       _
+ \ \    / /       | |_   _(_)     | |
+  \ \  / /__   __| | | |  _ _ __  | | _____ _ __
+   \ \/ / _ \ / _` | | | | | '_ \ | |/ / _ \ '__|
+    \  / (_) | (_| | | | | | | | ||   <  __/ |
+     \/ \___/ \__,_|_|_| |_|_| |_|/_\_\___|_|
+```
+
+# VodTinker: Portfolio Gamificado y Retro Cyberpunk
 
 [![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Astro](https://img.shields.io/badge/Astro-5.15.3-FF5D01?logo=astro)](https://astro.build)
-[![React](https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
+[![Astro](https://img.shields.io/badge/Astro-6.3.3-FF5D01?logo=astro)](https://astro.build)
+[![React](https://img.shields.io/badge/React-19.2.6-61DAFB?logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Cloudflare](https://img.shields.io/badge/Cloudflare_Pages-F38020?logo=cloudflare)](https://pages.cloudflare.com)
 
 > 🌍 Español | [English](./README.md)
 
-Un moderno sitio web de portfolio multilingüe construido con Astro, React y TypeScript. Incluye animaciones interactivas, un asistente de chat con IA, cambio de tema claro/oscuro y diseño responsivo optimizado para todos los dispositivos.
+Un portfolio interactivo de alta fidelidad con estética retro-cyberpunk construido con **Astro**, **React** y **TypeScript**. Transforma el tradicional CV estático en una experiencia de usuario de 8 bits interactiva, con controles de monitor CRT físicos, personalización visual de temas en tiempo real, marcador de puntuación dinámico persistente, misiones de onboarding y un asistente virtual integrado de Inteligencia Artificial.
 
-## ✨ Características
+```
++--------------------------------------------------+
+| DANIEL (LV. 21)               CLASS: SYSADMIN   |
++--------------------------------------------------+
+| HP: [██████████████████████░░] 92%               |
+| MP: [██████████████░░░░░░░░░░] 68%               |
+| XP: [████████████████████░░░░] 85%               |
++--------------------------------------------------+
+```
 
-- 🎨 **UI/UX Moderna** - Diseño limpio y profesional con animaciones suaves
-- 🌓 **Tema Claro/Oscuro** - Cambio automático y manual con detección de preferencias del sistema
-- 🌐 **Multilingüe** - Soporte completo para inglés y español con i18next
-- 💬 **Asistente de Chat IA** - Chatbot interactivo potenciado por OpenAI
-- 📱 **Totalmente Responsivo** - Diseño mobile-first que funciona en todos los dispositivos
-- ⚡ **Optimizado para Rendimiento** - Construido con Astro para tiempos de carga ultrarrápidos
-- 🎭 **Animaciones Suaves** - Animaciones profesionales usando Framer Motion y Anime.js
-- 🔍 **Amigable con SEO** - Optimizado para motores de búsqueda
-- ♿ **Accesible** - Compatible con WCAG y HTML semántico
+---
 
-## 🛠️ Stack Tecnológico
+## Características
 
-### Tecnologías Principales
-- **[Astro](https://astro.build)** (v5.15.3) - Generador de sitios estáticos
-- **[React](https://react.dev)** (v18.3.1) - Framework de UI
-- **[TypeScript](https://www.typescriptlang.org/)** (v5.6.2) - JavaScript con tipado seguro
-- **[Tailwind CSS](https://tailwindcss.com)** (v3.4.17) - Framework CSS utility-first
+### Onboarding Gamificado ("Misiones Activas")
+- **Micro-Misiones secuenciales:** Guía interactiva que introduce paso a paso al visitante por los detalles de la interfaz.
+- **Integración con Scoreboard:** Completar tareas reproduce efectos de sonido chiptune retro e incrementa el marcador global de puntuación y monedas en la barra de navegación.
+- **HUD Final:** Al completar las 5 misiones, el HUD flotante se transforma en una vitrina de trofeos felicitando al usuario.
 
-### Librerías Adicionales
-- **Framer Motion** - Animaciones avanzadas
-- **Anime.js** - Librería de animaciones ligera
-- **React Icons** - Librería de iconos
-- **i18next** - Internacionalización
-- **OpenAI API** - Chat potenciado por IA
-- **AOS** - Librería Animate On Scroll
+### Terminal CRT Interactiva
+- **Interruptor analógico:** Apaga o enciende la simulación CRT pulsando el botón de encendido naranja en la cabecera o el punto rojo indicador de energía del monitor.
+- **Colores de fósforo:** Alterna entre los fósforos Ámbar, Verde o Cian en la cabecera de la terminal en cualquier momento.
+- **Efecto Glitch y Scanlines:** Activa o desactiva interferencias estáticas y el filtro de rejilla analógica en tiempo real.
 
-### Herramientas de Desarrollo
-- **Biome** - Linter y formateador rápido
-- **ESLint** - Linting de código
-- **Cloudflare Pages** - Plataforma de despliegue
+### Panel de Personalización Visual (Tweaks)
+- **Temas Globales en tiempo real:** Barra lateral deslizante que permite cambiar toda la paleta cromática del sitio instantáneamente:
+  - **Default Cyberpunk** (Tonos violetas y rosa neón)
+  - **Sunset Outrun** (Degradados cálidos estilo synthwave retro)
+  - **Green Terminal** (Modo consola clásico estilo Matrix)
+  - **Gameboy Classic** (Verde monocromático pixelado de cuatro tonos)
+  - **Cyberneon** (Líneas de alto contraste cian y magenta)
+- **Persistencia local:** Los temas de color y la configuración del CRT se guardan automáticamente en `localStorage`.
 
-## 🚀 Inicio Rápido
+### Asistente IA y Consola de Comandos
+- **Chatbot Inteligente:** Un asistente virtual integrado con el modelo GPT de OpenAI para responder a cualquier pregunta sobre mi experiencia, proyectos o biografía.
+- **Consola de comandos:** Escribe `/help` o `/clear` en el chat para ejecutar comandos personalizados dentro del chatbot.
 
-### Requisitos Previos
+### Optimización y Fuentes Locales
+- **Tipografías Autoalojadas:** Todo el catálogo de fuentes retro y mono (`Press Start 2P`, `VT323`, `Pixelify Sans`, `Silkscreen`, `JetBrains Mono`) se compila localmente mediante paquetes de `@fontsource`. Esto elimina errores de MIME-type provocados por Cloudflare Fonts en producción y garantiza una carga instantánea y fluida sin peticiones a terceros.
 
-- **Node.js** 18+ o **Bun** (recomendado)
-- **npm**, **pnpm**, **yarn**, o **bun**
+---
+
+## Mock API de Estado Interactiva
+Puedes realizar peticiones de prueba a un endpoint simulado para comprobar el estado de mi homelab localmente o previsualizar su respuesta:
+```bash
+$ curl -s https://vodtinker.dev/api/status
+{
+  "status": "online",
+  "uptime": "99.99%",
+  "preferred_sfx": "8-bit chiptunes",
+  "current_quest": "Building awesome retro systems"
+}
+```
+
+---
+
+## Trucos y Easter Eggs Secretos
+El sitio web incluye varios huevos de pascua de arcade programados en la interfaz:
+- **El Código Konami:** Pulsa la combinación clásica en tu teclado desde cualquier sección de la página de inicio para desbloquear un modo especial secreto:
+  `[ ↑ ] [ ↑ ] [ ↓ ] [ ↓ ] [ ← ] [ → ] [ ← ] [ → ] [ B ] [ A ]`
+- **Avatar Interactivo:** Haz clic sobre el avatar pixelado de Daniel dentro del marco P1 READY en la cabecera de la web para reproducir efectos de sonido, alterar estadísticas del HUD y subir experiencia (XP) en tiempo real.
+
+---
+
+## Stack Tecnológico
+
+### Tecnologías Core
+- **Astro** (v6.3.3) — Framework estático de última generación para lograr un rendimiento óptimo.
+- **React** (v19.2.6) — Diseñado para el HUD reactivo, el panel lateral de tweaks y el asistente inteligente.
+- **TypeScript** — Tipado estricto en todo el proyecto.
+- **CSS Vanilla y Variables HSL** — Permite el cambio de paletas cromáticas dinámico.
+
+### Librerías Clave
+- **Framer Motion y Anime.js** — Físicas de píxeles, efectos de sonido y transiciones interactivos.
+- **i18next** — Localización robusta para soporte multilingüe (Inglés y Español).
+- **OpenAI API** — Conexión fluida con la API de OpenAI en el Edge.
+- **@fontsource** — Gestión y almacenamiento óptimo de tipografías web locales.
+
+---
+
+## Inicio Rápido
+
+### Requisitos previos
+- **Node.js** 20+ o **Bun** 1.1+ (recomendado)
+- Gestor de paquetes **npm** o **bun**
 
 ### Instalación
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/VodTinker/VodTinker-Webpage.git
-   cd VodTinker-Webpage
+   git clone https://github.com/VodTinker/portfolio-daniel.git
+   cd portfolio-daniel
    ```
 
 2. **Instalar dependencias**
    ```bash
-   npm install
-   # o
    bun install
+   # o bien
+   npm install --legacy-peer-deps
    ```
 
 3. **Configurar variables de entorno**
    ```bash
    cp .env.example .env
    ```
-   Edita `.env` y añade tus claves API:
-   - `OPENAI_API_KEY` - Para la funcionalidad de chat IA
-   - `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_USER_ID` - Para formulario de contacto
+   Abre `.env` y rellena tus credenciales:
+   - `OPENAI_API_KEY` — Para el asistente inteligente de IA.
+   - `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_USER_ID` — Para el formulario de contacto.
 
-4. **Iniciar el servidor de desarrollo**
+4. **Arrancar en desarrollo**
    ```bash
-   npm run dev
-   # o
    bun run dev
+   # o bien
+   npm run dev
    ```
 
-5. **Abrir tu navegador**
-   Navega a `http://localhost:3000`
-
-## 📦 Scripts Disponibles
-
-```bash
-npm run dev          # Iniciar servidor de desarrollo en puerto 3000
-npm run build        # Construir para producción
-npm run build:clean  # Construcción limpia (elimina caché)
-npm run preview      # Previsualizar construcción de producción
-npm run lint         # Verificar código con Biome y Astro check
-npm run format       # Formatear código con Biome
-npm run deploy       # Desplegar a Cloudflare Pages
-```
-
-## 📁 Estructura del Proyecto
-
-```
-VodTinker-Webpage-main/
-├── src/
-│   ├── components/        # Componentes React
-│   │   ├── ui/           # Componentes UI reutilizables
-│   │   ├── About.tsx     # Sección Acerca de
-│   │   ├── Contact.tsx   # Sección Contacto
-│   │   ├── Hero.tsx      # Sección Hero
-│   │   ├── Navbar.tsx    # Barra de navegación
-│   │   ├── Projects.tsx  # Showcase de proyectos
-│   │   └── Skills.tsx    # Muestra de habilidades
-│   ├── contexts/         # Contextos React
-│   │   └── LanguageContext.tsx
-│   ├── layouts/          # Layouts Astro
-│   │   └── Layout.astro
-│   ├── pages/            # Páginas Astro (rutas)
-│   │   ├── index.astro   # Página principal
-│   │   └── api/          # Rutas API
-│   ├── utils/            # Funciones utilitarias
-│   │   ├── translations.ts
-│   │   ├── animations.ts
-│   │   └── projectsData.ts
-│   └── index.css         # Estilos globales
-├── public/               # Assets estáticos
-├── functions/            # Funciones Cloudflare
-│   └── api/
-│       └── openai-chat.js
-├── astro.config.mjs      # Configuración Astro
-├── tailwind.config.js    # Configuración Tailwind CSS
-├── tsconfig.json         # Configuración TypeScript
-└── package.json          # Dependencias y scripts
-```
-
-## 🎨 Características Principales Explicadas
-
-### Sistema de Temas
-El sitio web cuenta con un sistema de temas avanzado que:
-- Detecta preferencias del sistema automáticamente
-- Persiste la elección del usuario en localStorage
-- Transiciona suavemente entre temas
-- Soporta modos claro, oscuro y sistema
-
-### Soporte Multilingüe
-Internacionalización completa con:
-- Detección de idioma basada en configuración del navegador
-- Cambio manual de idioma
-- Todo el contenido traducido (Inglés/Español)
-- Preferencia de idioma persistente
-
-### Asistente de Chat IA
-Chatbot interactivo que:
-- Responde preguntas sobre el portfolio
-- Proporciona información sobre proyectos y habilidades
-- Usa el modelo GPT de OpenAI
-- Incluye sistema de comandos (escribe `/help`)
-
-### Diseño Responsivo
-- Enfoque mobile-first
-- Breakpoints para todos los tamaños de dispositivo
-- Interacciones táctiles amigables
-- Imágenes optimizadas para diferentes tamaños de pantalla
-
-## 🔧 Configuración
-
-### Variables de Entorno
-
-Crea un archivo `.env` con las siguientes variables:
-
-```env
-# API OpenAI (para funcionalidad de chat)
-OPENAI_API_KEY=tu_clave_api_openai
-
-# EmailJS (para formulario de contacto)
-EMAILJS_SERVICE_ID=tu_service_id
-EMAILJS_TEMPLATE_ID=tu_template_id
-EMAILJS_USER_ID=tu_user_id
-```
-
-### Personalización
-
-#### Actualizar Información Personal
-Edita `src/utils/translations.ts` para actualizar:
-- Biografía personal y descripción
-- Habilidades y tecnologías
-- Información de contacto
-- Enlaces de redes sociales
-
-#### Actualizar Proyectos
-Edita `src/utils/projectsData.ts` para añadir o modificar proyectos:
-```typescript
-export const projects = [
-  {
-    title: "Nombre del Proyecto",
-    description: "Descripción del proyecto",
-    technologies: ["React", "TypeScript"],
-    image: "/ruta/a/imagen.jpg",
-    github: "https://github.com/...",
-    demo: "https://url-demo.com"
-  }
-];
-```
-
-#### Modificar Colores del Tema
-Edita `tailwind.config.js` para personalizar el esquema de colores:
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: "tu-color",
-      secondary: "tu-color",
-      // ...
-    }
-  }
-}
-```
-
-## 🚀 Despliegue
-
-### Cloudflare Pages (Recomendado)
-
-1. **Construir el proyecto**
-   ```bash
-   npm run build
-   ```
-
-2. **Desplegar**
-   ```bash
-   npm run deploy
-   ```
-
-O conecta tu repositorio GitHub a Cloudflare Pages para despliegues automáticos.
-
-### Otras Plataformas
-
-El sitio es compatible con:
-- **Vercel** - `vercel deploy`
-- **Netlify** - `netlify deploy`
-- **GitHub Pages** - Despliegue de sitio estático
-- **Cualquier hosting estático** - Sube la carpeta `dist/`
-
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Por favor lee nuestras [Guías de Contribución](CONTRIBUTING.md) primero.
-
-1. Haz fork del repositorio
-2. Crea tu rama de característica (`git checkout -b feature/CaracteristicaIncreible`)
-3. Confirma tus cambios (`git commit -m 'Añadir alguna CaracteristicaIncreible'`)
-4. Empuja a la rama (`git push origin feature/CaracteristicaIncreible`)
-5. Abre un Pull Request
-
-## 📝 Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
-
-## 👤 Autor
-
-**Daniel Fonov (VodTinker)**
-
-- GitHub: [@VodTinker](https://github.com/VodTinker)
-- LinkedIn: [Daniel Fonov](https://linkedin.com/in/tu-perfil)
-- Portfolio: [vodtinker.dev](https://tu-url-portfolio.com)
-
-## 🙏 Agradecimientos
-
-- [Astro](https://astro.build) por el increíble generador de sitios estáticos
-- [React](https://react.dev) por el framework de UI
-- [Tailwind CSS](https://tailwindcss.com) por el sistema de estilos
-- [OpenAI](https://openai.com) por las capacidades de IA
-- Todos los contribuidores de código abierto que hicieron esto posible
-
-## 📧 Contacto
-
-¿Tienes preguntas o sugerencias? No dudes en:
-- Abrir un [issue](https://github.com/VodTinker/VodTinker-Webpage/issues)
-- Enviar un email a tu-email@example.com
-- Conectar en [LinkedIn](https://linkedin.com/in/tu-perfil)
+5. **Abrir navegador**
+   Accede a `http://localhost:3000`
 
 ---
 
-⭐ ¡Si te gusta este proyecto, dale una estrella en GitHub!
+## Scripts Disponibles
+
+```bash
+bun run dev          # Inicia el entorno de desarrollo en el puerto 3000
+bun run build        # Construye los archivos estáticos de producción (astro check & build)
+bun run preview      # Previsualiza la build de producción localmente
+bun run lint         # Verifica y lintea el código con Biome y Astro check
+bun run format       # Formatea el código automáticamente con Biome
+bun run deploy       # Despliega manualmente a Cloudflare Pages mediante Wrangler
+```
+
+---
+
+## Estructura del Directorio
+
+```
+portfolio-daniel/
+├── src/
+│   ├── components/        # Componentes en React y JSX
+│   │   ├── ui/           # Primitivas visuales
+│   │   ├── AppContent.tsx # Gestor de estado global y maquetación de pantalla
+│   │   ├── QuestHelper.tsx# HUD flotante interactivo de misiones
+│   │   ├── PixelHero.tsx  # Terminal CRT y cabecera de la web
+│   │   ├── PixelTweaks.tsx# Panel lateral deslizante de configuraciones estéticas
+│   │   ├── PixelChat.tsx  # Chatbot flotante interactivo con IA
+│   │   └── Sprites.tsx    # Sprites animados responsivos retro
+│   ├── contexts/         # Contextos globales en React
+│   │   └── LanguageContext.tsx
+│   ├── layouts/          # Plantillas de maquetación en Astro
+│   │   └── Layout.astro   # Configuración del head y carga de fuentes locales
+│   ├── index.css         # Estilos globales y reglas de paletas variables HSL
+│   └── env.d.ts          # Declaraciones de tipos TypeScript globales
+├── public/               # Recursos estáticos y efectos de sonido en formato WAV/MP3
+└── functions/            # Cloudflare Workers (Función serverless para la API de OpenAI)
+```
+
+---
+
+## Despliegue en Producción
+
+### Cloudflare Pages
+Este sitio está preconfigurado para compilarse y desplegarse en **Cloudflare Pages** de forma automática con cada push en `main`:
+- **Build Command:** `bun run build` (or `npm run build` utilizando las dependencias heredadas de `.npmrc`)
+- **Output Directory:** `dist`
+- **Root Directory:** `/` (v2 strategy)
+
+---
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT; consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+## Autor
+
+**Daniel Fonov (VodTinker)**
+- **Portfolio:** [vodtinker.dev](https://vodtinker.dev)
+- **GitHub:** [@VodTinker](https://github.com/VodTinker)
+- **LinkedIn:** [Daniel Fonov](https://www.linkedin.com/in/daniel-fonov-b897a82b3/)
+
+---
+
+*Si te ha gustado esta experiencia, ¡no dudes en darle una estrella al repositorio!*
