@@ -10,6 +10,7 @@ import { PIXEL_DATA } from '../utils/pixelData';
 import type { Lang, I18n } from '../utils/pixelData';
 import { playHover, playClick, playLevelUp } from '../utils/audio';
 import QuestHelper from './QuestHelper';
+import MobileMenu from './MobileMenu';
 
 const LEVEL_LABELS: Record<string, { en: string; es: string }> = {
   about:    { en: 'ENTER LORE',     es: 'ENTRAR EN LORE' },
@@ -32,6 +33,7 @@ export default function AppContent() {
     sfx: false,
   });
   const [scrollPct, setScrollPct] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -277,6 +279,17 @@ export default function AppContent() {
             <button type="button" className={`lang-btn lang-select es${lang === 'es' ? ' active' : ''}`} onClick={() => setTweak('lang', 'es')}>ES</button>
           </div>
         </div>
+
+        <button
+          type="button"
+          className="mobile-menu-btn pixel"
+          onClick={() => {
+            if (tweaks.sfx) playClick();
+            setMobileMenuOpen(true);
+          }}
+        >
+          MENU
+        </button>
       </nav>
 
       <nav className="scroll-dots" aria-label="section navigation">
@@ -353,6 +366,14 @@ export default function AppContent() {
       <div id="konami-toast">★ CHEAT UNLOCKED · 30 LIVES GRANTED ★</div>
 
       <PixelTweaks tweaks={tweaks} setTweak={setTweak} questStep={questStep} />
+
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        tweaks={tweaks}
+        setTweak={setTweak}
+        navigate={navigate}
+      />
     </>
   );
 }
