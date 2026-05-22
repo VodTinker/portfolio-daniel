@@ -2427,6 +2427,29 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   color: var(--ink);
 }
 
+.quest-hud-ctrls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.quest-hud-close-btn {
+  background: transparent;
+  border: 0;
+  color: var(--ink-faint);
+  font-family: var(--pixel-font);
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.15s;
+}
+
+.quest-hud-close-btn:hover {
+  color: var(--red);
+}
+
 .quest-title {
   font-family: var(--pixel-font);
   font-size: 9px;
@@ -2574,7 +2597,7 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 
 /* Responsive adjustment to prevent overlap on mobile */
 @media (max-width: 600px) {
-  /* Quest HUD placement */
+  /* Quest HUD placement & Compact layout */
   .quest-hud {
     left: 12px !important;
     bottom: 84px !important;
@@ -2583,6 +2606,42 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   }
   .quest-hud.minimized {
     width: calc(100vw - 24px) !important;
+  }
+  .quest-hud-header {
+    padding: 6px 10px !important;
+  }
+  .quest-hud-body {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+  .quest-avatar {
+    transform: scale(0.8) !important;
+    transform-origin: center center !important;
+    margin: 0 !important;
+  }
+  .quest-desc {
+    font-size: 9px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.3 !important;
+  }
+  .quest-hint {
+    font-size: 7.5px !important;
+    margin-bottom: 6px !important;
+    padding-left: 4px !important;
+  }
+  .quest-actions {
+    margin-top: 2px !important;
+  }
+  .quest-skip-btn {
+    padding: 4px 8px !important;
+    font-size: 7.5px !important;
+  }
+  .quest-hud.completed {
+    box-shadow: 
+      0 0 0 2px var(--bg-0), 
+      0 0 0 4px var(--gold), 
+      2px 2px 0 var(--bg-0), 
+      0 0 12px rgba(245, 158, 11, 0.25) !important;
   }
   
   /* Chat FAB and Back to Top placement to avoid clash */

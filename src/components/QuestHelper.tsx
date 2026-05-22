@@ -60,6 +60,20 @@ interface QuestHelperProps {
 export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
   const [minimized, setMinimized] = useState(false);
   const [alertText, setAlertText] = useState<string | null>(null);
+  const [dismissed, setDismissed] = useState(() => {
+    try {
+      return localStorage.getItem('vod-quest-dismissed') === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleDismiss = () => {
+    setDismissed(true);
+    try {
+      localStorage.setItem('vod-quest-dismissed', '1');
+    } catch {}
+  };
 
   useEffect(() => {
     if (step > 0 && step <= QUESTS.length) {
@@ -69,12 +83,34 @@ export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
     }
   }, [step, lang]);
 
+  // Auto-dismiss completed HUD after 8 seconds so it doesn't clutter the screen
+  useEffect(() => {
+    if (step === QUESTS.length && !dismissed) {
+      const t = setTimeout(() => {
+        handleDismiss();
+      }, 8000);
+      return () => clearTimeout(t);
+    }
+  }, [step, dismissed]);
+
+  if (dismissed) {
+    return null;
+  }
+
   if (step >= QUESTS.length) {
     return (
       <div className="quest-hud completed">
         <div className="quest-hud-header">
           <span className="quest-icon">🏆</span>
           <span className="quest-title pixel">{lang === 'es' ? '¡HÉROE RETRO!' : 'RETRO CHAMP!'}</span>
+          <button 
+            type="button" 
+            className="quest-hud-close-btn"
+            onClick={handleDismiss}
+            aria-label="Close"
+          >
+            ✕
+          </button>
         </div>
         <div className="quest-hud-body">
           <div className="quest-avatar">
@@ -107,13 +143,24 @@ export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
         <span className="quest-title pixel">
           {minimized ? (lang === 'es' ? '▶ QUEST ACTIVA' : '▶ ACTIVE QUEST') : activeQuest.title[lang]}
         </span>
-        <button 
-          type="button" 
-          className="quest-hud-toggle-btn"
-          aria-label={minimized ? 'Expand' : 'Collapse'}
-        >
-          {minimized ? '+' : '-'}
-        </button>
+        <div className="quest-hud-ctrls" onClick={(e) => e.stopPropagation()}>
+          <button 
+            type="button" 
+            className="quest-hud-toggle-btn"
+            onClick={() => setMinimized(!minimized)}
+            aria-label={minimized ? 'Expand' : 'Collapse'}
+          >
+            {minimized ? '+' : '-'}
+          </button>
+          <button 
+            type="button" 
+            className="quest-hud-close-btn"
+            onClick={handleDismiss}
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       {!minimized && (
