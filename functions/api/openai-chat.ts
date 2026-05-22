@@ -2,7 +2,7 @@
 // No Astro adapter needed — Cloudflare Pages detects functions/ automatically
 
 const NVIDIA_BASE_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
-const MODEL = 'deepseek-ai/deepseek-v4-flash';
+const MODEL = 'meta/llama-3.1-8b-instruct';
 
 interface Env {
   NVIDIA_API_KEY: string; // nvapi-... from build.nvidia.com
@@ -35,7 +35,7 @@ export const onRequestPost = async ({
 
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: 'ERROR: NVIDIA_API_KEY no está definida' }),
+      JSON.stringify({ error: 'ERROR: NVIDIA_API_KEY no está definida en las variables de entorno de Cloudflare' }),
       { status: 500, headers: HEADERS }
     );
   }
@@ -50,34 +50,10 @@ export const onRequestPost = async ({
       );
     }
 
-    // Language detection
-    const detectionResponse = await fetch(NVIDIA_BASE_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          {
-            role: 'system',
-            content:
-              'You are a language detection assistant. Detect the language of the user input and respond with the ISO 639-1 language code only (e.g., "en" for English, "es" for Spanish). Reply with the code only, nothing else.',
-          },
-          { role: 'user', content: message },
-        ],
-        max_tokens: 5,
-      }),
-    });
-
-    const detection = await detectionResponse.json();
-    const rawLang = detection.choices?.[0]?.message?.content ?? 'en';
-    const langCode = rawLang.trim().slice(0, 2).toLowerCase().replace(/[^a-z]/g, '');
-
-    const systemPrompt = `Responde en ${langCode === 'es' ? 'español' : 'inglés'}.
-Eres un asistente de la página web personal de Daniel, desarrollador frontend y estudiante de ASIR.
-Responde de forma cercana, profesional y práctica.`;
+    const systemPrompt = `Eres un asistente virtual de la página web personal de Daniel.
+Daniel es desarrollador frontend y estudiante de ASIR (Administración de Sistemas Informáticos en Red).
+Responde de forma muy cercana, profesional, práctica y breve (máximo 2 o 3 párrafos).
+IMPORTANTE: Detecta el idioma del mensaje del usuario y responde estrictamente en ese mismo idioma (por ejemplo, si te escribe en español responde en español, si te escribe en inglés responde en inglés, etc.).`;
 
     const completionResponse = await fetch(NVIDIA_BASE_URL, {
       method: 'POST',
@@ -94,6 +70,15 @@ Responde de forma cercana, profesional y práctica.`;
         max_tokens: 1024,
       }),
     });
+
+    if (!completionResponse.ok) {
+      const errorText = await completionResponse.text();
+      console.error('NVIDIA API error response:', errorText);
+      return new Response(
+        JSON.stringify({ error: `NVIDIA API returned error: ${completionResponse.status}` }),
+        { status: 502, headers: HEADERS }
+      );
+    }
 
     const completion = await completionResponse.json();
     const reply = completion.choices?.[0]?.message?.content ?? '';
