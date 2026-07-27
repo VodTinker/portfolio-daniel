@@ -117,7 +117,7 @@ const HeroNew = () => {
               <FiGithub size={28} />
             </a>
             <a
-              href="https://www.linkedin.com/in/daniel-fonov-b897a82b3/"
+              href="https://www.linkedin.com/in/daniel-fonov-garcía"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative overflow-hidden rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-sm p-4 text-foreground/80 transition-all duration-300 hover:scale-110 hover:bg-primary/20 hover:text-primary border border-white/20 dark:border-white/10"

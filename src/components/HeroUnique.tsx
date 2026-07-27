@@ -224,7 +224,7 @@ export default function HeroUnique() {
           </svg>
         </a>
         <a
-          href="https://linkedin.com/in/daniel-fonov"
+          href="https://www.linkedin.com/in/daniel-fonov-garcía"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"

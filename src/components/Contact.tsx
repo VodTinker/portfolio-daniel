@@ -170,7 +170,7 @@ const Contact = () => {
                     </motion.a>
                     <motion.a
                       {...(animationProps.staggerItem() as any)}
-                      href="https://www.linkedin.com/in/daniel-fonov-b897a82b3/"
+                      href="https://www.linkedin.com/in/daniel-fonov-garcía"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group/social relative rounded-full bg-card/50 backdrop-blur-sm p-4 text-muted-foreground ring-1 ring-border/10 transition-all duration-300 hover:-translate-y-2 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/10 dark:bg-white/5 dark:text-[#a78bfa] dark:hover:text-white overflow-hidden"

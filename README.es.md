@@ -197,7 +197,7 @@ Este proyecto está bajo la Licencia MIT; consulta el archivo [LICENSE](LICENSE)
 **Daniel Fonov (VodTinker)**
 - **Portfolio:** [vodtinker.dev](https://vodtinker.dev)
 - **GitHub:** [@VodTinker](https://github.com/VodTinker)
-- **LinkedIn:** [Daniel Fonov](https://www.linkedin.com/in/daniel-fonov-b897a82b3/)
+- **LinkedIn:** [Daniel Fonov](https://www.linkedin.com/in/daniel-fonov-garcía)
 
 ---
 

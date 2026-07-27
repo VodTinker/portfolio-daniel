@@ -15,7 +15,7 @@ export default function ContactUnique() {
   const links = [
     { label: "Email",    href: `mailto:${CONTACT_EMAIL}`,               external: false },
     { label: "GitHub",   href: "https://github.com/VodTinker",          external: true  },
-    { label: "LinkedIn", href: "https://linkedin.com/in/daniel-fonov",  external: true  },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/daniel-fonov-garcía", external: true  },
     { label: "Discord",  href: "https://discord.com/users/vodtinker",   external: true  },
   ];
 

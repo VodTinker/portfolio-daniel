@@ -46,7 +46,7 @@ const FooterMinimal = () => {
             </p>
             <nav className="flex flex-col gap-2.5">
               <a href="https://github.com/VodTinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">GitHub</a>
-              <a href="https://linkedin.com/in/daniel-fonov" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/daniel-fonov-garcía" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">LinkedIn</a>
               <a href="https://discord.com/users/vodtinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">Discord</a>
             </nav>
           </div>

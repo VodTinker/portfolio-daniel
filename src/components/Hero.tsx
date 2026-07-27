@@ -82,7 +82,7 @@ const Hero = () => {
               {/* LinkedIn */}
               <div className="inline-block" style={{ opacity: 1 }}>
                 <a
-                  href="https://www.linkedin.com/in/daniel-fonov-b897a82b3/"
+                  href="https://www.linkedin.com/in/daniel-fonov-garcía"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative overflow-hidden rounded-full bg-muted/60 p-3 text-muted-foreground transition-all duration-300 hover:-translate-y-1 hover:text-primary hover:shadow-md dark:bg-white/5 dark:text-[#a78bfa] dark:hover:text-white inline-flex"

@@ -11,7 +11,7 @@ export const PIXEL_DATA = {
   socials: [
     { id: 'github',   label: 'GitHub',   handle: '@VodTinker',          url: 'https://github.com/VodTinker',          glyph: 'GH' },
     { id: 'mail',     label: 'E-Mail',   handle: 'danielfonov71@gmail.com', url: 'mailto:danielfonov71@gmail.com',    glyph: 'M'  },
-    { id: 'linkedin', label: 'LinkedIn', handle: '/in/daniel-fonov',     url: 'https://linkedin.com/in/daniel-fonov', glyph: 'IN' },
+    { id: 'linkedin', label: 'LinkedIn', handle: '/in/daniel-fonov-garcía', url: 'https://www.linkedin.com/in/daniel-fonov-garcía', glyph: 'IN' },
     { id: 'discord',  label: 'Discord',  handle: 'vodtinker',            url: '#',                                    glyph: 'DC' },
   ],
 

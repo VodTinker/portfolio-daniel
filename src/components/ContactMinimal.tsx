@@ -23,7 +23,7 @@ const contactMethods = [
     icon: FiLinkedin,
     title: "LinkedIn",
     value: "Daniel Fonov",
-    href: "https://www.linkedin.com/in/daniel-fonov-b897a82b3/",
+    href: "https://www.linkedin.com/in/daniel-fonov-garcía",
     description: "Conectemos",
     gradient: "from-blue-600 to-blue-800",
   },

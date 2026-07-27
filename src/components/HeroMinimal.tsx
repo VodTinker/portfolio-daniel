@@ -104,7 +104,7 @@ const HeroMinimal = () => {
                 <FiGithub size={20} />
               </a>
               <a
-                href="https://www.linkedin.com/in/daniel-fonov-b897a82b3/"
+                href="https://www.linkedin.com/in/daniel-fonov-garcía"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/60 hover:text-foreground transition-colors duration-300"
