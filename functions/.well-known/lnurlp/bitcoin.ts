@@ -1,3 +1,5 @@
+import { nwc } from '@getalby/sdk';
+
 export const onRequestGet: PagesFunction = async (context) => {
   const url = new URL(context.request.url);
   const amountMsat = url.searchParams.get('amount');
@@ -26,22 +28,35 @@ export const onRequestGet: PagesFunction = async (context) => {
     );
   }
 
-  // Paso 2: Si la cartera envía ?amount=... obtenemos la factura dinámica de Alby
-  try {
-    const albyResp = await fetch(`https://getalby.com/.well-known/lnurlp/vodtinker/cb?amount=${amountMsat}`);
-    const albyData = await albyResp.text();
+  // Paso 2: Generar la factura dinámica solicitándosela a tu Alby Hub en casa vía Nostr NWC
+  const nwcUrl = 'nostr+walletconnect://f15205b046e89dd798f0c59490c18f740a485f6fa797840da04b8db8c2a95605?relay=wss://relay.getalby.com&secret=bdcb8c94237472c0df977596310ae86431312fa735c571e012e8e7d8f01fa28e';
 
-    return new Response(albyData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
+  try {
+    const client = new nwc.NWCClient({ nostrWalletConnectUrl: nwcUrl });
+    const amountSats = Math.max(1, Math.floor(parseInt(amountMsat, 10) / 1000));
+    
+    const invoiceResp = await client.makeInvoice({
+      amount: amountSats,
+      description: 'Pago a bitcoin@vodtinker.dev'
     });
-  } catch (err) {
+
+    return new Response(
+      JSON.stringify({
+        pr: invoiceResp.invoice,
+        routes: []
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      }
+    );
+  } catch (err: any) {
     return new Response(
       JSON.stringify({
         status: 'ERROR',
-        reason: 'Error generando la factura de Lightning'
+        reason: err?.message || 'Error al generar factura NWC'
       }),
       {
         status: 500,
