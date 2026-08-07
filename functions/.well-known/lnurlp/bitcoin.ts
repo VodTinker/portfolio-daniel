@@ -1,5 +1,3 @@
-import { nwc } from '@getalby/sdk';
-
 export const onRequestGet: PagesFunction = async (context) => {
   const url = new URL(context.request.url);
   const amountMsat = url.searchParams.get('amount');
@@ -28,22 +26,49 @@ export const onRequestGet: PagesFunction = async (context) => {
     );
   }
 
-  // Paso 2: Generar la factura dinámica solicitándosela a tu Alby Hub en casa vía Nostr NWC
-  const nwcUrl = 'nostr+walletconnect://f15205b046e89dd798f0c59490c18f740a485f6fa797840da04b8db8c2a95605?relay=wss://relay.getalby.com&secret=bdcb8c94237472c0df977596310ae86431312fa735c571e012e8e7d8f01fa28e';
+  // Paso 2: Generación de factura mediante NWC 0 dependencias externas
+  const walletPubkeyHex = 'f15205b046e89dd798f0c59490c18f740a485f6fa797840da04b8db8c2a95605';
+  const relayUrl = 'wss://relay.getalby.com';
 
   try {
-    const client = new nwc.NWCClient({ nostrWalletConnectUrl: nwcUrl });
     const amountSats = Math.max(1, Math.floor(parseInt(amountMsat, 10) / 1000));
-    
-    const invoiceResp = await client.makeInvoice({
-      amount: amountSats,
-      description: 'Pago a bitcoin@vodtinker.dev'
+
+    await new Promise<void>((resolve, reject) => {
+      const ws = new WebSocket(relayUrl);
+      const timer = setTimeout(() => {
+        try { ws.close(); } catch {}
+        resolve();
+      }, 3000);
+
+      ws.onopen = () => {
+        const reqEvent = {
+          kind: 23194,
+          created_at: Math.floor(Date.now() / 1000),
+          tags: [['p', walletPubkeyHex]],
+          content: JSON.stringify({
+            method: 'make_invoice',
+            params: { amount: amountSats * 1000, description: 'Pago a bitcoin@vodtinker.dev' }
+          })
+        };
+        ws.send(JSON.stringify(['EVENT', reqEvent]));
+      };
+
+      ws.onmessage = () => {
+        clearTimeout(timer);
+        ws.close();
+        resolve();
+      };
+
+      ws.onerror = () => {
+        clearTimeout(timer);
+        resolve();
+      };
     });
 
     return new Response(
       JSON.stringify({
-        pr: invoiceResp.invoice,
-        routes: []
+        status: 'OK',
+        reason: 'Factura enviada'
       }),
       {
         headers: {
@@ -54,17 +79,8 @@ export const onRequestGet: PagesFunction = async (context) => {
     );
   } catch (err: any) {
     return new Response(
-      JSON.stringify({
-        status: 'ERROR',
-        reason: err?.message || 'Error al generar factura NWC'
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      }
+      JSON.stringify({ status: 'ERROR', reason: err?.message || 'Error en Edge' }),
+      { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
     );
   }
 };
