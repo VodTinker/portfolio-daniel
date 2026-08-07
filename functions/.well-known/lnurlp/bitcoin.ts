@@ -1,4 +1,4 @@
-// Cloudflare Pages Function — handles /.well-known/lnurlp/bitcoin
+// Cloudflare Pages Function — handles /.well-known/lnurlp/bitcoin (MAINNET)
 
 import { finalizeEvent, nip04 } from 'nostr-tools';
 
@@ -38,9 +38,9 @@ export const onRequestGet = async ({ request }: { request: Request }) => {
     );
   }
 
-  // Paso 2: Generar la factura dinámicamente mediante Nostr NWC con tu Alby Hub de casa
-  const secretHex = 'bdcb8c94237472c0df977596310ae86431312fa735c571e012e8e7d8f01fa28e';
-  const walletPubkey = 'f15205b046e89dd798f0c59490c18f740a485f6fa797840da04b8db8c2a95605';
+  // Paso 2: Generar la factura dinámicamente mediante Nostr NWC con tu Alby Hub en casa (MAINNET)
+  const secretHex = 'b55affb99d04b16b54d96ee7b6b8970546551a26bcd7d0e9ca4e3abd2df13232';
+  const walletPubkey = 'd4c485eeba8e017faccfe4a41f1703e95fcdd5bf6a927be75cb3108bf0be25ce';
   const relayUrl = 'wss://relay.getalby.com';
 
   try {
