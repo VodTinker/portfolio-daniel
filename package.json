@@ -73,6 +73,8 @@
     "motion": "^12.38.0",
     "node-fetch": "^3.3.2",
     "node.js": "^0.0.1-security",
+    "nostr-tools": "^2.10.4",
+    "@noble/hashes": "^1.7.1",
     "openai": "^6.38.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

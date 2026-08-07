@@ -1,6 +1,14 @@
-import { finalizeEvent } from 'nostr-tools/pure';
-import * as nip04 from 'nostr-tools/nip04';
-import { hexToBytes } from '@noble/hashes/utils';
+// Cloudflare Pages Function — handles /.well-known/lnurlp/bitcoin
+
+import { finalizeEvent, nip04 } from 'nostr-tools';
+
+const hexToBytes = (hex: string): Uint8Array => {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
+  }
+  return bytes;
+};
 
 export const onRequestGet = async ({ request }: { request: Request }) => {
   const url = new URL(request.url);
@@ -30,7 +38,7 @@ export const onRequestGet = async ({ request }: { request: Request }) => {
     );
   }
 
-  // Paso 2: Generar la factura en tu nodo local vía NWC (Nostr Wallet Connect)
+  // Paso 2: Generar la factura dinámicamente mediante Nostr NWC con tu Alby Hub de casa
   const secretHex = 'bdcb8c94237472c0df977596310ae86431312fa735c571e012e8e7d8f01fa28e';
   const walletPubkey = 'f15205b046e89dd798f0c59490c18f740a485f6fa797840da04b8db8c2a95605';
   const relayUrl = 'wss://relay.getalby.com';
