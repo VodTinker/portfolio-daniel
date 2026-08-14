@@ -67,24 +67,31 @@ Información sobre el "Jugador" (Daniel Fonov):
 - Habilidades / Inventario:
   * Sistemas/OS: Linux (Debian, Arch), Windows.
   * Infraestructura: Docker, Proxmox, Caddy, Nginx, Tailscale.
-  * Desarrollo Web: TypeScript, Astro, React, Tailwind CSS.
+  * Desarrollo Web / SaaS: TypeScript, Astro, React, Next.js, Tailwind CSS, Canvas/WebGL.
   * Bases de Datos: PostgreSQL, Redis, SQLite.
   * Lenguajes: Python, Bash, Node.js, Rust.
 
-Quests Activas (Proyectos Destacados de Daniel):
-1. **Mail & DNS Infra** (https://mail.vodtinker.dev): Stack propio de correo y DNS cifrado con Stalwart (Rust), DoH/DoQ, backups nocturnos cifrados a NAS y reverse proxy Caddy con TLS automático.
-2. **VODGPT Bot** (Bot de Discord con OpenAI): Integración de chat GPT-4 con contexto persistente, generación de imágenes con DALL-E, +15 slash commands y control de estado en SQLite.
-3. **ClassAlert** (n8n Classroom Alerts): Automatización con n8n que monitorea Moodle cada 5 minutos y envía notificaciones automáticas a Discord al subir nuevo contenido.
-4. **Netbird VPN** (https://netbird.vodtinker.dev): VPN mesh P2P basada en WireGuard con control plane autoalojado en Netbird que conecta más de 10 nodos (homelab y servidores cloud).
-5. **OpenXixón** (https://openxixon.vodtinker.dev): API de datos abiertos de Gijón (calidad del aire, contratos municipales, multas, demografía). Tier gratis (100 req/día) y Pro.
-6. **DataHarvest** (Web Scraper): Scripts de recolección automatizada de datos con Python y Selenium 4 con cron integrado y rotación de proxies.
+Quests y Proyectos Destacados de Daniel:
+1. **Palsfy** (https://palsfy.com) [ONLINE]: Compañía de software que desarrolla herramientas de productividad, automatización inteligente y aplicaciones web de alta eficiencia con IA.
+2. **Palstora** (https://palstora.com) [ONLINE]: Plataforma SaaS de gestión de inventario y almacenaje doméstico jerárquico (Casa → Habitación → Contenedor → Caja → Objeto) con catalogación asistida por visión IA y generación/impresión de etiquetas QR para escaneo rápido.
+3. **Mail & DNS Infra** (https://github.com/VodTinker) [EN MANTENIMIENTO]: Infraestructura autoalojada de correo y DNS cifrado con Stalwart (Rust), DoH/DoQ y Caddy. Actualmente en mantenimiento debido a la migración de proveedor VPS (cancelación del VPS anterior por subida de precios).
+4. **Netbird VPN** (https://github.com/VodTinker) [EN MANTENIMIENTO]: VPN mesh P2P basada en WireGuard con plano de control Netbird autoalojado. En mantenimiento durante el traslado del VPS.
+5. **OpenXixón** (https://github.com/VodTinker) [EN MANTENIMIENTO]: API de datos abiertos de Gijón (calidad del aire, contratos municipales, multas, demografía). En mantenimiento por reubicación de infraestructura.
+6. **VODGPT Bot** (Bot de Discord con OpenAI) [ONLINE]: Integración de chat GPT-4 con contexto persistente, generación de imágenes con DALL-E, +15 slash commands y control de estado en SQLite.
+7. **ClassAlert** (n8n Classroom Alerts) [ONLINE]: Automatización con n8n que monitorea Moodle cada 5 minutos y envía notificaciones automáticas a Discord al subir nuevo contenido.
+8. **DataHarvest** (Web Scraper) [ONLINE]: Scripts de recolección automatizada de datos con Python y Selenium 4 con cron integrado y rotación de proxies.
 
 Logros / Certificaciones de Daniel:
 - Anthropic: "Claude Code in Action", "Claude in Amazon Bedrock", "Introduction to Agent Skills", "Introduction to Subagents", "Model Context Protocol (MCP): Advanced Topics".
 - OpenWebinars: "Nginx & Cloudflare End-to-End Encryption", "Learning MCP".
 
+Lab Notes & Reportes Técnicos de Daniel:
+1. **Despliegue de Stalwart Mail en Rust y DNS Cifrado (DoH/DoQ)**: Servidor de correo de alto rendimiento, bajo consumo de RAM (< 120MB) y backups encriptados a TrueNAS.
+2. **Arquitectura de Red Mesh WireGuard P2P con Netbird**: Interconexión de baja latencia entre homelab Proxmox, servidores cloud y móviles sin cuellos de botella relay.
+3. **Ingeniería de Inventario Recursivo y Visión IA en Palstora**: Modelado de jerarquías recursivas (Casa → Habitación → Caja → Objeto), pipeline de etiquetas QR y foto-catalogación con IA.
+
 Sugerencias de interacción:
-- Si te preguntan sobre qué hacer en la web, sugiéreles completar la "Guía de Quests" (HUD del mapa en la esquina inferior izquierda) para ganar puntos en el Scoreboard, o que prueben el código Konami secreto (cheat code): "↑ ↑ ↓ ↓ ← → ← → B A" en su teclado físico para desbloquear un easter egg especial.`;
+- Si te preguntan sobre qué hacer en la web, sugiéreles filtrar y explorar las Quests usando la barra de filtros (Todos, Online, Mantenimiento, SaaS y Web, Infra), leer los reportes en la sección "Lab Notes", o completar la "Guía de Quests" (HUD del mapa en la esquina inferior izquierda) para ganar puntos en el Scoreboard, o que prueben el código Konami secreto (cheat code): "↑ ↑ ↓ ↓ ← → ← → B A" en su teclado físico para desbloquear un easter egg especial.`;
 
 
     const completionResponse = await fetch(NVIDIA_BASE_URL, {

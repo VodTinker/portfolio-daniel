@@ -1,5 +1,22 @@
-import { useState } from 'react';
-import { Sprite, SPRITE_STAR, SPRITE_SERVER, SPRITE_GEAR, SPRITE_MUSHROOM, SPRITE_SWORD, SPRITE_MONITOR, SPRITE_CHEST, SPRITE_NETBIRD, SPRITE_GLOBE, SPRITE_VPS_SERVER, SPRITE_DESKTOP, SPRITE_PROXMOX_RACK, SPRITE_IPAD, SPRITE_PHONE } from './Sprites';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import {
+  Sprite,
+  SPRITE_STAR,
+  SPRITE_SERVER,
+  SPRITE_GEAR,
+  SPRITE_MONITOR,
+  SPRITE_CHEST,
+  SPRITE_NETBIRD,
+  SPRITE_GLOBE,
+  SPRITE_VPS_SERVER,
+  SPRITE_DESKTOP,
+  SPRITE_PROXMOX_RACK,
+  SPRITE_IPAD,
+  SPRITE_PHONE,
+  SPRITE_PALSFY,
+  SPRITE_PALSTORA,
+} from './Sprites';
 import { PIXEL_DATA } from '../utils/pixelData';
 import type { I18n, Lang } from '../utils/pixelData';
 
@@ -55,6 +72,8 @@ export function PixelAbout({ t }: { t: I18n }) {
 
 /* ======= PROJECTS ======= */
 const SPRITES_MAP: Record<string, string> = {
+  'palsfy':        SPRITE_PALSFY,
+  'palstora':      SPRITE_PALSTORA,
   'mail-infra':    SPRITE_SERVER,
   'discord-bot':   SPRITE_MONITOR,
   'classroom-bot': SPRITE_CHEST,
@@ -72,14 +91,31 @@ const LVL_COLOR: Record<string, string> = {
   S: 'var(--gold)', A: 'var(--cyan)', B: 'var(--magenta)', C: 'var(--ink-dim)',
 };
 
-function ProjectCard({ p, lang }: { p: (typeof PIXEL_DATA.projects)[number]; lang: Lang }) {
-  const statusColor = p.stats.status === 'live' ? 'var(--green)' : 'var(--gold)';
+function ProjectCard({
+  p,
+  lang,
+  t,
+  onSelect,
+}: {
+  p: (typeof PIXEL_DATA.projects)[number];
+  lang: Lang;
+  t: I18n;
+  onSelect: (p: (typeof PIXEL_DATA.projects)[number]) => void;
+}) {
+  const isMaintenance = p.stats.status === 'maintenance';
+  const statusColor = isMaintenance ? 'var(--gold)' : 'var(--green)';
   const sprite = SPRITES_MAP[p.id] ?? SPRITE_CHEST;
   const cardColor = COLOR_VAR[p.color] ?? 'var(--cyan)';
+
   return (
-    <div className="project-wrap" style={{ '--project-c': cardColor } as React.CSSProperties}>
-      <a href={p.link} target="_blank" rel="noopener noreferrer"
-         className={`project-card hover-lift project-card-${p.color}`}>
+    <div className={`project-wrap${isMaintenance ? ' is-maint' : ''}`} style={{ '--project-c': cardColor } as React.CSSProperties}>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => onSelect(p)}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onSelect(p); }}
+        className={`project-card hover-lift project-card-${p.color}${isMaintenance ? ' project-card-maint' : ''}`}
+      >
         <div className="project-art">
           <div className="project-art-bg" />
           <div className="project-art-icon">
@@ -88,32 +124,51 @@ function ProjectCard({ p, lang }: { p: (typeof PIXEL_DATA.projects)[number]; lan
           <div className="project-lvl pixel" style={{ color: LVL_COLOR[p.stats.lvl] ?? 'var(--ink)' }}>
             LV {p.stats.lvl}
           </div>
+          {isMaintenance && (
+            <div className="project-maint-tag pixel">
+              <span className="dot-blink gold" /> {t.projects_maint_badge}
+            </div>
+          )}
         </div>
         <div className="project-body">
           <div className="project-head">
             <h3 className="project-title">{p.title}</h3>
-            <div className="project-status" style={{ color: statusColor }}>
-              <span className="dot-blink" style={{ background: statusColor }} />
-              {p.stats.status}
+            <div className={`project-status ${isMaintenance ? 'maintenance' : 'live'}`} style={{ color: statusColor }}>
+              <span className={`dot-blink ${isMaintenance ? 'gold' : 'green'}`} style={{ background: statusColor }} />
+              {isMaintenance ? t.projects_status_maint : t.projects_status_live}
             </div>
           </div>
           <p className="project-tag pixel">{p.tagline[lang]}</p>
           <p className="project-desc">{p.desc[lang]}</p>
           <div className="project-tags">
-            {p.tags.map(tg => <span key={tg} className="chip">{tg}</span>)}
+            {p.tags.map(tg => (
+              <span key={tg} className={`chip ${tg === 'Migration' ? 'gold' : ''}`}>{tg}</span>
+            ))}
           </div>
           <div className="project-footer">
             <span className="project-stat"><span className="pixel">★</span> {p.stats.lvl}</span>
-            <span className="project-arrow pixel">OPEN ▶</span>
+            <span className="project-arrow pixel">
+              {t.projects_btn_details}
+            </span>
           </div>
         </div>
-      </a>
+      </div>
 
-      {/* side panel */}
+      {/* Desktop hover side panel */}
       <div className="project-panel">
-        <div className="project-panel-head pixel">◆ QUEST LOG</div>
+        <div className="project-panel-head pixel">
+          ◆ QUEST LOG {isMaintenance ? '· [MIGRATING]' : ''}
+        </div>
+        {isMaintenance && (
+          <div className="project-panel-maint-alert pixel">
+            <span className="maint-alert-icon">⚠</span>
+            <span>{lang === 'es' ? 'Migración de VPS en curso' : 'VPS migration in progress'}</span>
+          </div>
+        )}
         <ul className="project-panel-features">
-          {p.details.features[lang].map((f, i) => <li key={i}>{f}</li>)}
+          {p.details.features[lang].map((f, i) => (
+            <li key={i} className={f.startsWith('⚠') ? 'maint-feature' : ''}>{f}</li>
+          ))}
         </ul>
         <div className="project-panel-meta pixel">
           <span style={{ color: 'var(--gold)' }}>◷</span> {p.details.date}
@@ -124,29 +179,262 @@ function ProjectCard({ p, lang }: { p: (typeof PIXEL_DATA.projects)[number]; lan
             {p.details.rewards.map(r => <span key={r} className="chip">{r}</span>)}
           </div>
         </div>
-        <a href={p.link} target="_blank" rel="noopener noreferrer"
-           className="project-panel-cta pixel" onClick={e => e.stopPropagation()}>
-          OPEN ▶
-        </a>
+        <div className="row" style={{ gap: 8, marginTop: 4 }}>
+          <button
+            type="button"
+            className="project-panel-cta pixel"
+            style={{ flex: 1, textAlign: 'center', cursor: 'pointer', background: 'transparent', border: 'none' }}
+            onClick={e => {
+              e.stopPropagation();
+              onSelect(p);
+            }}
+          >
+            {t.projects_btn_details}
+          </button>
+          <a
+            href={p.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-panel-cta pixel"
+            style={{ flex: 1, textAlign: 'center' }}
+            onClick={e => e.stopPropagation()}
+          >
+            {isMaintenance ? (lang === 'es' ? 'REPO ▶' : 'REPO ▶') : t.projects_btn_open}
+          </a>
+        </div>
       </div>
     </div>
   );
 }
 
+function QuestModal({
+  p,
+  lang,
+  t,
+  onClose,
+}: {
+  p: (typeof PIXEL_DATA.projects)[number];
+  lang: Lang;
+  t: I18n;
+  onClose: () => void;
+}) {
+  const [mounted, setMounted] = useState(false);
+  const isMaintenance = p.stats.status === 'maintenance';
+  const sprite = SPRITES_MAP[p.id] ?? SPRITE_CHEST;
+  const cardColor = COLOR_VAR[p.color] ?? 'var(--cyan)';
+
+  useEffect(() => {
+    setMounted(true);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [onClose]);
+
+  if (!mounted || typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div className="quest-modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
+      <div
+        className="quest-modal-box"
+        style={{ '--project-modal-c': cardColor } as React.CSSProperties}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="quest-modal-header">
+          <div className="quest-modal-title-group">
+            <span className="quest-modal-tag pixel">
+              [LV.{p.stats.lvl}] {t.quest_modal_title}
+            </span>
+            <span
+              className={`chip ${isMaintenance ? 'gold' : 'green'}`}
+              style={{ fontSize: 7, padding: '2px 6px' }}
+            >
+              <span className={`dot-mini ${isMaintenance ? 'gold' : 'green'}`} />{' '}
+              {isMaintenance ? t.projects_status_maint : t.projects_status_live}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="quest-modal-close-btn pixel"
+            onClick={onClose}
+            aria-label={t.quest_modal_close}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="quest-modal-body">
+          {/* Hero Row */}
+          <div className="quest-modal-hero">
+            <div className="quest-modal-icon-wrap">
+              <Sprite grid={sprite} scale={3} />
+            </div>
+            <div className="quest-modal-meta">
+              <h3>{p.title}</h3>
+              <p>{p.tagline[lang]}</p>
+            </div>
+          </div>
+
+          {/* Maintenance Notice if applicable */}
+          {isMaintenance && (
+            <div className="quest-modal-maint-banner">
+              <span style={{ fontSize: 14 }}>⚠</span>
+              <span>{t.quest_modal_maint_alert}</span>
+            </div>
+          )}
+
+          {/* Description */}
+          <p className="project-desc" style={{ fontSize: 14 }}>{p.desc[lang]}</p>
+
+          {/* System Specs & Features */}
+          <div className="quest-modal-section-h pixel">
+            ◆ {t.quest_modal_features}
+          </div>
+          <ul className="quest-modal-bullets">
+            {p.details.features[lang].map((f, i) => (
+              <li key={i} className={f.startsWith('⚠') ? 'maint-feature' : ''}>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          {/* Tech stack chips */}
+          <div className="quest-modal-section-h pixel">
+            ◆ STACK & PROTOCOLS
+          </div>
+          <div className="project-tags">
+            {p.tags.map(tg => (
+              <span key={tg} className={`chip ${tg === 'Migration' ? 'gold' : ''}`}>
+                {tg}
+              </span>
+            ))}
+          </div>
+
+          {/* XP Rewards */}
+          <div className="quest-modal-section-h pixel">
+            ★ {t.quest_modal_rewards}
+          </div>
+          <div className="project-tags">
+            {p.details.rewards.map(r => (
+              <span key={r} className="chip">
+                {r}
+              </span>
+            ))}
+          </div>
+
+          {/* Action CTAs */}
+          <div className="quest-modal-actions">
+            <a
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quest-modal-btn-primary pixel"
+            >
+              {isMaintenance ? t.quest_modal_github : t.quest_modal_visit}
+            </a>
+            <button
+              type="button"
+              className="quest-modal-btn-secondary pixel"
+              onClick={onClose}
+            >
+              {t.quest_modal_close}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 export function PixelProjects({ t, lang }: { t: I18n; lang: Lang }) {
+  const [filter, setFilter] = useState<'all' | 'live' | 'maintenance' | 'saas' | 'infra'>('all');
+  const [selectedQuest, setSelectedQuest] = useState<(typeof PIXEL_DATA.projects)[number] | null>(null);
+
+  const filteredProjects = PIXEL_DATA.projects.filter(p => {
+    if (filter === 'all') return true;
+    if (filter === 'live') return p.stats.status === 'live';
+    if (filter === 'maintenance') return p.stats.status === 'maintenance';
+    if (filter === 'saas') return p.tags.some(tag => ['SaaS', 'Design Editor', 'AI Tools', 'Next.js / React'].includes(tag));
+    if (filter === 'infra') return p.tags.some(tag => ['Rust', 'Stalwart', 'DNS', 'Netbird', 'WireGuard', 'Linux', 'Automation', 'Python', 'n8n'].includes(tag));
+    return true;
+  });
+
+  const countLive = PIXEL_DATA.projects.filter(p => p.stats.status === 'live').length;
+  const countMaint = PIXEL_DATA.projects.filter(p => p.stats.status === 'maintenance').length;
+
   return (
     <section id="projects">
       <div className="shell">
         <div className="section-banner magenta pixel">{t.projects_banner}</div>
         <h2 className="section-title">{t.projects_title}</h2>
-        <p className="muted" style={{ marginBottom: 32 }}>{t.projects_sub}</p>
-        <div className="projects-grid">
-          {PIXEL_DATA.projects.map(p => <ProjectCard key={p.id} p={p} lang={lang} />)}
+        <p className="muted" style={{ marginBottom: 24 }}>{t.projects_sub}</p>
+
+        {/* Quest Filter Bar */}
+        <div className="projects-filter-bar pixel">
+          <button
+            type="button"
+            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+            onClick={() => setFilter('all')}
+          >
+            {t.projects_filter_all} <span className="filter-count">({PIXEL_DATA.projects.length})</span>
+          </button>
+          <button
+            type="button"
+            className={`filter-btn live ${filter === 'live' ? 'active' : ''}`}
+            onClick={() => setFilter('live')}
+          >
+            <span className="dot-mini green" /> {t.projects_filter_live} <span className="filter-count">({countLive})</span>
+          </button>
+          <button
+            type="button"
+            className={`filter-btn maint ${filter === 'maintenance' ? 'active' : ''}`}
+            onClick={() => setFilter('maintenance')}
+          >
+            <span className="dot-mini gold" /> {t.projects_filter_maint} <span className="filter-count">({countMaint})</span>
+          </button>
+          <button
+            type="button"
+            className={`filter-btn saas ${filter === 'saas' ? 'active' : ''}`}
+            onClick={() => setFilter('saas')}
+          >
+            {t.projects_filter_saas}
+          </button>
+          <button
+            type="button"
+            className={`filter-btn infra ${filter === 'infra' ? 'active' : ''}`}
+            onClick={() => setFilter('infra')}
+          >
+            {t.projects_filter_infra}
+          </button>
         </div>
+
+        <div className="projects-grid">
+          {filteredProjects.map(p => (
+            <ProjectCard key={p.id} p={p} lang={lang} t={t} onSelect={setSelectedQuest} />
+          ))}
+        </div>
+
+        {/* Quest Details Modal */}
+        {selectedQuest && (
+          <QuestModal
+            p={selectedQuest}
+            lang={lang}
+            t={t}
+            onClose={() => setSelectedQuest(null)}
+          />
+        )}
       </div>
     </section>
   );
 }
+
 
 /* ======= STACK ======= */
 const COLORS = ['cyan', 'magenta', 'gold', 'violet', 'green', 'cyan'];
@@ -236,14 +524,14 @@ const HL_NODES = [
   },
   {
     id: 'vps',
-    label: { en: 'VPS', es: 'VPS' },
-    sub:   'cloud vm · Ubuntu',
+    label: { en: 'VPS (MIGRATING)', es: 'VPS (MIGRANDO)' },
+    sub:   'cloud vm · migrating',
     sprite: SPRITE_VPS_SERVER,
     x: 14, y: 38,
-    color: 'var(--cyan)',
+    color: 'var(--gold)',
     services: {
-      en: ['Stalwart mail (JMAP/IMAP)', 'Caddy reverse proxy', 'DoH / DoQ DNS', 'Netbird relay'],
-      es: ['Stalwart mail (JMAP/IMAP)', 'Reverse proxy Caddy', 'DNS DoH / DoQ', 'Relay Netbird'],
+      en: ['Stalwart mail (migrating)', 'Caddy reverse proxy', 'DoH / DoQ DNS', 'Netbird relay'],
+      es: ['Stalwart mail (en migración)', 'Reverse proxy Caddy', 'DNS DoH / DoQ', 'Relay Netbird'],
     },
   },
   {
@@ -457,7 +745,7 @@ export function PixelHomelab({ t, lang }: { t: I18n; lang: Lang }) {
                   <div className="hl-node-dots">
                     <span className="hl-node-dot" />
                     <span className="hl-node-dot" />
-                    <span className="hl-node-dot red" />
+                    <span className={`hl-node-dot ${n.id === 'vps' ? 'amber' : 'red'}`} />
                   </div>
                 </div>
 
@@ -471,8 +759,11 @@ export function PixelHomelab({ t, lang }: { t: I18n; lang: Lang }) {
                   <div className="hl-label pixel">{n.label[lang]}</div>
                   {n.sub && <div className="hl-sub">{n.sub}</div>}
                   {n.id !== 'net' && (
-                    <div className="hl-status-row">
-                      <span className="hl-dot" /><span className="hl-dot-label pixel">ONLINE</span>
+                    <div className={`hl-status-row ${n.id === 'vps' ? 'maint' : ''}`}>
+                      <span className={`hl-dot ${n.id === 'vps' ? 'amber' : ''}`} />
+                      <span className="hl-dot-label pixel">
+                        {n.id === 'vps' ? (lang === 'es' ? 'MIGRANDO' : 'MIGRATING') : 'ONLINE'}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -485,12 +776,14 @@ export function PixelHomelab({ t, lang }: { t: I18n; lang: Lang }) {
             {hovNode ? (
               <div className="hl-bar-content">
                 <div className="hl-bar-name pixel" style={{ color: hovNode.color }}>
-                  ▸ [SYS_{hovNode.id.toUpperCase()}]: ACTIVE
+                  ▸ [SYS_{hovNode.id.toUpperCase()}]: {hovNode.id === 'vps' ? (lang === 'es' ? 'EN MIGRACIÓN' : 'MIGRATING') : 'ACTIVE'}
                 </div>
                 {hovNode.sub && <div className="hl-bar-sub">{hovNode.sub}</div>}
                 {hovNode.services[lang].length > 0 && (
                   <div className="hl-bar-chips">
-                    {hovNode.services[lang].map(s => <span key={s} className="chip cyan">{s}</span>)}
+                    {hovNode.services[lang].map(s => (
+                      <span key={s} className={`chip ${s.includes('migra') ? 'gold' : 'cyan'}`}>{s}</span>
+                    ))}
                   </div>
                 )}
               </div>
@@ -590,6 +883,189 @@ export function PixelCerts({ t, lang }: { t: I18n; lang: Lang }) {
   );
 }
 
+/* ======= LAB NOTES / CASE STUDIES ======= */
+function LabReaderModal({
+  note,
+  lang,
+  t,
+  onClose,
+}: {
+  note: (typeof PIXEL_DATA.labNotes)[number];
+  lang: Lang;
+  t: I18n;
+  onClose: () => void;
+}) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [onClose]);
+
+  if (!mounted || typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div className="quest-modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
+      <div
+        className="quest-modal-box lab-reader-box"
+        style={{
+          '--note-c': COLOR_VAR[note.color] ?? 'var(--cyan)',
+          '--project-modal-c': COLOR_VAR[note.color] ?? 'var(--cyan)'
+        } as React.CSSProperties}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="quest-modal-header">
+          <span className="quest-modal-tag pixel">
+            LOG FILE: /sys/lab/{note.id}.md
+          </span>
+          <button
+            type="button"
+            className="quest-modal-close-btn pixel"
+            onClick={onClose}
+            aria-label={t.notes_btn_close}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="quest-modal-body">
+          <div className="lab-note-header">
+            <span className="lab-note-cat pixel">{note.category}</span>
+            <span className="lab-note-time pixel">⏱ {note.readTime} · ◷ {note.date}</span>
+          </div>
+
+          <h3 style={{ fontSize: 18, color: 'var(--ink)', fontFamily: 'var(--pixel-font)', lineHeight: 1.4 }}>
+            {note.title[lang]}
+          </h3>
+          <p style={{ fontSize: 13, color: 'var(--ink-dim)', fontStyle: 'italic' }}>
+            {note.tagline[lang]}
+          </p>
+
+          <div className="lab-reader-content" style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 8 }}>
+            {note.content[lang].map((paragraph, idx) => {
+              const lines = paragraph.split('\n');
+              const heading = lines[0].replace(/^###\s*/, '');
+              const rest = lines.slice(1);
+              return (
+                <div key={idx} className="lab-reader-entry">
+                  <h4>◆ {heading}</h4>
+                  {rest.map((line, lIdx) => {
+                    if (line.startsWith('- ')) {
+                      const clean = line.replace(/^- \*\*(.*?)\*\*:\s*/, '');
+                      const labelMatch = line.match(/^- \*\*(.*?)\*\*:\s*/);
+                      const label = labelMatch ? labelMatch[1] : '';
+                      return (
+                        <ul key={lIdx} style={{ listStyle: 'none', paddingLeft: 0, marginTop: 4 }}>
+                          <li style={{ fontSize: 13, color: 'var(--ink-dim)', paddingLeft: 16, position: 'relative', lineHeight: 1.5 }}>
+                            <span style={{ position: 'absolute', left: 0, color: 'var(--note-c, var(--cyan))' }}>▸</span>
+                            {label ? <strong style={{ color: 'var(--ink)' }}>{label}: </strong> : null}
+                            {clean}
+                          </li>
+                        </ul>
+                      );
+                    }
+                    return (
+                      <p key={lIdx} style={{ marginTop: lIdx > 0 ? 6 : 0 }}>
+                        {line}
+                      </p>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="project-tags" style={{ marginTop: 8 }}>
+            {note.tags.map(tag => (
+              <span key={tag} className="chip">{tag}</span>
+            ))}
+          </div>
+
+          <div className="quest-modal-actions">
+            <button
+              type="button"
+              className="quest-modal-btn-primary pixel"
+              onClick={onClose}
+            >
+              {t.notes_btn_close}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+/* ======= LAB NOTES / CASE STUDIES ======= */
+export function PixelLabNotes({ t, lang }: { t: I18n; lang: Lang }) {
+  const [selectedNote, setSelectedNote] = useState<(typeof PIXEL_DATA.labNotes)[number] | null>(null);
+
+  return (
+    <section id="labnotes">
+      <div className="shell">
+        <div className="section-banner cyan pixel">{t.notes_banner}</div>
+        <h2 className="section-title">{t.notes_title}</h2>
+        <p className="muted" style={{ marginBottom: 24 }}>{t.notes_sub}</p>
+
+        <div className="lab-notes-grid">
+          {PIXEL_DATA.labNotes.map(note => {
+            const cardColor = COLOR_VAR[note.color] ?? 'var(--cyan)';
+            return (
+              <article
+                key={note.id}
+                className="lab-note-card"
+                style={{ '--note-c': cardColor } as React.CSSProperties}
+                onClick={() => setSelectedNote(note)}
+                tabIndex={0}
+                role="button"
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedNote(note); }}
+              >
+                <div className="lab-note-header">
+                  <span className="lab-note-cat pixel">{note.category}</span>
+                  <span className="lab-note-time pixel">⏱ {note.readTime}</span>
+                </div>
+                <h3 className="lab-note-title">{note.title[lang]}</h3>
+                <p className="lab-note-tagline">{note.tagline[lang]}</p>
+                <div className="lab-note-tags">
+                  {note.tags.map(tag => (
+                    <span key={tag} className="chip">{tag}</span>
+                  ))}
+                </div>
+                <div className="lab-note-footer">
+                  <span className="lab-note-date pixel">◷ {note.date}</span>
+                  <button type="button" className="lab-note-btn pixel">
+                    {t.notes_btn_read}
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        {/* Reader Modal rendered with Portal */}
+        {selectedNote && (
+          <LabReaderModal
+            note={selectedNote}
+            lang={lang}
+            t={t}
+            onClose={() => setSelectedNote(null)}
+          />
+        )}
+      </div>
+    </section>
+  );
+}
+
 /* ======= COMMS ======= */
 export function PixelComms({ t, lang }: { t: I18n; lang: Lang }) {
   return (
@@ -633,12 +1109,13 @@ export function PixelComms({ t, lang }: { t: I18n; lang: Lang }) {
 }
 
 /* ======= FOOTER ======= */
-const FOOTER_NAV = ['about', 'projects', 'stack', 'xp', 'comms'] as const;
+const FOOTER_NAV = ['about', 'projects', 'stack', 'xp', 'labnotes', 'comms'] as const;
 const FOOTER_NAV_LABELS: Record<string, { en: string; es: string }> = {
   about:    { en: 'About',      es: 'Sobre mí'   },
   projects: { en: 'Projects',   es: 'Proyectos'  },
   stack:    { en: 'Stack',      es: 'Stack'       },
   xp:       { en: 'Experience', es: 'Experiencia' },
+  labnotes: { en: 'Lab Notes',  es: 'Notas Lab'  },
   comms:    { en: 'Contact',    es: 'Contacto'    },
 };
 

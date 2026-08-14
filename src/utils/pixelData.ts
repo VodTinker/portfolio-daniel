@@ -25,24 +25,158 @@ export const PIXEL_DATA = {
 
   projects: [
     {
-      id: 'mail-infra',
-      title: 'Mail & DNS Infra',
-      tagline: { en: 'Self-hosted mail & encrypted DNS', es: 'Correo y DNS cifrado propio' },
+      id: 'palsfy',
+      title: 'Palsfy',
+      tagline: { en: 'Software tools & web apps built for humans', es: 'Herramientas de software y apps web para humanos' },
       desc: {
-        en: 'Full mail + DNS stack with Stalwart (Rust), JMAP/IMAP/SMTP, DoH/DoQ, auto-backups, zero downtime.',
-        es: 'Stack completo de correo + DNS con Stalwart (Rust), JMAP/IMAP/SMTP, DoH/DoQ, backups automáticos.',
+        en: 'Software company (Sweden & Spain) crafting high-efficiency web apps, intelligent automation tools, and AI-enabled productivity platforms that eliminate manual friction.',
+        es: 'Compañía de software (Suecia y España) que desarrolla aplicaciones web de alta eficiencia, herramientas de automatización y plataformas con IA que eliminan la fricción manual.',
       },
-      tags: ['Rust', 'Stalwart', 'DNS', 'Caddy', 'Tailscale'],
+      tags: ['SaaS', 'Web Apps', 'TypeScript', 'AI Tools', 'Cloud'],
+      stats: { stars: 0, lvl: 'S', status: 'live' as const },
+      color: 'magenta',
+      link: 'https://palsfy.com',
+      details: {
+        date: '2024 – present',
+        features: {
+          en: [
+            'Productivity-first web apps and intelligent automation suites',
+            'AI-assisted workflows removing repetitive human overhead',
+            'Modern full-stack architecture (React / Next.js / TypeScript)',
+            'Engineering next-gen software platforms including Palstora.com',
+          ],
+          es: [
+            'Aplicaciones web y suites de automatización inteligente centradas en productividad',
+            'Flujos de trabajo con IA que eliminan tareas repetitivas y sobrecarga',
+            'Arquitectura full-stack moderna (React / Next.js / TypeScript)',
+            'Desarrollo de plataformas de nueva generación incluyendo Palstora.com',
+          ],
+        },
+        rewards: ['SaaS development', 'AI workflows', 'product engineering'],
+      },
+    },
+    {
+      id: 'palstora',
+      title: 'Palstora',
+      tagline: { en: 'Smart home inventory & storage tracking', es: 'Gestión inteligente de inventario y almacenaje' },
+      desc: {
+        en: 'Hierarchical storage organizer with AI-assisted item cataloging, printable QR container labels, recursive spaces, and real-time collaboration.',
+        es: 'Organizador de inventario físico jerárquico con catalogación asistida por IA, generación de etiquetas QR para cajas y colaboración multiusuario.',
+      },
+      tags: ['SaaS', 'Next.js / React', 'QR System', 'AI Vision', 'Cloud'],
       stats: { stars: 0, lvl: 'S', status: 'live' as const },
       color: 'cyan',
-      link: 'https://mail.vodtinker.dev',
+      link: 'https://palstora.com',
+      details: {
+        date: '2024 – present',
+        features: {
+          en: [
+            'Recursive hierarchy (House → Room → Container → Box → Item)',
+            'AI camera snap-and-tag cataloging assistant',
+            'Instant QR label generation & mobile box scanning',
+            'Multi-user shared workspaces with live search & filters',
+          ],
+          es: [
+            'Jerarquía recursiva (Casa → Habitación → Contenedor → Caja → Objeto)',
+            'Asistente de foto-catalogación con visión IA',
+            'Generación de etiquetas QR y escaneo rápido en móvil',
+            'Espacios compartidos familiares con búsqueda y filtros en tiempo real',
+          ],
+        },
+        rewards: ['QR pipeline', 'AI item vision', 'recursive data model'],
+      },
+    },
+    {
+      id: 'mail-infra',
+      title: 'Mail & DNS Infra',
+      tagline: { en: 'Self-hosted mail & encrypted DNS (Migrating VPS)', es: 'Correo y DNS cifrado propio (En migración VPS)' },
+      desc: {
+        en: 'Full mail + DNS stack with Stalwart (Rust), JMAP/IMAP/SMTP, DoH/DoQ, auto-backups. Currently in maintenance due to VPS provider migration.',
+        es: 'Stack completo de correo + DNS con Stalwart (Rust), JMAP/IMAP/SMTP, DoH/DoQ, backups automáticos. Temporalmente en mantenimiento por migración de VPS.',
+      },
+      tags: ['Rust', 'Stalwart', 'DNS', 'Caddy', 'Tailscale', 'Migration'],
+      stats: { stars: 0, lvl: 'S', status: 'maintenance' as const },
+      color: 'gold',
+      link: 'https://github.com/VodTinker',
       details: {
         date: '2023 – present',
         features: {
-          en: ['Stalwart JMAP/IMAP/SMTP + DoH/DoQ', 'Nightly encrypted backups to NAS', 'Zero-downtime deploys via Tailscale', 'Caddy reverse proxy + auto TLS'],
-          es: ['Stalwart JMAP/IMAP/SMTP + DoH/DoQ', 'Backups cifrados nocturnos a NAS', 'Sin downtime via red Tailscale', 'Reverse proxy Caddy + TLS auto'],
+          en: [
+            'Stalwart JMAP/IMAP/SMTP + DoH/DoQ encrypted DNS',
+            'Nightly encrypted backups to NAS & zero-downtime architecture',
+            'Caddy reverse proxy + auto TLS cert management',
+            '⚠ Server migration in progress (cancelled previous VPS due to price increase)',
+          ],
+          es: [
+            'Stalwart JMAP/IMAP/SMTP + DNS cifrado DoH/DoQ',
+            'Backups cifrados nocturnos a NAS y arquitectura zero-downtime',
+            'Reverse proxy Caddy + gestión TLS automática',
+            '⚠ Migración de servidor en curso (baja del VPS previo por subida de precios)',
+          ],
         },
-        rewards: ['self-hosted mail', 'encrypted DNS', 'zero-downtime ops'],
+        rewards: ['self-hosted mail', 'encrypted DNS', 'infra migration'],
+      },
+    },
+    {
+      id: 'vpn-netbird',
+      title: 'Netbird VPN',
+      tagline: { en: 'Self-hosted WireGuard mesh VPN (Migrating VPS)', es: 'VPN mesh WireGuard autoalojada (En migración VPS)' },
+      desc: {
+        en: 'WireGuard-based mesh VPN with a self-hosted Netbird control plane connecting homelab, VMs, and devices. Under maintenance during VPS relocation.',
+        es: 'VPN mesh basada en WireGuard con control plane Netbird propio conectando homelab, VMs y dispositivos. En mantenimiento por traslado de VPS.',
+      },
+      tags: ['Netbird', 'WireGuard', 'Linux', 'Docker', 'Migration'],
+      stats: { stars: 0, lvl: 'A', status: 'maintenance' as const },
+      color: 'violet',
+      link: 'https://github.com/VodTinker',
+      details: {
+        date: '2024 – present',
+        features: {
+          en: [
+            'Self-hosted Netbird control plane & P2P WireGuard mesh',
+            'Granular ACL rules per device group & zero relay hops',
+            'Connects 10+ nodes across homelab and cloud environments',
+            '⚠ Control plane under maintenance while migrating cloud provider',
+          ],
+          es: [
+            'Control plane Netbird propio y red mesh WireGuard P2P',
+            'Reglas ACL granulares por grupo de dispositivo sin saltos relay',
+            'Conecta +10 nodos entre homelab y entornos cloud',
+            '⚠ Plano de control en mantenimiento durante la migración de servidor',
+          ],
+        },
+        rewards: ['WireGuard internals', 'Netbird self-host', 'network ACLs'],
+      },
+    },
+    {
+      id: 'openxixon',
+      title: 'OpenXixón',
+      tagline: { en: 'Open data API for Gijón (Infra maintenance)', es: 'API de datos abiertos de Gijón (En mantenimiento)' },
+      desc: {
+        en: 'REST API exposing verified Gijón municipal datasets: air quality, public contracts, traffic fines, demographics. Undergoing infra upgrade.',
+        es: 'API REST con datasets municipales de Gijón verificados: calidad del aire, contratos públicos, multas, demografía. En actualización de infra.',
+      },
+      tags: ['REST API', 'Open Data', 'TypeScript', 'Cloudflare', 'Migration'],
+      stats: { stars: 0, lvl: 'S', status: 'maintenance' as const },
+      color: 'cyan',
+      link: 'https://github.com/VodTinker',
+      details: {
+        date: '2025 – present',
+        features: {
+          en: [
+            'Air quality: NO₂, O₃, PM10, PM2.5 hourly telemetry',
+            'Public investments & municipal contracts ingestion pipeline',
+            'Bearer token auth + edge deployment architecture',
+            '⚠ API endpoint in maintenance while backend data collectors are migrated',
+          ],
+          es: [
+            'Calidad del aire: telemetría horaria NO₂, O₃, PM10, PM2.5',
+            'Pipeline de ingesta de inversiones públicas y contratos',
+            'Autenticación por bearer token + arquitectura en el edge',
+            '⚠ Endpoint API en mantenimiento mientras se migran los recolectores',
+          ],
+        },
+        rewards: ['REST API design', 'open data pipelines', 'edge deployment'],
       },
     },
     {
@@ -85,48 +219,6 @@ export const PIXEL_DATA = {
           es: ['Polling Moodle cada 5 min via cron', 'Alerta Discord al subir contenido', 'Filtros configurables por asignatura', 'Cadena n8n + flujo no-code'],
         },
         rewards: ['n8n automation', 'webhook chains', 'Moodle scraping'],
-      },
-    },
-    {
-      id: 'vpn-netbird',
-      title: 'Netbird VPN',
-      tagline: { en: 'Self-hosted WireGuard mesh VPN', es: 'VPN mesh WireGuard autoalojada' },
-      desc: {
-        en: 'WireGuard-based mesh VPN with a self-hosted Netbird control plane. Connects homelab, cloud VMs and remote devices with zero relay hops.',
-        es: 'VPN mesh basada en WireGuard con plano de control Netbird propio. Conecta homelab, VMs cloud y dispositivos remotos sin relay.',
-      },
-      tags: ['Netbird', 'WireGuard', 'Linux', 'Docker'],
-      stats: { stars: 0, lvl: 'A', status: 'live' as const },
-      color: 'violet',
-      link: 'https://netbird.vodtinker.dev',
-      details: {
-        date: '2024 – present',
-        features: {
-          en: ['Self-hosted Netbird control plane', 'P2P WireGuard — no relay hops', 'ACL rules per device group', 'Connects 10+ nodes across homelab & cloud'],
-          es: ['Control plane Netbird propio', 'WireGuard P2P sin saltos relay', 'Reglas ACL por grupo de dispositivo', 'Conecta +10 nodos entre homelab y cloud'],
-        },
-        rewards: ['WireGuard internals', 'Netbird self-host', 'network ACLs'],
-      },
-    },
-    {
-      id: 'openxixon',
-      title: 'OpenXixón',
-      tagline: { en: 'Open data API for Gijón', es: 'API de datos abiertos de Gijón' },
-      desc: {
-        en: 'REST API exposing verified Gijón municipal datasets: air quality, public contracts, traffic fines, demographics. Free tier + Pro plan.',
-        es: 'API REST con datasets municipales de Gijón verificados: calidad del aire, contratos públicos, multas, demografía. Tier gratuito + plan Pro.',
-      },
-      tags: ['REST API', 'Open Data', 'TypeScript', 'Cloudflare'],
-      stats: { stars: 0, lvl: 'S', status: 'live' as const },
-      color: 'cyan',
-      link: 'https://openxixon.vodtinker.dev',
-      details: {
-        date: '2025 – present',
-        features: {
-          en: ['Air quality: NO₂, O₃, PM10, PM2.5 hourly', 'Public investments & municipal contracts', 'Bearer token auth + edge deployment', 'Free 100 req/day · Pro 10K req/day'],
-          es: ['Calidad del aire: NO₂, O₃, PM10 cada hora', 'Inversiones públicas y contratos municipales', 'Auth bearer token + despliegue en edge', 'Gratis 100 req/día · Pro 10K req/día'],
-        },
-        rewards: ['REST API design', 'open data pipelines', 'edge deployment'],
       },
     },
     {
@@ -285,6 +377,93 @@ export const PIXEL_DATA = {
     },
   ],
 
+  labNotes: [
+    {
+      id: 'stalwart-rust-mail',
+      title: {
+        en: 'Deploying Stalwart Mail in Rust & Encrypted DNS (DoH/DoQ)',
+        es: 'Despliegue de Stalwart Mail en Rust y DNS Cifrado (DoH/DoQ)',
+      },
+      tagline: {
+        en: 'High-efficiency modern mail server with zero downtime and automated NAS backups',
+        es: 'Servidor de correo moderno de alta eficiencia con cero downtime y backups cifrados a NAS',
+      },
+      date: '2025-02',
+      category: 'INFRA & SECURITY',
+      color: 'cyan',
+      readTime: '4 min',
+      content: {
+        en: [
+          '### Objective & Context\nTraditional mail servers like Postfix/Dovecot are memory-heavy and complex to configure securely. Stalwart is an all-in-one mail server written in Rust that unifies JMAP, IMAP, and SMTP with exceptional memory efficiency and built-in Sieve filtering.',
+          '### Key Architectural Highlights\n- **Encrypted DNS Integration**: Configured Stalwart DNS with DNS-over-HTTPS (DoH) and DNS-over-QUIC (DoQ) to prevent MITM and ISP eavesdropping.\n- **Storage & Nightly Backups**: Integrated rocksdb backend with automated nightly encrypted snapshots transferred over Tailscale to an isolated TrueNAS backup pool.\n- **Zero-Downtime TLS & Reverse Proxy**: Fronted by Caddy to handle automatic ACME certificate renewals and TLS termination effortlessly.',
+          '### Takeaways & Lessons Learned\nRust-based infrastructure significantly reduces RAM footprint (< 120MB idling) while achieving sub-millisecond query latency and rock-solid reliability.'
+        ],
+        es: [
+          '### Objetivo y Contexto\nLos servidores de correo tradicionales como Postfix/Dovecot consumen bastante memoria y su configuración segura es compleja. Stalwart es un servidor integral escrito en Rust que unifica JMAP, IMAP y SMTP con una eficiencia de memoria asombrosa y soporte nativo de filtros Sieve.',
+          '### Aspectos Clave de la Arquitectura\n- **Integración de DNS Cifrado**: Configuración de DNS con DNS-over-HTTPS (DoH) y DNS-over-QUIC (DoQ) para eliminar riesgos de espionaje o manipulación por ISPs.\n- **Almacenamiento y Backups Nocturnos**: Backend con RocksDB y snapshots encriptados diarios enviados mediante la red privada Tailscale a un pool TrueNAS.\n- **TLS y Reverse Proxy sin Caídas**: Frontal con Caddy para renovación automática de certificados ACME TLS y balanceo sin fricción.',
+          '### Conclusiones y Aprendizaje\nLa infraestructura en Rust reduce drásticamente el consumo de RAM (< 120MB en reposo) proporcionando latencias de consulta inferiores al milisegundo y máxima estabilidad.'
+        ],
+      },
+      tags: ['Rust', 'Stalwart', 'DoH/DoQ', 'Caddy', 'Tailscale', 'Linux'],
+    },
+    {
+      id: 'netbird-wireguard-mesh',
+      title: {
+        en: 'P2P WireGuard Mesh Network Architecture with Netbird',
+        es: 'Arquitectura de Red Mesh WireGuard P2P con Netbird',
+      },
+      tagline: {
+        en: 'Connecting Proxmox homelab, cloud nodes, and remote workstations with zero relay hops',
+        es: 'Conectando homelab Proxmox, nodos cloud y estaciones remotas sin cuellos de botella relay',
+      },
+      date: '2025-05',
+      category: 'NETWORKING & MESH',
+      color: 'magenta',
+      readTime: '5 min',
+      content: {
+        en: [
+          '### The Problem with Centralized VPNs\nTraditional hub-and-spoke VPNs (like OpenVPN) force all network traffic through a single central server, creating latency spikes and single points of failure between homelab nodes.',
+          '### P2P Mesh Architecture\n- **Self-Hosted Netbird Control Plane**: Deployed Netbird Management and Signal servers to coordinate WireGuard keys without acting as a bottleneck relay.\n- **ICE / STUN Hole Punching**: Direct peer-to-peer tunnels are established dynamically between Proxmox nodes, Arch Linux workstation, and remote mobile devices.\n- **Granular ACL Routing**: Isolated internal management subnets (Proxmox cluster / Docker daemons) from public-facing containers using strict Netbird security groups.',
+          '### Performance Results\nAchieved line-rate 1 Gbps throughput between local nodes with less than 2ms latency overhead and zero exposure of internal ports to the public Internet.'
+        ],
+        es: [
+          '### El Problema de las VPNs Centralizadas\nLas VPNs tradicionales en estrella (hub-and-spoke como OpenVPN) enrutan todo el tráfico por un único nodo central, generando latencias innecesarias y un punto único de fallo entre máquinas del homelab.',
+          '### Arquitectura Mesh P2P\n- **Control Plane Netbird Propio**: Despliegue de los servidores de Gestión y Señalización de Netbird para coordinar claves WireGuard sin actuar de cuello de botella.\n- **ICE / STUN Hole Punching**: Los túneles P2P se negocian directamente entre los nodos Proxmox, la workstation Arch Linux y los dispositivos móviles.\n- **Enrutamiento por ACLs Granulares**: Aislamiento de subredes de gestión interna (cluster Proxmox / daemons Docker) respecto a contenedores públicos mediante reglas de seguridad Netbird.',
+          '### Resultados de Rendimiento\nVelocidades de 1 Gbps punto a punto entre nodos con menos de 2ms de sobrecarga de latencia y sin abrir ningún puerto interno a Internet.'
+        ],
+      },
+      tags: ['WireGuard', 'Netbird', 'Proxmox', 'Networking', 'P2P', 'Security'],
+    },
+    {
+      id: 'palstora-recursive-ai',
+      title: {
+        en: 'Engineering Recursive Inventory & Vision AI in Palstora',
+        es: 'Ingeniería de Inventario Recursivo y Visión IA en Palstora',
+      },
+      tagline: {
+        en: 'Hierarchical data modeling, QR code generation pipeline, and mobile camera cataloging',
+        es: 'Modelado de datos jerárquico, pipeline de generación QR y foto-catalogación con IA',
+      },
+      date: '2026-01',
+      category: 'FULLSTACK & SAAS',
+      color: 'gold',
+      readTime: '4 min',
+      content: {
+        en: [
+          '### Motivation\nKeeping track of physical boxes, storage rooms, and spare electronics is notoriously messy. Palstora was built to replicate physical organization hierarchy digitally with frictionless scanning.',
+          '### Technical Highlights\n- **Recursive Relational Schema**: Modeled nested hierarchies (House → Room → Shelf → Box → Item) using efficient self-referencing adjacency trees and CTE queries.\n- **AI Vision Snap-to-Catalog**: Users take a quick picture of an item; an integrated vision model extracts item title, category tags, and approximate dimensions in under 1 second.\n- **Vector QR Matrix Generation**: Client-side dynamic generation of high-res print-ready QR vector stickers that link directly to the container contents on mobile scan.',
+          '### Product Impact\nReduced item cataloging time by over 70% and enabled instant search across hundreds of physical containers in households and small workshops.'
+        ],
+        es: [
+          '### Motivación\nOrganizar cajas físicas, trasteros y repuestos electrónicos suele ser caótico. Palstora se diseñó para replicar digitalmente la jerarquía real de almacenamiento físico con escaneo sin fricción.',
+          '### Aspectos Técnicos Destacados\n- **Esquema Relacional Recursivo**: Modelado de jerarquías anidadas (Casa → Habitación → Estantería → Caja → Objeto) mediante árboles de adyacencia y consultas CTE optimizadas.\n- **Catalogación por Foto con Visión IA**: El usuario saca una foto y el modelo de visión extrae el nombre del objeto, etiquetas y dimensiones en menos de 1 segundo.\n- **Pipeline de Matriz QR Vectorial**: Generación en cliente de etiquetas vectoriales QR listas para imprimir que abren directamente el contenido de la caja al escanear.',
+          '### Impacto en el Producto\nRedujo el tiempo de catalogación en más de un 70% y permite búsquedas instantáneas en cientos de contenedores físicos en hogares y talleres.'
+        ],
+      },
+      tags: ['Next.js', 'React', 'QR Matrix', 'AI Vision', 'Recursive Data', 'Postgres'],
+    },
+  ],
+
   bootSeq: [
     { t: 0,   type: 'info', text: 'VOD-BIOS v2.4.1 — © vodtinker.dev' },
     { t: 80,  type: 'ok',   text: 'CPU ............ 8x ARCH-RISC @ 3.2GHz [OK]' },
@@ -303,7 +482,7 @@ export const PIXEL_DATA = {
   i18n: {
     en: {
       nav_about: 'about', nav_projects: 'projects', nav_stack: 'stack',
-      nav_xp: 'experience', nav_comms: 'contact',
+      nav_xp: 'experience', nav_comms: 'contact', nav_notes: 'lab notes',
       hero_pretitle: 'NEW GAME — PRESS START',
       hero_title: 'Between servers', hero_title_2: 'and code.',
       hero_sub: 'ASIR student bridging Linux infrastructure and modern web development. I build systems that work quietly so people can focus on what matters.',
@@ -317,7 +496,29 @@ export const PIXEL_DATA = {
       about_stats: 'Stat block',
       stat_focus: 'focus', stat_curiosity: 'curiosity', stat_patience: 'patience', stat_caffeine: 'caffeine',
       projects_banner: 'QUESTS · ACTIVE', projects_title: 'Featured quests',
-      projects_sub: "Things I've built. Click any quest to view.",
+      projects_sub: "Things I've built and engineered. Click any quest to inspect.",
+      projects_filter_all: 'ALL',
+      projects_filter_live: 'ONLINE',
+      projects_filter_maint: 'MAINTENANCE',
+      projects_filter_saas: 'SAAS & WEB',
+      projects_filter_infra: 'INFRA & AUTOMATION',
+      projects_status_live: 'ONLINE',
+      projects_status_maint: 'MAINTENANCE',
+      projects_maint_badge: 'MIGRATING VPS',
+      projects_btn_open: 'OPEN ▶',
+      projects_btn_details: 'DETAILS ◈',
+      quest_modal_title: 'QUEST LOG FILE',
+      quest_modal_features: 'SYSTEM SPECS & FEATURES',
+      quest_modal_rewards: 'XP REWARDS GAINED',
+      quest_modal_close: 'CLOSE ✕',
+      quest_modal_visit: 'OPEN PROJECT ▶',
+      quest_modal_github: 'VIEW GITHUB REPO ▶',
+      quest_modal_maint_alert: 'INFRASTRUCTURE NOTICE: This service is temporarily in maintenance due to VPS provider migration.',
+      notes_banner: 'LAB LOGS · WRITEUPS',
+      notes_title: 'Technical lab notes',
+      notes_sub: 'Engineering reports, architecture decisions, and homelab case studies.',
+      notes_btn_read: 'READ ENTRY ▶',
+      notes_btn_close: 'CLOSE ENTRY ✕',
       stack_banner: 'INVENTORY', stack_title: 'Equipped gear',
       stack_sub: 'Tools I reach for daily.',
       homelab_banner: 'HOMELAB · INFRA MAP', homelab_title: 'Infrastructure topology',
@@ -336,7 +537,7 @@ export const PIXEL_DATA = {
     },
     es: {
       nav_about: 'sobre', nav_projects: 'proyectos', nav_stack: 'stack',
-      nav_xp: 'experiencia', nav_comms: 'contacto',
+      nav_xp: 'experiencia', nav_comms: 'contacto', nav_notes: 'notas lab',
       hero_pretitle: 'NUEVA PARTIDA — PULSA START',
       hero_title: 'Entre servidores', hero_title_2: 'y código.',
       hero_sub: 'Estudiante ASIR que conecta infraestructura Linux con desarrollo web moderno. Construyo sistemas que funcionan en silencio.',
@@ -350,7 +551,29 @@ export const PIXEL_DATA = {
       about_stats: 'Stats',
       stat_focus: 'foco', stat_curiosity: 'curiosidad', stat_patience: 'paciencia', stat_caffeine: 'cafeína',
       projects_banner: 'QUESTS · ACTIVAS', projects_title: 'Quests destacadas',
-      projects_sub: 'Cosas que he construido. Haz clic para ver.',
+      projects_sub: 'Cosas que he construido y desplegado. Haz clic para inspeccionar.',
+      projects_filter_all: 'TODOS',
+      projects_filter_live: 'ONLINE',
+      projects_filter_maint: 'MANTENIMIENTO',
+      projects_filter_saas: 'SAAS Y WEB',
+      projects_filter_infra: 'INFRA Y AUTOMATIZACIÓN',
+      projects_status_live: 'ONLINE',
+      projects_status_maint: 'MANTENIMIENTO',
+      projects_maint_badge: 'MIGRANDO VPS',
+      projects_btn_open: 'ABRIR ▶',
+      projects_btn_details: 'DETALLES ◈',
+      quest_modal_title: 'ARCHIVO DE QUEST',
+      quest_modal_features: 'ESPECIFICACIONES Y FUNCIONES',
+      quest_modal_rewards: 'RECOMPENSAS XP OBTENIDAS',
+      quest_modal_close: 'CERRAR ✕',
+      quest_modal_visit: 'ABRIR PROYECTO ▶',
+      quest_modal_github: 'VER REPOSITORIO GITHUB ▶',
+      quest_modal_maint_alert: 'AVISO DE INFRAESTRUCTURA: Servicio temporalmente en pausa mientras se migra a un nuevo servidor VPS.',
+      notes_banner: 'LOGS DE LAB · CASOS DE ESTUDIO',
+      notes_title: 'Notas técnicas de laboratorio',
+      notes_sub: 'Informes de ingeniería, decisiones de arquitectura y casos reales de homelab.',
+      notes_btn_read: 'LEER ENTRADA ▶',
+      notes_btn_close: 'CERRAR ENTRADA ✕',
       stack_banner: 'INVENTARIO', stack_title: 'Equipo equipado',
       stack_sub: 'Herramientas del día a día.',
       homelab_banner: 'HOMELAB · MAPA INFRA', homelab_title: 'Topología de infraestructura',
@@ -372,3 +595,5 @@ export const PIXEL_DATA = {
 
 export type Lang = 'en' | 'es';
 export type I18n = typeof PIXEL_DATA.i18n.en;
+
+

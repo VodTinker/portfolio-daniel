@@ -4,7 +4,17 @@ import PixelTweaks, { useTweaks } from './PixelTweaks';
 import PixelHero from './PixelHero';
 import PixelWorldMap from './PixelWorldMap';
 import PixelChat from './PixelChat';
-import { PixelAbout, PixelProjects, PixelStack, PixelHomelab, PixelExperience, PixelCerts, PixelComms, PixelFooter } from './PixelSections';
+import {
+  PixelAbout,
+  PixelProjects,
+  PixelStack,
+  PixelHomelab,
+  PixelExperience,
+  PixelCerts,
+  PixelLabNotes,
+  PixelComms,
+  PixelFooter,
+} from './PixelSections';
 import { Sprite, SPRITE_HEART, SPRITE_COIN } from './Sprites';
 import { PIXEL_DATA } from '../utils/pixelData';
 import type { Lang, I18n } from '../utils/pixelData';
@@ -17,12 +27,13 @@ const LEVEL_LABELS: Record<string, { en: string; es: string }> = {
   projects: { en: 'QUEST LOG',      es: 'REGISTRO DE QUESTS' },
   stack:    { en: 'OPEN INVENTORY', es: 'ABRIR INVENTARIO' },
   xp:       { en: 'TIMELINE',       es: 'CRONOLOGÍA' },
+  labnotes: { en: 'LAB NOTES',      es: 'NOTAS DE LAB' },
   comms:    { en: 'OPEN COMMS',     es: 'ABRIR COMMS' },
   worldmap: { en: 'WORLD MAP',      es: 'MAPAMUNDI' },
   hero:     { en: 'RETURN HOME',    es: 'VOLVER AL INICIO' },
 };
 
-const NAV_SECTIONS = ['hero', 'worldmap', 'about', 'projects', 'stack', 'xp', 'comms'] as const;
+const NAV_SECTIONS = ['hero', 'worldmap', 'about', 'projects', 'stack', 'xp', 'labnotes', 'comms'] as const;
 
 export default function AppContent() {
   const [tweaks, setTweak] = useTweaks({
@@ -316,6 +327,7 @@ export default function AppContent() {
       <PixelHomelab  t={t} lang={lang} />
       <PixelExperience t={t} lang={lang} />
       <PixelCerts    t={t} lang={lang} />
+      <PixelLabNotes t={t} lang={lang} />
       <PixelComms    t={t} lang={lang} />
       <PixelFooter   t={t} lang={lang} onNavigate={navigate} />
 

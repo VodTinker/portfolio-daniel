@@ -49,7 +49,8 @@ export default function MobileMenu({
     { id: 'projects', label: lang === 'es' ? 'REGISTRO QUESTS' : 'QUEST LOG',      n: '02' },
     { id: 'stack',    label: lang === 'es' ? 'ABRIR INVENTARIO' : 'INVENTORY',    n: '03' },
     { id: 'xp',       label: lang === 'es' ? 'CRONOLOGÍA' : 'TIMELINE',           n: '04' },
-    { id: 'comms',    label: lang === 'es' ? 'ABRIR COMMS' : 'OPEN COMMS',        n: '05' },
+    { id: 'labnotes', label: lang === 'es' ? 'NOTAS DE LAB' : 'LAB NOTES',        n: '05' },
+    { id: 'comms',    label: lang === 'es' ? 'ABRIR COMMS' : 'OPEN COMMS',        n: '06' },
   ];
 
   return (
