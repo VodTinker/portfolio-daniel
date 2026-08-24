@@ -1,8 +1,8 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Code, MessageSquare, Terminal, X, Zap } from "lucide-react";
+import { useEffect } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../utils/translations";
-import { Terminal, Code, Zap, MessageSquare, X } from "lucide-react";
-import { useEffect } from "react";
 
 interface BotCommandsModalProps {
   isOpen: boolean;
@@ -41,19 +41,25 @@ const BotCommandsModal = ({ isOpen, onClose }: BotCommandsModalProps) => {
       icon: <MessageSquare className="w-5 h-5" />,
       command: "!chat",
       description: t.commands.chat,
-      example: language === 'es' ? "!chat Hola, ¿cómo estás?" : "!chat Hello, how are you?",
+      example:
+        language === "es"
+          ? "!chat Hola, ¿cómo estás?"
+          : "!chat Hello, how are you?",
     },
     {
       icon: <Code className="w-5 h-5" />,
       command: "!wallet",
       description: t.commands.wallet,
-      example: language === 'es' ? "!wallet" : "!wallet",
+      example: language === "es" ? "!wallet" : "!wallet",
     },
     {
       icon: <Zap className="w-5 h-5" />,
       command: "!image",
       description: t.commands.image,
-      example: language === 'es' ? "!image Un gato astronauta en el espacio" : "!image An astronaut cat in space",
+      example:
+        language === "es"
+          ? "!image Un gato astronauta en el espacio"
+          : "!image An astronaut cat in space",
     },
     {
       icon: <Terminal className="w-5 h-5" />,

@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { navLinks } from "../utils/navigationConfig";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { navLinks } from "../utils/navigationConfig";
 
 export default function NavbarSimple() {
-  const [isScrolled, setIsScrolled]       = useState(false);
-  const [isMenuOpen, setIsMenuOpen]       = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const { language, setLanguage, t }      = useLanguage();
-  const { theme, toggleTheme }            = useTheme();
+  const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => {
@@ -43,14 +43,16 @@ export default function NavbarSimple() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
-
         {/* Wordmark */}
         <a
           href="#home"
           onClick={(e) => scrollTo(e, "#home")}
           className="font-serif text-lg text-ink hover:opacity-70 transition-opacity"
         >
-          Daniel Fonov<span className="font-mono text-xs text-muted ml-1.5 opacity-70">df</span>
+          Daniel Fonov
+          <span className="font-mono text-xs text-muted ml-1.5 opacity-70">
+            df
+          </span>
         </a>
 
         {/* Desktop links — centrados */}
@@ -64,7 +66,9 @@ export default function NavbarSimple() {
                 href={link.href}
                 onClick={(e) => scrollTo(e, link.href)}
                 className={`text-sm transition-colors duration-200 ${
-                  isActive ? "text-ink font-medium" : "text-muted hover:text-ink"
+                  isActive
+                    ? "text-ink font-medium"
+                    : "text-muted hover:text-ink"
                 }`}
               >
                 {label}
@@ -82,13 +86,31 @@ export default function NavbarSimple() {
             className="hidden md:flex items-center justify-center w-8 h-8 text-muted hover:text-ink transition-colors"
           >
             {theme === "dark" ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="4"/>
-                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
               </svg>
             ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             )}
           </button>
@@ -96,7 +118,9 @@ export default function NavbarSimple() {
             <button
               onClick={() => setLanguage("en")}
               className={`px-1.5 py-0.5 transition-colors ${
-                language === "en" ? "text-ink font-medium" : "text-muted hover:text-ink"
+                language === "en"
+                  ? "text-ink font-medium"
+                  : "text-muted hover:text-ink"
               }`}
             >
               EN
@@ -105,7 +129,9 @@ export default function NavbarSimple() {
             <button
               onClick={() => setLanguage("es")}
               className={`px-1.5 py-0.5 transition-colors ${
-                language === "es" ? "text-ink font-medium" : "text-muted hover:text-ink"
+                language === "es"
+                  ? "text-ink font-medium"
+                  : "text-muted hover:text-ink"
               }`}
             >
               ES
@@ -126,9 +152,15 @@ export default function NavbarSimple() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-5 h-px bg-ink transition-opacity ${isMenuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span
+              className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+            />
+            <span
+              className={`block w-5 h-px bg-ink transition-opacity ${isMenuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block w-5 h-px bg-ink transition-transform origin-center ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+            />
           </button>
         </div>
       </div>
@@ -154,21 +186,49 @@ export default function NavbarSimple() {
               </a>
             ))}
             <div className="flex gap-3 pt-2 border-t border-[hsl(var(--border))]">
-              <button onClick={() => setLanguage("en")} className={`text-xs font-mono ${language === "en" ? "text-ink font-medium" : "text-muted"}`}>EN</button>
-              <button onClick={() => setLanguage("es")} className={`text-xs font-mono ${language === "es" ? "text-ink font-medium" : "text-muted"}`}>ES</button>
+              <button
+                onClick={() => setLanguage("en")}
+                className={`text-xs font-mono ${language === "en" ? "text-ink font-medium" : "text-muted"}`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage("es")}
+                className={`text-xs font-mono ${language === "es" ? "text-ink font-medium" : "text-muted"}`}
+              >
+                ES
+              </button>
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle dark mode"
                 className="text-muted hover:text-ink transition-colors ml-auto"
               >
                 {theme === "dark" ? (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
                   </svg>
                 ) : (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                   </svg>
                 )}
               </button>

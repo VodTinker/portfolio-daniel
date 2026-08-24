@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { FiMail, FiGithub, FiLinkedin, FiMessageCircle, FiArrowUpRight } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiMessageCircle,
+} from "react-icons/fi";
 import { RiDiscordLine } from "react-icons/ri";
 
 const contactMethods = [
@@ -41,7 +47,6 @@ const ContactMinimal = () => {
   return (
     <section id="contact" className="relative px-6 py-32 md:py-40">
       <div className="container mx-auto max-w-6xl">
-        
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -54,14 +59,14 @@ const ContactMinimal = () => {
             <FiMessageCircle className="w-4 h-4" />
             <span className="text-sm font-medium">Contacto</span>
           </div>
-          
+
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
             Hablemos
           </h2>
-          
+
           <p className="text-xl text-foreground/60 max-w-2xl mx-auto leading-relaxed">
-            ¿Tienes un proyecto en mente o simplemente quieres charlar? 
-            Estoy siempre abierto a nuevas oportunidades y colaboraciones.
+            ¿Tienes un proyecto en mente o simplemente quieres charlar? Estoy
+            siempre abierto a nuevas oportunidades y colaboraciones.
           </p>
         </motion.div>
 
@@ -80,11 +85,15 @@ const ContactMinimal = () => {
               className="group relative p-8 rounded-3xl bg-foreground/5 border border-foreground/10 hover:border-foreground/20 transition-all duration-500 overflow-hidden"
             >
               {/* Gradient background on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${method.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-              
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${method.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+              />
+
               <div className="relative z-10">
                 {/* Icon */}
-                <div className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${method.gradient} mb-4`}>
+                <div
+                  className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${method.gradient} mb-4`}
+                >
                   <method.icon className="w-6 h-6 text-white" />
                 </div>
 
@@ -94,7 +103,9 @@ const ContactMinimal = () => {
                     <h3 className="text-xl font-bold">{method.title}</h3>
                     <FiArrowUpRight className="w-5 h-5 text-foreground/40 group-hover:text-foreground group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                   </div>
-                  <p className="text-sm text-foreground/50">{method.description}</p>
+                  <p className="text-sm text-foreground/50">
+                    {method.description}
+                  </p>
                 </div>
 
                 {/* Value */}
@@ -116,8 +127,8 @@ const ContactMinimal = () => {
         >
           <h3 className="text-3xl font-bold mb-4">¿Listo para empezar?</h3>
           <p className="text-lg text-foreground/60 mb-8 max-w-2xl mx-auto">
-            Ya sea un proyecto grande, una consulta rápida o simplemente para saludar, 
-            me encantaría escucharte.
+            Ya sea un proyecto grande, una consulta rápida o simplemente para
+            saludar, me encantaría escucharte.
           </p>
           <a
             href="mailto:danielfonov71@vodtinker.dev"

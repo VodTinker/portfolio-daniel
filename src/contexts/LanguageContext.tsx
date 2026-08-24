@@ -1,15 +1,15 @@
 /**
  * @fileoverview Language Context Provider for internationalization
  * @module contexts/LanguageContext
- * 
+ *
  * This module provides a React Context for managing language preferences
  * across the application. It supports English and Spanish languages with
  * automatic detection and persistent storage.
- * 
+ *
  * @example
  * ```tsx
  * import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
- * 
+ *
  * function App() {
  *   return (
  *     <LanguageProvider>
@@ -17,7 +17,7 @@
  *     </LanguageProvider>
  *   );
  * }
- * 
+ *
  * function MyComponent() {
  *   const { language, setLanguage, t } = useLanguage();
  *   return <h1>{t.hero.title}</h1>;
@@ -25,8 +25,8 @@
  * ```
  */
 
-import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { translations } from "../utils/translations";
 
 /** Supported language codes */
@@ -46,16 +46,18 @@ interface LanguageContextType {
 }
 
 /** Language Context */
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
 
 /**
  * Language Provider Component
- * 
+ *
  * Provides language context to all children components. Handles:
  * - Language persistence in localStorage
  * - Browser language detection
  * - HTML lang attribute updates
- * 
+ *
  * @param {Object} props - Component props
  * @param {ReactNode} props.children - Child components
  * @returns {JSX.Element} Provider component
@@ -64,14 +66,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     // Check if we're in browser environment
     if (typeof window === "undefined") return "en";
-    
+
     try {
       // Check localStorage first
       const savedLang = localStorage.getItem("language");
       if (savedLang === "en" || savedLang === "es") {
         return savedLang;
       }
-      
+
       // Check browser language as fallback
       const browserLang = navigator.language.toLowerCase();
       if (browserLang.startsWith("es")) {
@@ -80,7 +82,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("Error detecting language:", error);
     }
-    
+
     return "en";
   });
 
@@ -119,10 +121,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
 /**
  * Hook to access language context
- * 
+ *
  * @throws {Error} If used outside of LanguageProvider
  * @returns {LanguageContextType} Language context value
- * 
+ *
  * @example
  * ```tsx
  * function MyComponent() {

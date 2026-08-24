@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX, FiMoon, FiSun } from "react-icons/fi";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
 import { navLinks } from "../utils/navigationConfig";
 
 const Navbar = () => {
@@ -41,18 +41,21 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-      
+
       // Detect active section based on scroll position
-      const sections = document.querySelectorAll('section[id]');
-      
-      sections.forEach(section => {
+      const sections = document.querySelectorAll("section[id]");
+
+      sections.forEach((section) => {
         // Usar getBoundingClientRect para compatibilidad con TypeScript
         const rect = section.getBoundingClientRect();
         const sectionTop = rect.top + window.scrollY - 100;
         const sectionHeight = rect.height;
-        const sectionId = section.getAttribute('id') || '';
-        
-        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+        const sectionId = section.getAttribute("id") || "";
+
+        if (
+          window.scrollY >= sectionTop &&
+          window.scrollY < sectionTop + sectionHeight
+        ) {
           setActiveSection(sectionId);
         }
       });
@@ -64,10 +67,10 @@ const Navbar = () => {
 
   const handleNavLinkClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
-    targetId: string
+    targetId: string,
   ) => {
     event.preventDefault();
-    const id = targetId.startsWith('#') ? targetId.slice(1) : targetId;
+    const id = targetId.startsWith("#") ? targetId.slice(1) : targetId;
     const targetElement = document.getElementById(id);
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: "smooth" });
@@ -101,7 +104,7 @@ const Navbar = () => {
         <div className="hidden md:block">
           <ul className="flex space-x-1">
             {navLinks.map((link, index) => (
-              <motion.li 
+              <motion.li
                 key={link.key}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -111,14 +114,15 @@ const Navbar = () => {
                   href={link.href}
                   onClick={(e) => handleNavLinkClick(e, link.href)}
                   className={`relative mx-1 inline-block px-4 py-2 font-medium transition-colors duration: 300 
-                    ${activeSection === link.href.substring(1) 
-                      ? "text-primary" 
-                      : "text-muted-foreground hover:text-foreground dark:text-gray-300 dark:hover:text-white"
+                    ${
+                      activeSection === link.href.substring(1)
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-foreground dark:text-gray-300 dark:hover:text-white"
                     }`}
                 >
                   {link.key}
                   {activeSection === link.href.substring(1) && (
-                    <motion.span 
+                    <motion.span
                       layoutId="activeSection"
                       className="absolute inset-0 rounded-md bg-primary/10 -z-10"
                       transition={{ type: "spring", duration: 0.6 }}
@@ -184,21 +188,25 @@ const Navbar = () => {
       {/* Mobile Navigation */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="absolute left-0 w-full overflow-hidden backdrop-blur-xl border-b border-white/10 bg-white/40 dark:bg-gray-900/60 dark:border-gray-800/40 md:hidden"
           >
-            <motion.ul 
+            <motion.ul
               className="flex flex-col space-y-1 p-4"
               initial="closed"
               animate="open"
               exit="closed"
               variants={{
-                open: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
-                closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+                open: {
+                  transition: { staggerChildren: 0.07, delayChildren: 0.1 },
+                },
+                closed: {
+                  transition: { staggerChildren: 0.05, staggerDirection: -1 },
+                },
               }}
             >
               {navLinks.map((link) => (
@@ -206,7 +214,7 @@ const Navbar = () => {
                   key={link.key}
                   variants={{
                     open: { y: 0, opacity: 1 },
-                    closed: { y: -20, opacity: 0 }
+                    closed: { y: -20, opacity: 0 },
                   }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
                 >
@@ -214,9 +222,10 @@ const Navbar = () => {
                     href={link.href}
                     onClick={(e) => handleNavLinkClick(e, link.href)}
                     className={`block rounded-lg px-4 py-3 font-medium transition-all duration-200 hover:bg-primary/10 
-                      ${activeSection === link.href.substring(1) 
-                        ? "text-primary bg-primary/5" 
-                        : "text-muted-foreground dark:text-gray-300"
+                      ${
+                        activeSection === link.href.substring(1)
+                          ? "text-primary bg-primary/5"
+                          : "text-muted-foreground dark:text-gray-300"
                       }`}
                   >
                     {link.key}

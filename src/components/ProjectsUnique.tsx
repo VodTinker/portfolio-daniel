@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { useState } from "react";
-import { projects } from "../utils/projectsData";
 import { useLanguage } from "../contexts/LanguageContext";
+import { projects } from "../utils/projectsData";
 
 // ─── Easing ──────────────────────────────────────────────────────────────────
 
@@ -17,7 +17,10 @@ const containerVariants: Variants = {
 
 // Row entrance: clip-path sweep upward
 const rowVariants: Variants = {
-  hidden: { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)", opacity: 0 },
+  hidden: {
+    clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+    opacity: 0,
+  },
   visible: {
     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
     opacity: 1,
@@ -37,7 +40,11 @@ const headerVariants: Variants = {
 
 const headerAccentVariants: Variants = {
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE, delay: 0.08 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: EASE, delay: 0.08 },
+  },
 };
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -50,7 +57,6 @@ export default function ProjectsUnique() {
   return (
     <section id="work" className="px-6 sm:px-10 lg:px-16 py-24 sm:py-32">
       <div className="max-w-6xl mx-auto">
-
         {/* Section header */}
         <motion.div
           className="mb-10 sm:mb-14"
@@ -70,7 +76,9 @@ export default function ProjectsUnique() {
           >
             {t.work.title}
             <br />
-            <em className="italic text-coral">{(t.work as any).titleAccent ?? "built."}</em>
+            <em className="italic text-coral">
+              {(t.work as any).titleAccent ?? "built."}
+            </em>
           </motion.h2>
         </motion.div>
 
@@ -140,10 +148,13 @@ export default function ProjectsUnique() {
 
                   {/* ── Text content ── */}
                   <div className="relative grid grid-cols-[40px_1fr] sm:grid-cols-[64px_1fr] gap-x-4 sm:gap-x-10 py-6 sm:py-9 pr-4 sm:pr-8 items-start z-10">
-
                     {/* Number */}
                     <motion.span
-                      animate={{ color: isHovered ? "hsl(var(--coral))" : "hsl(var(--muted))" }}
+                      animate={{
+                        color: isHovered
+                          ? "hsl(var(--coral))"
+                          : "hsl(var(--muted))",
+                      }}
                       transition={{ duration: 0.25 }}
                       className="font-mono text-xs pt-1 tabular-nums"
                     >
@@ -160,7 +171,9 @@ export default function ProjectsUnique() {
                       <motion.h3
                         animate={{
                           x: isHovered ? -6 : 0,
-                          color: isHovered ? "hsl(var(--coral))" : "hsl(var(--ink))",
+                          color: isHovered
+                            ? "hsl(var(--coral))"
+                            : "hsl(var(--ink))",
                         }}
                         transition={{ duration: 0.35, ease: EASE_SOFT }}
                         className="font-serif text-2xl sm:text-3xl font-light mb-3 leading-snug"
@@ -189,7 +202,9 @@ export default function ProjectsUnique() {
                             style={{ color: "hsl(var(--coral))" }}
                           >
                             {i > 0 && (
-                              <span className="mr-2 text-muted opacity-50">·</span>
+                              <span className="mr-2 text-muted opacity-50">
+                                ·
+                              </span>
                             )}
                             {tag}
                           </span>
@@ -198,8 +213,15 @@ export default function ProjectsUnique() {
 
                       {/* Links — siempre visibles en móvil, revelan en hover en desktop */}
                       <motion.div
-                        animate={{ opacity: isHovered ? 1 : 0.55, y: isHovered ? 0 : 0 }}
-                        transition={{ duration: 0.3, ease: EASE_SOFT, delay: isHovered ? 0.1 : 0 }}
+                        animate={{
+                          opacity: isHovered ? 1 : 0.55,
+                          y: isHovered ? 0 : 0,
+                        }}
+                        transition={{
+                          duration: 0.3,
+                          ease: EASE_SOFT,
+                          delay: isHovered ? 0.1 : 0,
+                        }}
                         className="mt-5 flex gap-5"
                       >
                         {project.liveLink && (

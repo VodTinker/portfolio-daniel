@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
-import { FiCode, FiFolder, FiAward, FiZap, FiHeart, FiTrendingUp } from "react-icons/fi";
+import {
+  FiAward,
+  FiCode,
+  FiFolder,
+  FiHeart,
+  FiTrendingUp,
+  FiZap,
+} from "react-icons/fi";
 
 const stats = [
   {
@@ -69,16 +76,28 @@ const StatsSection = () => {
               {/* Card con glassmorphism */}
               <div className="card relative h-full p-8 overflow-hidden">
                 {/* Gradient background animado */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`} />
-                
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}
+                />
+
                 {/* Icono grande */}
-                <div className={`mb-6 inline-flex p-4 rounded-2xl bg-gradient-to-br ${stat.gradient} bg-opacity-10`}>
-                  <stat.icon className={`w-8 h-8 text-transparent bg-gradient-to-br ${stat.gradient} bg-clip-text`} style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }} />
+                <div
+                  className={`mb-6 inline-flex p-4 rounded-2xl bg-gradient-to-br ${stat.gradient} bg-opacity-10`}
+                >
+                  <stat.icon
+                    className={`w-8 h-8 text-transparent bg-gradient-to-br ${stat.gradient} bg-clip-text`}
+                    style={{
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  />
                 </div>
 
                 {/* Contenido */}
                 <div className="relative z-10">
-                  <div className={`text-5xl font-bold mb-2 bg-gradient-to-br ${stat.gradient} bg-clip-text text-transparent`}>
+                  <div
+                    className={`text-5xl font-bold mb-2 bg-gradient-to-br ${stat.gradient} bg-clip-text text-transparent`}
+                  >
                     {stat.value}
                   </div>
                   <div className="text-xl font-semibold text-foreground mb-1">
@@ -90,7 +109,9 @@ const StatsSection = () => {
                 </div>
 
                 {/* Decorative corner */}
-                <div className={`absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-tl ${stat.gradient} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity duration-500`} />
+                <div
+                  className={`absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-tl ${stat.gradient} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity duration-500`}
+                />
               </div>
             </motion.div>
           ))}
@@ -106,7 +127,9 @@ const StatsSection = () => {
         >
           <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 dark:bg-black/20 backdrop-blur-sm border border-white/10 dark:border-white/5">
             <FiHeart className="w-5 h-5 text-red-500 animate-pulse" />
-            <span className="text-foreground/80">Apasionado por aprender y crecer cada día</span>
+            <span className="text-foreground/80">
+              Apasionado por aprender y crecer cada día
+            </span>
             <FiTrendingUp className="w-5 h-5 text-green-500" />
           </div>
         </motion.div>

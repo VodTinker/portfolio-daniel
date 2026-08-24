@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
-import { FiGithub, FiExternalLink, FiFolder, FiArrowUpRight } from "react-icons/fi";
-import { projects } from "../utils/projectsData";
 import { useState } from "react";
+import {
+  FiArrowUpRight,
+  FiExternalLink,
+  FiFolder,
+  FiGithub,
+} from "react-icons/fi";
 import { useLanguage } from "../contexts/LanguageContext";
+import { projects } from "../utils/projectsData";
 
 const ProjectsMinimal = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -11,7 +16,6 @@ const ProjectsMinimal = () => {
   return (
     <section id="projects" className="relative px-6 py-32 md:py-40">
       <div className="container mx-auto max-w-7xl">
-        
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -24,7 +28,7 @@ const ProjectsMinimal = () => {
             <FiFolder className="w-4 h-4" />
             <span className="text-sm font-medium">Trabajos seleccionados</span>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
             <div>
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold">
@@ -33,8 +37,8 @@ const ProjectsMinimal = () => {
             </div>
             <div>
               <p className="text-xl text-foreground/60 leading-relaxed">
-                Una selección de proyectos que muestran mi experiencia 
-                en desarrollo full stack, sistemas y tecnologías modernas.
+                Una selección de proyectos que muestran mi experiencia en
+                desarrollo full stack, sistemas y tecnologías modernas.
               </p>
             </div>
           </div>
@@ -54,7 +58,6 @@ const ProjectsMinimal = () => {
               className="group"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 rounded-3xl bg-foreground/5 border border-foreground/10 hover:border-foreground/20 transition-all duration-500">
-                
                 {/* Imagen del proyecto */}
                 <div className="lg:col-span-5 relative overflow-hidden rounded-2xl bg-foreground/5">
                   <div className="aspect-video relative">
@@ -73,7 +76,7 @@ const ProjectsMinimal = () => {
                   <div className="space-y-4">
                     {/* Número del proyecto */}
                     <div className="text-sm font-mono text-foreground/40">
-                      {String(index + 1).padStart(2, '0')}
+                      {String(index + 1).padStart(2, "0")}
                     </div>
 
                     {/* Título */}

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function BackToTop() {
@@ -93,7 +93,7 @@ export default function BackToTop() {
             .back-to-top-button::before {
               position: absolute;
               bottom: -20px;
-              content: "${language === 'es' ? 'Volver Arriba' : 'Back to Top'}";
+              content: "${language === "es" ? "Volver Arriba" : "Back to Top"}";
               color: white;
               font-size: 0px;
               white-space: nowrap;

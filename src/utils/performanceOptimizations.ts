@@ -5,7 +5,7 @@
 // Debounce para eventos que se disparan frecuentemente
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout | null = null;
 
@@ -23,7 +23,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 // Throttle para limitar la frecuencia de ejecución
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  limit: number
+  limit: number,
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
 
@@ -44,19 +44,19 @@ export const lazyLoadImage = (img: HTMLImageElement) => {
         if (entry.isIntersecting) {
           const target = entry.target as HTMLImageElement;
           const src = target.dataset.src;
-          
+
           if (src) {
             target.src = src;
-            target.classList.add('loaded');
+            target.classList.add("loaded");
             observer.unobserve(target);
           }
         }
       });
     },
     {
-      rootMargin: '50px', // Precargar 50px antes de que entre en viewport
+      rootMargin: "50px", // Precargar 50px antes de que entre en viewport
       threshold: 0.01,
-    }
+    },
   );
 
   observer.observe(img);
@@ -65,8 +65,8 @@ export const lazyLoadImage = (img: HTMLImageElement) => {
 
 // Preload de recursos críticos
 export const preloadResource = (href: string, as: string) => {
-  const link = document.createElement('link');
-  link.rel = 'preload';
+  const link = document.createElement("link");
+  link.rel = "preload";
   link.href = href;
   link.as = as;
   document.head.appendChild(link);
@@ -74,17 +74,17 @@ export const preloadResource = (href: string, as: string) => {
 
 // Preconnect a dominios externos
 export const preconnect = (href: string) => {
-  const link = document.createElement('link');
-  link.rel = 'preconnect';
+  const link = document.createElement("link");
+  link.rel = "preconnect";
   link.href = href;
-  link.crossOrigin = 'anonymous';
+  link.crossOrigin = "anonymous";
   document.head.appendChild(link);
 };
 
 // Memoización simple
 export const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
   const cache = new Map();
-  
+
   return ((...args: Parameters<T>) => {
     const key = JSON.stringify(args);
     if (cache.has(key)) {
@@ -98,7 +98,7 @@ export const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
 
 // Detectar preferencia de reducción de movimiento
 export const prefersReducedMotion = (): boolean => {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
 // Web Vitals helper

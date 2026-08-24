@@ -1,60 +1,85 @@
-import { useState, useRef, useEffect } from 'react';
-import type { Lang } from '../utils/pixelData';
-import { Sprite, SPRITE_AVATAR_S, SPRITE_HEART } from './Sprites';
+import { useEffect, useRef, useState } from "react";
+import type { Lang } from "../utils/pixelData";
+import { SPRITE_AVATAR_S, SPRITE_HEART, Sprite } from "./Sprites";
 
-interface Message { role: 'user' | 'assistant'; content: string; id: number; }
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+  id: number;
+}
 
 const INITIAL: Record<Lang, string> = {
   en: "Hi! I'm Daniel's AI assistant. Ask me anything about his work.",
-  es: '¡Hola! Soy el asistente IA de Daniel. Pregúntame lo que quieras sobre su trabajo.',
+  es: "¡Hola! Soy el asistente IA de Daniel. Pregúntame lo que quieras sobre su trabajo.",
 };
 
-interface Props { lang: Lang; }
+interface Props {
+  lang: Lang;
+}
 
 export default function PixelChat({ lang }: Props) {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: INITIAL[lang], id: 0 },
+    { role: "assistant", content: INITIAL[lang], id: 0 },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const msgIdRef = useRef(0);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMessages([{ role: 'assistant', content: INITIAL[lang], id: 0 }]);
+    setMessages([{ role: "assistant", content: INITIAL[lang], id: 0 }]);
   }, [lang]);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const send = async () => {
     const text = input.trim();
     if (!text || loading) return;
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: text, id: ++msgIdRef.current }]);
+    setInput("");
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: text, id: ++msgIdRef.current },
+    ]);
     setLoading(true);
     try {
-      const res = await fetch('/api/openai-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/openai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
       });
       const data = await res.json();
-      setMessages(prev => [...prev, { role: 'assistant', content: data.reply || '...', id: ++msgIdRef.current }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: data.reply || "...",
+          id: ++msgIdRef.current,
+        },
+      ]);
     } catch {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: lang === 'es' ? 'Error de transmisión. Reintenta.' : 'Transmission error. Try again.',
-        id: ++msgIdRef.current,
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            lang === "es"
+              ? "Error de transmisión. Reintenta."
+              : "Transmission error. Try again.",
+          id: ++msgIdRef.current,
+        },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
   const onKey = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
   };
 
   return (
@@ -140,7 +165,9 @@ export default function PixelChat({ lang }: Props) {
       <div className="pixel-chat-window">
         <div className="pixel-chat-bar">
           <div className="pixel-chat-dots">
-            <span className="dot" /><span className="dot" /><span className="dot" />
+            <span className="dot" />
+            <span className="dot" />
+            <span className="dot" />
           </div>
           <div className="pixel-chat-label">DANIEL AI · v2.4</div>
           <div className="pixel-chat-status">
@@ -150,10 +177,13 @@ export default function PixelChat({ lang }: Props) {
         </div>
 
         <div className="pixel-chat-messages">
-          {messages.map(msg => (
-            <div key={msg.id} className={`pixel-chat-msg${msg.role === 'user' ? ' user' : ''}`}>
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`pixel-chat-msg${msg.role === "user" ? " user" : ""}`}
+            >
               <div className="pixel-chat-avatar">
-                {msg.role === 'assistant' ? (
+                {msg.role === "assistant" ? (
                   <Sprite grid={SPRITE_AVATAR_S} scale={1.5} />
                 ) : (
                   <Sprite grid={SPRITE_HEART} scale={2} />
@@ -169,7 +199,9 @@ export default function PixelChat({ lang }: Props) {
               </div>
               <div className="pixel-chat-bubble">
                 <div className="pixel-chat-typing">
-                  <span /><span /><span />
+                  <span />
+                  <span />
+                  <span />
                 </div>
               </div>
             </div>
@@ -181,12 +213,18 @@ export default function PixelChat({ lang }: Props) {
           <input
             className="pixel-chat-input"
             value={input}
-            onChange={e => setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKey}
-            placeholder={lang === 'es' ? 'escribe tu mensaje...' : 'type your message...'}
+            placeholder={
+              lang === "es" ? "escribe tu mensaje..." : "type your message..."
+            }
             disabled={loading}
           />
-          <button className="pixel-chat-send" onClick={send} disabled={loading || !input.trim()}>
+          <button
+            className="pixel-chat-send"
+            onClick={send}
+            disabled={loading || !input.trim()}
+          >
             SEND ▶
           </button>
         </div>

@@ -1,6 +1,16 @@
-import { SiLinux, SiDocker, SiNginx, SiTypescript, SiReact, SiAstro, SiNodedotjs, SiGit, SiN8N } from "react-icons/si";
-import { FiServer, FiShield, FiLink2 } from "react-icons/fi";
 import type { IconType } from "react-icons";
+import { FiLink2, FiServer, FiShield } from "react-icons/fi";
+import {
+  SiAstro,
+  SiDocker,
+  SiGit,
+  SiLinux,
+  SiN8N,
+  SiNginx,
+  SiNodedotjs,
+  SiReact,
+  SiTypescript,
+} from "react-icons/si";
 
 interface TechItem {
   icon: IconType;
@@ -8,24 +18,30 @@ interface TechItem {
 }
 
 const ROW_1: TechItem[] = [
-  { icon: SiLinux,      name: "Linux"      },
-  { icon: SiDocker,     name: "Docker"     },
-  { icon: FiServer,     name: "Proxmox"    },
-  { icon: SiNginx,      name: "Nginx"      },
-  { icon: FiShield,     name: "Caddy"      },
-  { icon: FiLink2,      name: "Tailscale"  },
+  { icon: SiLinux, name: "Linux" },
+  { icon: SiDocker, name: "Docker" },
+  { icon: FiServer, name: "Proxmox" },
+  { icon: SiNginx, name: "Nginx" },
+  { icon: FiShield, name: "Caddy" },
+  { icon: FiLink2, name: "Tailscale" },
 ];
 
 const ROW_2: TechItem[] = [
   { icon: SiTypescript, name: "TypeScript" },
-  { icon: SiReact,      name: "React"      },
-  { icon: SiAstro,      name: "Astro"      },
-  { icon: SiNodedotjs,  name: "Node.js"    },
-  { icon: SiN8N,        name: "n8n"        },
-  { icon: SiGit,        name: "Git"        },
+  { icon: SiReact, name: "React" },
+  { icon: SiAstro, name: "Astro" },
+  { icon: SiNodedotjs, name: "Node.js" },
+  { icon: SiN8N, name: "n8n" },
+  { icon: SiGit, name: "Git" },
 ];
 
-function MarqueeRow({ items, reverse = false }: { items: TechItem[]; reverse?: boolean }) {
+function MarqueeRow({
+  items,
+  reverse = false,
+}: {
+  items: TechItem[];
+  reverse?: boolean;
+}) {
   const doubled = [...items, ...items, ...items, ...items];
   return (
     <div className="overflow-hidden">

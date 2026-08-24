@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { SectionTitle } from "./ui/SectionElements";
 import { animationProps } from "../utils/styleUtils";
+import { SectionTitle } from "./ui/SectionElements";
+
 // import { TypewriterEffectSmooth } from "./ui/typewriter-effect";
 
 const Playground = () => {
-    const words = [
+  const words = [
     {
       text: "Crea",
     },
@@ -44,7 +45,8 @@ const Playground = () => {
         >
           <h3 className="text-xl font-bold mb-4">Efecto Máquina de Escribir</h3>
           <p className="text-muted-foreground mb-6">
-            Este es uno de los componentes que he creado. ¡Pasa el cursor sobre el texto para ver la animación!
+            Este es uno de los componentes que he creado. ¡Pasa el cursor sobre
+            el texto para ver la animación!
           </p>
           <div className="flex flex-col items-center justify-center h-[20rem]">
             {/* <TypewriterEffectSmooth words={words} /> */}

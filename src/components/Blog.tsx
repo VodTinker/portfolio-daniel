@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { SectionTitle } from "./ui/SectionElements";
 import { animationProps } from "../utils/styleUtils";
+import { SectionTitle } from "./ui/SectionElements";
 
 const Blog = () => {
   const [postContent, setPostContent] = useState("");

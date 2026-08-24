@@ -68,7 +68,8 @@ export const translations = {
       buttonClose: "Close",
       title: "Daniel AI",
       status: "Online",
-      initialMessage: "Hi! I'm Daniel's AI assistant. How can I help you today?",
+      initialMessage:
+        "Hi! I'm Daniel's AI assistant. How can I help you today?",
       placeholder: "Type your message...",
       typing: "Typing...",
       errorMessage: "Sorry, something went wrong. Please try again.",
@@ -160,7 +161,8 @@ export const translations = {
       buttonClose: "Cerrar",
       title: "Daniel AI",
       status: "En línea",
-      initialMessage: "¡Hola! Soy el asistente IA de Daniel. ¿En qué puedo ayudarte hoy?",
+      initialMessage:
+        "¡Hola! Soy el asistente IA de Daniel. ¿En qué puedo ayudarte hoy?",
       placeholder: "Escribe tu mensaje...",
       typing: "Escribiendo...",
       errorMessage: "Lo siento, hubo un error. Inténtalo de nuevo.",

@@ -4,19 +4,27 @@ import { useLanguage } from "../contexts/LanguageContext";
 const CONTACT_EMAIL = "danielfonov71@vodtinker.dev";
 
 const STATS = [
-  { value: "3+",    label: "años de experiencia" },
-  { value: "10+",   label: "proyectos construidos" },
-  { value: "100%",  label: "self-hosted & open source" },
+  { value: "3+", label: "años de experiencia" },
+  { value: "10+", label: "proyectos construidos" },
+  { value: "100%", label: "self-hosted & open source" },
 ] as const;
 
 export default function ContactUnique() {
   const { t } = useLanguage();
 
   const links = [
-    { label: "Email",    href: `mailto:${CONTACT_EMAIL}`,               external: false },
-    { label: "GitHub",   href: "https://github.com/VodTinker",          external: true  },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/daniel-fonov-garcía", external: true  },
-    { label: "Discord",  href: "https://discord.com/users/vodtinker",   external: true  },
+    { label: "Email", href: `mailto:${CONTACT_EMAIL}`, external: false },
+    { label: "GitHub", href: "https://github.com/VodTinker", external: true },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/daniel-fonov-garcía",
+      external: true,
+    },
+    {
+      label: "Discord",
+      href: "https://discord.com/users/vodtinker",
+      external: true,
+    },
   ];
 
   return (
@@ -45,9 +53,11 @@ export default function ContactUnique() {
       </div>
 
       {/* Contact CTA section */}
-      <section id="contact" className="px-6 sm:px-10 lg:px-16 py-16 sm:py-24 lg:py-32">
+      <section
+        id="contact"
+        className="px-6 sm:px-10 lg:px-16 py-16 sm:py-24 lg:py-32"
+      >
         <div className="max-w-6xl mx-auto">
-
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -69,7 +79,9 @@ export default function ContactUnique() {
               >
                 {t.contact.title}
                 <br />
-                <em className="italic text-coral">{(t.contact as any).titleAccent ?? "let's talk."}</em>
+                <em className="italic text-coral">
+                  {(t.contact as any).titleAccent ?? "let's talk."}
+                </em>
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 14 }}
@@ -98,7 +110,9 @@ export default function ContactUnique() {
                   className="group inline-flex items-center gap-2 text-sm font-mono text-muted hover:text-ink transition-colors duration-200"
                 >
                   {link.label}
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    ↗
+                  </span>
                 </a>
               ))}
             </motion.div>

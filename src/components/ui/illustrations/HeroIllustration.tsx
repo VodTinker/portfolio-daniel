@@ -6,8 +6,12 @@ const draw = {
     pathLength: 1,
     opacity: 1,
     transition: {
-      pathLength: { delay: i * 0.15, duration: 1.8, ease: "easeInOut" as const },
-      opacity:    { delay: i * 0.15, duration: 0.4 },
+      pathLength: {
+        delay: i * 0.15,
+        duration: 1.8,
+        ease: "easeInOut" as const,
+      },
+      opacity: { delay: i * 0.15, duration: 0.4 },
     },
   }),
 };
@@ -41,7 +45,9 @@ export default function HeroIllustration() {
         variants={draw}
       />
       <motion.circle
-        cx="420" cy="118" r="7"
+        cx="420"
+        cy="118"
+        r="7"
         stroke="hsl(25 12% 10%)"
         strokeWidth="1.5"
         custom={1.5}
@@ -57,7 +63,9 @@ export default function HeroIllustration() {
         variants={draw}
       />
       <motion.circle
-        cx="294" cy="432" r="5"
+        cx="294"
+        cy="432"
+        r="5"
         stroke="hsl(25 12% 10%)"
         strokeWidth="1.5"
         custom={2.5}
@@ -73,7 +81,9 @@ export default function HeroIllustration() {
         variants={draw}
       />
       <motion.circle
-        cx="8" cy="299" r="7"
+        cx="8"
+        cy="299"
+        r="7"
         stroke="hsl(25 12% 10%)"
         strokeWidth="1.5"
         custom={3.5}
@@ -89,7 +99,9 @@ export default function HeroIllustration() {
         variants={draw}
       />
       <motion.circle
-        cx="89" cy="23" r="5"
+        cx="89"
+        cy="23"
+        r="5"
         stroke="hsl(25 12% 10%)"
         strokeWidth="1.5"
         custom={4.5}
@@ -97,7 +109,9 @@ export default function HeroIllustration() {
       />
       {/* Inner dashed circle */}
       <motion.circle
-        cx="215" cy="210" r="22"
+        cx="215"
+        cy="210"
+        r="22"
         stroke="hsl(25 12% 10%)"
         strokeWidth="1"
         strokeDasharray="4 6"
@@ -105,9 +119,30 @@ export default function HeroIllustration() {
         variants={draw}
       />
       {/* Floating dots */}
-      <motion.circle cx="320" cy="100" r="3" fill="hsl(25 12% 10%)" custom={5} variants={draw} />
-      <motion.circle cx="140" cy="390" r="3" fill="hsl(25 12% 10%)" custom={5.5} variants={draw} />
-      <motion.circle cx="60" cy="175" r="3" fill="hsl(25 12% 10%)" custom={6} variants={draw} />
+      <motion.circle
+        cx="320"
+        cy="100"
+        r="3"
+        fill="hsl(25 12% 10%)"
+        custom={5}
+        variants={draw}
+      />
+      <motion.circle
+        cx="140"
+        cy="390"
+        r="3"
+        fill="hsl(25 12% 10%)"
+        custom={5.5}
+        variants={draw}
+      />
+      <motion.circle
+        cx="60"
+        cy="175"
+        r="3"
+        fill="hsl(25 12% 10%)"
+        custom={6}
+        variants={draw}
+      />
     </motion.svg>
   );
 }

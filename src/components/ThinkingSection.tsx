@@ -13,11 +13,12 @@ export default function ThinkingSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="thinking" className="px-6 sm:px-10 lg:px-16 py-16 sm:py-24 lg:py-32">
+    <section
+      id="thinking"
+      className="px-6 sm:px-10 lg:px-16 py-16 sm:py-24 lg:py-32"
+    >
       <div className="max-w-6xl mx-auto">
-
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 sm:gap-16 lg:gap-20">
-
           {/* Left: prose */}
           <div>
             <motion.p
@@ -39,7 +40,9 @@ export default function ThinkingSection() {
             >
               {t.thinking.title}
               <br />
-              <em className="italic text-coral">{(t.thinking as any).titleAccent ?? "seriously."}</em>
+              <em className="italic text-coral">
+                {(t.thinking as any).titleAccent ?? "seriously."}
+              </em>
             </motion.h2>
 
             <div className="space-y-6">
@@ -66,11 +69,15 @@ export default function ThinkingSection() {
               className="flex flex-wrap gap-3 mt-8 sm:mt-10 pt-10 border-t border-[hsl(var(--border))]"
             >
               <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm inline-flex items-center gap-1.5">
-                <span className="text-coral text-[10px]" aria-hidden="true">·</span>
+                <span className="text-coral text-[10px]" aria-hidden="true">
+                  ·
+                </span>
                 {t.thinking.since2022}
               </span>
               <span className="text-xs font-mono text-muted px-3 py-1.5 border border-[hsl(var(--border))] rounded-sm inline-flex items-center gap-1.5">
-                <span className="text-coral text-[10px]" aria-hidden="true">·</span>
+                <span className="text-coral text-[10px]" aria-hidden="true">
+                  ·
+                </span>
                 {t.thinking.since2024}
               </span>
             </motion.div>
@@ -103,7 +110,6 @@ export default function ThinkingSection() {
               </motion.div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

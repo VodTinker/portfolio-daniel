@@ -1,17 +1,39 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 const PALETTE: Record<string, string | null> = {
-  '.': null,
-  K: '#000000', V: '#5b21b6', P: '#a855f7', M: '#ec4899', p: '#f9a8d4',
-  C: '#06b6d4', c: '#67e8f9', i: '#a5f3fc', G: '#fbbf24', g: '#fde68a',
-  W: '#ffffff', w: '#fef9ff', S: '#b4a5e8', D: '#1a0b3d', R: '#ff4d6d',
-  r: '#ffa9b9', Y: '#0b0420', L: '#4ade80', T: '#0d6b80', O: '#f59e0b',
-  s: '#ffe0bd', h: '#ffcca0', H: '#d49b75', b: '#1e3a8a', B: '#3b82f6',
-  E: '#fcd34d', e: '#7dd3fc', N: '#581c87',
+  ".": null,
+  K: "#000000",
+  V: "#5b21b6",
+  P: "#a855f7",
+  M: "#ec4899",
+  p: "#f9a8d4",
+  C: "#06b6d4",
+  c: "#67e8f9",
+  i: "#a5f3fc",
+  G: "#fbbf24",
+  g: "#fde68a",
+  W: "#ffffff",
+  w: "#fef9ff",
+  S: "#b4a5e8",
+  D: "#1a0b3d",
+  R: "#ff4d6d",
+  r: "#ffa9b9",
+  Y: "#0b0420",
+  L: "#4ade80",
+  T: "#0d6b80",
+  O: "#f59e0b",
+  s: "#ffe0bd",
+  h: "#ffcca0",
+  H: "#d49b75",
+  b: "#1e3a8a",
+  B: "#3b82f6",
+  E: "#fcd34d",
+  e: "#7dd3fc",
+  N: "#581c87",
 };
 
 function gridToShadow(grid: string, scale: number): string {
-  const rows = grid.split('\n').filter(Boolean);
+  const rows = grid.split("\n").filter(Boolean);
   const shadows: string[] = [];
   rows.forEach((row, y) => {
     [...row].forEach((ch, x) => {
@@ -20,12 +42,12 @@ function gridToShadow(grid: string, scale: number): string {
       shadows.push(`${x * scale}px ${y * scale}px 0 0 ${c}`);
     });
   });
-  return shadows.join(', ');
+  return shadows.join(", ");
 }
 
 function spriteSize(grid: string, scale: number) {
-  const rows = grid.split('\n').filter(Boolean);
-  const w = Math.max(...rows.map(r => r.length));
+  const rows = grid.split("\n").filter(Boolean);
+  const w = Math.max(...rows.map((r) => r.length));
   const h = rows.length;
   return { w: w * scale, h: h * scale };
 }
@@ -37,18 +59,35 @@ interface SpriteProps {
   style?: React.CSSProperties;
 }
 
-export function Sprite({ grid, scale = 4, animated = false, style = {} }: SpriteProps) {
+export function Sprite({
+  grid,
+  scale = 4,
+  animated = false,
+  style = {},
+}: SpriteProps) {
   const shadow = useMemo(() => gridToShadow(grid, scale), [grid, scale]);
   const { w, h } = spriteSize(grid, scale);
   return (
-    <div className="sprite-box" style={{ position: 'relative', width: w, height: h, ...style }}>
-      <div style={{
-        position: 'absolute', width: scale, height: scale, left: 0, top: 0,
-        background: 'transparent', boxShadow: shadow,
-        animation: animated ? `idle-bob calc(2.4s / var(--anim-mult)) steps(2) infinite` : 'none',
-        transform: 'translateZ(0)',
-        willChange: 'transform',
-      }} />
+    <div
+      className="sprite-box"
+      style={{ position: "relative", width: w, height: h, ...style }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          width: scale,
+          height: scale,
+          left: 0,
+          top: 0,
+          background: "transparent",
+          boxShadow: shadow,
+          animation: animated
+            ? `idle-bob calc(2.4s / var(--anim-mult)) steps(2) infinite`
+            : "none",
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
+      />
     </div>
   );
 }
@@ -455,5 +494,3 @@ KCWWWWCCCCKWWKCK
 KKCCCCCCCCCCCCKK
 .KKKKKKKKKKKKKK.
 `;
-
-

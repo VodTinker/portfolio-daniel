@@ -1,14 +1,20 @@
-import { useState, useRef, useCallback } from 'react';
-import { Sprite, SPRITE_CLOUD, SPRITE_MUSHROOM, SPRITE_GEAR, SPRITE_HEART } from './Sprites';
-import { PIXEL_DATA } from '../utils/pixelData';
-import type { I18n, Lang } from '../utils/pixelData';
+import { useCallback, useRef, useState } from "react";
+import type { I18n, Lang } from "../utils/pixelData";
+import { PIXEL_DATA } from "../utils/pixelData";
+import {
+  SPRITE_CLOUD,
+  SPRITE_GEAR,
+  SPRITE_HEART,
+  SPRITE_MUSHROOM,
+  Sprite,
+} from "./Sprites";
 
 const ZONE_META: Record<string, { en: string; es: string; glyph: string }> = {
-  about:    { en: 'LORE',      es: 'HISTORIA',  glyph: '◈' },
-  projects: { en: 'QUESTS',    es: 'MISIONES',  glyph: '⚔' },
-  stack:    { en: 'INVENTORY', es: 'INVENTARIO', glyph: '▦' },
-  xp:       { en: 'TIMELINE',  es: 'CRONOLOGÍA', glyph: '★' },
-  comms:    { en: 'COMMS',     es: 'COMMS',     glyph: '◉' },
+  about: { en: "LORE", es: "HISTORIA", glyph: "◈" },
+  projects: { en: "QUESTS", es: "MISIONES", glyph: "⚔" },
+  stack: { en: "INVENTORY", es: "INVENTARIO", glyph: "▦" },
+  xp: { en: "TIMELINE", es: "CRONOLOGÍA", glyph: "★" },
+  comms: { en: "COMMS", es: "COMMS", glyph: "◉" },
 };
 
 interface WorldMapProps {
@@ -29,23 +35,32 @@ export default function PixelWorldMap({ t, lang, onNavigate }: WorldMapProps) {
     const rect = bgRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setCursor({ x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) });
+    setCursor({
+      x: Math.max(0, Math.min(100, x)),
+      y: Math.max(0, Math.min(100, y)),
+    });
   }, []);
 
-  const handleZoneEnter = useCallback((z: typeof PIXEL_DATA.zones[number]) => {
-    setHover(z.id);
-    setPlayerPos({ x: z.x, y: z.y });
-  }, []);
+  const handleZoneEnter = useCallback(
+    (z: (typeof PIXEL_DATA.zones)[number]) => {
+      setHover(z.id);
+      setPlayerPos({ x: z.x, y: z.y });
+    },
+    [],
+  );
 
   const handleZoneLeave = useCallback(() => {
     setHover(null);
     setPlayerPos({ x: 50, y: 50 });
   }, []);
 
-  const handleZoneClick = useCallback((id: string) => {
-    setVisited(prev => new Set([...prev, id]));
-    onNavigate(id);
-  }, [onNavigate]);
+  const handleZoneClick = useCallback(
+    (id: string) => {
+      setVisited((prev) => new Set([...prev, id]));
+      onNavigate(id);
+    },
+    [onNavigate],
+  );
 
   const hoveredMeta = hover ? ZONE_META[hover] : null;
 
@@ -54,7 +69,9 @@ export default function PixelWorldMap({ t, lang, onNavigate }: WorldMapProps) {
       <div className="shell">
         <div className="section-banner gold pixel">◆ MAP — VODNET ◆</div>
         <h2 className="section-title">{t.world_title}</h2>
-        <p className="muted" style={{ marginBottom: 32 }}>{t.world_sub}</p>
+        <p className="muted" style={{ marginBottom: 32 }}>
+          {t.world_sub}
+        </p>
 
         <div className="worldmap-frame">
           <div
@@ -65,30 +82,81 @@ export default function PixelWorldMap({ t, lang, onNavigate }: WorldMapProps) {
             <div className="wm-grid" />
 
             {/* decorative tiles */}
-            <div className="wm-tile" style={{ left: '8%',  top: '12%', '--c': 'var(--cyan)'    } as React.CSSProperties}><Sprite grid={SPRITE_CLOUD}    scale={3} /></div>
-            <div className="wm-tile" style={{ left: '88%', top: '8%',  '--c': 'var(--cyan)'    } as React.CSSProperties}><Sprite grid={SPRITE_CLOUD}    scale={3} /></div>
-            <div className="wm-tile" style={{ left: '6%',  top: '78%', '--c': 'var(--violet)'  } as React.CSSProperties}><Sprite grid={SPRITE_GEAR}     scale={2} /></div>
-            <div className="wm-tile" style={{ left: '92%', top: '82%', '--c': 'var(--gold)'    } as React.CSSProperties}><Sprite grid={SPRITE_HEART}    scale={3} /></div>
+            <div
+              className="wm-tile"
+              style={
+                {
+                  left: "8%",
+                  top: "12%",
+                  "--c": "var(--cyan)",
+                } as React.CSSProperties
+              }
+            >
+              <Sprite grid={SPRITE_CLOUD} scale={3} />
+            </div>
+            <div
+              className="wm-tile"
+              style={
+                {
+                  left: "88%",
+                  top: "8%",
+                  "--c": "var(--cyan)",
+                } as React.CSSProperties
+              }
+            >
+              <Sprite grid={SPRITE_CLOUD} scale={3} />
+            </div>
+            <div
+              className="wm-tile"
+              style={
+                {
+                  left: "6%",
+                  top: "78%",
+                  "--c": "var(--violet)",
+                } as React.CSSProperties
+              }
+            >
+              <Sprite grid={SPRITE_GEAR} scale={2} />
+            </div>
+            <div
+              className="wm-tile"
+              style={
+                {
+                  left: "92%",
+                  top: "82%",
+                  "--c": "var(--gold)",
+                } as React.CSSProperties
+              }
+            >
+              <Sprite grid={SPRITE_HEART} scale={3} />
+            </div>
 
             {/* path — orden sin cruces: LORE → QUESTS → INVENTORY → COMMS → TIMELINE */}
-            <svg className="wm-paths" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <svg
+              className="wm-paths"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
               <path
                 d="M 0,42 L 14,32 Q 32,12 50,22 Q 64,28 78,38 Q 73,56 66,70 Q 48,72 30,65 L 0,62"
-                fill="none" stroke="var(--cyan)" strokeWidth="2"
-                strokeDasharray="6,5" opacity="0.7"
+                fill="none"
+                stroke="var(--cyan)"
+                strokeWidth="2"
+                strokeDasharray="6,5"
+                opacity="0.7"
                 vectorEffect="non-scaling-stroke"
               />
             </svg>
 
             {/* zones */}
-            {PIXEL_DATA.zones.map(z => {
+            {PIXEL_DATA.zones.map((z) => {
               const meta = ZONE_META[z.id];
               const isHovered = hover === z.id;
               const isVisited = visited.has(z.id);
               return (
                 <button
                   key={z.id}
-                  className={`wm-zone wm-zone-${z.id}${isHovered ? ' hover' : ''}${isVisited ? ' visited' : ''}`}
+                  className={`wm-zone wm-zone-${z.id}${isHovered ? " hover" : ""}${isVisited ? " visited" : ""}`}
                   style={{ left: `${z.x}%`, top: `${z.y}%` }}
                   onClick={() => handleZoneClick(z.id)}
                   onMouseEnter={() => handleZoneEnter(z)}
@@ -99,7 +167,9 @@ export default function PixelWorldMap({ t, lang, onNavigate }: WorldMapProps) {
                       <span className="wm-glyph">{meta.glyph}</span>
                     </div>
                     <div className="wm-pulse" />
-                    {isVisited && <div className="wm-visited-mark pixel">✓</div>}
+                    {isVisited && (
+                      <div className="wm-visited-mark pixel">✓</div>
+                    )}
                   </div>
                   <div className="wm-label pixel">{meta[lang]}</div>
                 </button>
@@ -112,22 +182,35 @@ export default function PixelWorldMap({ t, lang, onNavigate }: WorldMapProps) {
               style={{
                 left: `${playerPos.x}%`,
                 top: `${playerPos.y}%`,
-                transition: 'left 0.4s steps(8), top 0.4s steps(8)',
+                transition: "left 0.4s steps(8), top 0.4s steps(8)",
               }}
             >
-              <div className="wm-player-label pixel">{lang === 'es' ? 'TÚ' : 'YOU'}</div>
+              <div className="wm-player-label pixel">
+                {lang === "es" ? "TÚ" : "YOU"}
+              </div>
               <Sprite grid={SPRITE_MUSHROOM} scale={2} />
             </div>
           </div>
 
           <div className="worldmap-legend">
             <div className="wm-help pixel">
-              {hoveredMeta
-                ? <><span style={{ color: 'var(--gold)' }}>▶</span> {lang === 'es' ? 'NAVEGAR A:' : 'NAVIGATE TO:'} <span style={{ color: 'var(--cyan)' }}>{hoveredMeta[lang]}</span></>
-                : lang === 'es' ? 'HAZ CLIC EN UNA ZONA' : 'CLICK ZONE TO NAVIGATE'}
+              {hoveredMeta ? (
+                <>
+                  <span style={{ color: "var(--gold)" }}>▶</span>{" "}
+                  {lang === "es" ? "NAVEGAR A:" : "NAVIGATE TO:"}{" "}
+                  <span style={{ color: "var(--cyan)" }}>
+                    {hoveredMeta[lang]}
+                  </span>
+                </>
+              ) : lang === "es" ? (
+                "HAZ CLIC EN UNA ZONA"
+              ) : (
+                "CLICK ZONE TO NAVIGATE"
+              )}
             </div>
             <div className="wm-coords pixel">
-              <span className="muted">XY:</span> {cursor.x.toFixed(2)} / {cursor.y.toFixed(2)}
+              <span className="muted">XY:</span> {cursor.x.toFixed(2)} /{" "}
+              {cursor.y.toFixed(2)}
             </div>
           </div>
         </div>

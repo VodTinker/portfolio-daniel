@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
-import type { ReactNode, MouseEvent } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import type { MouseEvent, ReactNode } from "react";
+import { useRef, useState } from "react";
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ interface MagneticButtonProps {
 
 export default function MagneticButton({
   children,
-  className = '',
+  className = "",
   strength = 20,
   onClick,
   href,
@@ -63,7 +63,7 @@ export default function MagneticButton({
         y: position.y,
       }}
       transition={{
-        type: 'spring',
+        type: "spring",
         stiffness: 150,
         damping: 15,
         mass: 0.1,

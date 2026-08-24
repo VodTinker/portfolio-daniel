@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import type { MouseEvent, ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from "react";
+import { useState } from "react";
 
 interface RippleEffectProps {
   children: ReactNode;
@@ -16,8 +16,8 @@ interface Ripple {
 
 export default function RippleEffect({
   children,
-  className = '',
-  color = 'rgba(139, 92, 246, 0.4)',
+  className = "",
+  color = "rgba(139, 92, 246, 0.4)",
   duration = 600,
 }: RippleEffectProps) {
   const [ripples, setRipples] = useState<Ripple[]>([]);
@@ -40,7 +40,7 @@ export default function RippleEffect({
     <div
       className={`relative overflow-hidden ${className}`}
       onClick={handleClick}
-      style={{ isolation: 'isolate' }}
+      style={{ isolation: "isolate" }}
     >
       {children}
       {ripples.map((ripple) => (
@@ -50,14 +50,14 @@ export default function RippleEffect({
           style={{
             left: ripple.x,
             top: ripple.y,
-            width: '20px',
-            height: '20px',
-            marginLeft: '-10px',
-            marginTop: '-10px',
-            borderRadius: '50%',
+            width: "20px",
+            height: "20px",
+            marginLeft: "-10px",
+            marginTop: "-10px",
+            borderRadius: "50%",
             backgroundColor: color,
             animation: `ripple-animation ${duration}ms cubic-bezier(0, 0, 0.2, 1)`,
-            transform: 'scale(0)',
+            transform: "scale(0)",
             opacity: 1,
           }}
         />

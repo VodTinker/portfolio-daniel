@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const PageTransition = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,9 +20,9 @@ const PageTransition = () => {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ 
+          transition={{
             duration: 0.8,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <motion.div
@@ -31,10 +31,7 @@ const PageTransition = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <svg 
-              className="h-20 w-20 mb-4" 
-              viewBox="0 0 100 100"
-            >
+            <svg className="h-20 w-20 mb-4" viewBox="0 0 100 100">
               <motion.path
                 fill="none"
                 strokeWidth="4"
@@ -60,7 +57,7 @@ const PageTransition = () => {
                 transition={{ duration: 1, delay: 0.2, ease: "easeInOut" }}
               />
             </svg>
-            <motion.h1 
+            <motion.h1
               className="text-xl font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

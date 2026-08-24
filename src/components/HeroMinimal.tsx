@@ -12,13 +12,12 @@ const HeroMinimal = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
     >
-      <motion.div 
+      <motion.div
         style={{ opacity, scale }}
         className="container mx-auto max-w-6xl"
       >
         {/* Minimalista - Sin imagen, todo enfocado en tipografía */}
         <div className="space-y-12">
-          
           {/* Etiqueta pequeña arriba */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -27,7 +26,9 @@ const HeroMinimal = () => {
           >
             <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-foreground/5 backdrop-blur-sm border border-foreground/10">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-sm font-medium">Disponible para proyectos</span>
+              <span className="text-sm font-medium">
+                Disponible para proyectos
+              </span>
             </div>
           </motion.div>
 
@@ -58,7 +59,8 @@ const HeroMinimal = () => {
             </p>
             <p className="text-lg md:text-xl text-foreground/50 leading-relaxed">
               Creando experiencias digitales elegantes y sistemas robustos.
-              Estudiante de ASIR con pasión por el código limpio y la innovación.
+              Estudiante de ASIR con pasión por el código limpio y la
+              innovación.
             </p>
           </motion.div>
 

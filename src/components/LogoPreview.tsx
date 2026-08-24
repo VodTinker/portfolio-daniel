@@ -1,14 +1,14 @@
-import { Logo1, Logo2, Logo3, Logo4, Logo5, Logo6 } from './Logo';
+import { Logo1, Logo2, Logo3, Logo4, Logo5, Logo6 } from "./Logo";
 
 // Página temporal para previsualizar todos los logos
 export default function LogoPreview() {
   const logos = [
-    { name: 'Logo 1 - Geométrico Minimalista', Component: Logo1 },
-    { name: 'Logo 2 - Estilo Tech/Code', Component: Logo2 },
-    { name: 'Logo 3 - Hexágono Moderno', Component: Logo3 },
-    { name: 'Logo 4 - Con Degradado', Component: Logo4 },
-    { name: 'Logo 5 - Líneas Diagonales', Component: Logo5 },
-    { name: 'Logo 6 - Estilo Terminal', Component: Logo6 },
+    { name: "Logo 1 - Geométrico Minimalista", Component: Logo1 },
+    { name: "Logo 2 - Estilo Tech/Code", Component: Logo2 },
+    { name: "Logo 3 - Hexágono Moderno", Component: Logo3 },
+    { name: "Logo 4 - Con Degradado", Component: Logo4 },
+    { name: "Logo 5 - Líneas Diagonales", Component: Logo5 },
+    { name: "Logo 6 - Estilo Terminal", Component: Logo6 },
   ];
 
   return (
@@ -18,7 +18,8 @@ export default function LogoPreview() {
           Selecciona tu Logo
         </h1>
         <p className="text-neutral-600 dark:text-neutral-400 mb-12">
-          Elige el diseño que más te guste. Cada logo se adapta al tema claro/oscuro automáticamente.
+          Elige el diseño que más te guste. Cada logo se adapta al tema
+          claro/oscuro automáticamente.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -30,7 +31,7 @@ export default function LogoPreview() {
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-6">
                 {name}
               </h3>
-              
+
               {/* Preview en fondo claro */}
               <div className="mb-4">
                 <p className="text-xs text-neutral-500 mb-2">Fondo claro:</p>
@@ -66,7 +67,9 @@ export default function LogoPreview() {
 
               <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
                 <p className="text-xs text-blue-700 dark:text-blue-400">
-                  Para usar este logo, cambia el número en <code className="font-mono">src/components/Logo.tsx</code> línea 56 a <strong>Logo{index + 1}</strong>
+                  Para usar este logo, cambia el número en{" "}
+                  <code className="font-mono">src/components/Logo.tsx</code>{" "}
+                  línea 56 a <strong>Logo{index + 1}</strong>
                 </p>
               </div>
             </div>
@@ -80,8 +83,23 @@ export default function LogoPreview() {
           <ol className="space-y-2 text-neutral-300">
             <li>1. Revisa todos los diseños arriba</li>
             <li>2. Elige tu favorito</li>
-            <li>3. Abre <code className="px-2 py-1 bg-neutral-700 rounded font-mono text-sm">src/components/Logo.tsx</code></li>
-            <li>4. En la línea 56, cambia <code className="px-2 py-1 bg-neutral-700 rounded font-mono text-sm">Logo3</code> por <code className="px-2 py-1 bg-neutral-700 rounded font-mono text-sm">LogoX</code> (donde X es el número que elegiste)</li>
+            <li>
+              3. Abre{" "}
+              <code className="px-2 py-1 bg-neutral-700 rounded font-mono text-sm">
+                src/components/Logo.tsx
+              </code>
+            </li>
+            <li>
+              4. En la línea 56, cambia{" "}
+              <code className="px-2 py-1 bg-neutral-700 rounded font-mono text-sm">
+                Logo3
+              </code>{" "}
+              por{" "}
+              <code className="px-2 py-1 bg-neutral-700 rounded font-mono text-sm">
+                LogoX
+              </code>{" "}
+              (donde X es el número que elegiste)
+            </li>
             <li>5. Guarda y actualiza el navbar</li>
           </ol>
         </div>

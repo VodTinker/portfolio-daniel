@@ -27,7 +27,8 @@ const ScrollProgressIndicator = () => {
   useEffect(() => {
     const onScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       setScroll(scrolled);
     };
@@ -42,7 +43,10 @@ const ScrollProgressIndicator = () => {
     };
     checkDark();
     const observer = new MutationObserver(checkDark);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
     return () => observer.disconnect();
   }, []);
 
@@ -50,18 +54,20 @@ const ScrollProgressIndicator = () => {
   const darkGradient = "linear-gradient(90deg, #a78bfa 0%, #6366f1 100%)";
 
   return (
-    <div style={{
-      position: "fixed",
-      bottom: 0,
-      left: 0,
-      width: `${internalWidth}%`,
-      height: "4px",
-      background: isDark ? darkGradient : lightGradient,
-      zIndex: 100,
-      transition: "background 0.3s",
-      borderRadius: "2px",
-      pointerEvents: "none"
-    }} />
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: `${internalWidth}%`,
+        height: "4px",
+        background: isDark ? darkGradient : lightGradient,
+        zIndex: 100,
+        transition: "background 0.3s",
+        borderRadius: "2px",
+        pointerEvents: "none",
+      }}
+    />
   );
 };
 

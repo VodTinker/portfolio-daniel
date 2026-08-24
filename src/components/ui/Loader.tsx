@@ -1,24 +1,27 @@
-import React, { useMemo } from 'react';
+import type React from "react";
+import { useMemo } from "react";
 
 interface LoaderProps {
   words?: string[];
   className?: string;
 }
 
-const Loader: React.FC<LoaderProps> = ({ 
-  words = ['proyectos', 'experiencia', 'habilidades', 'contacto', 'proyectos'],
-  className = '' 
+const Loader: React.FC<LoaderProps> = ({
+  words = ["proyectos", "experiencia", "habilidades", "contacto", "proyectos"],
+  className = "",
 }) => {
   // Memoizar el renderizado de palabras para mejor rendimiento
-  const wordElements = useMemo(() => 
-    words.map((word, index) => (
-      <span 
-        key={index} 
-        className="word block h-full pl-2 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500 bg-clip-text text-transparent font-bold"
-      >
-        {word}
-      </span>
-    )), [words]
+  const wordElements = useMemo(
+    () =>
+      words.map((word, index) => (
+        <span
+          key={index}
+          className="word block h-full pl-2 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500 bg-clip-text text-transparent font-bold"
+        >
+          {word}
+        </span>
+      )),
+    [words],
   );
 
   return (
@@ -26,7 +29,7 @@ const Loader: React.FC<LoaderProps> = ({
       <div className="loader-card relative">
         {/* Efecto de resplandor de fondo */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 blur-3xl animate-pulse" />
-        
+
         {/* Card principal */}
         <div className="relative bg-gradient-to-br from-neutral-900/95 to-neutral-950/95 dark:from-neutral-950/95 dark:to-black/95 backdrop-blur-xl px-12 py-8 rounded-3xl shadow-2xl border border-purple-500/20">
           <div className="flex items-center gap-3 text-neutral-300 font-semibold text-4xl md:text-5xl h-16 overflow-hidden">
@@ -34,10 +37,8 @@ const Loader: React.FC<LoaderProps> = ({
             <div className="words-container relative h-full overflow-hidden">
               {/* Gradiente superior e inferior más pronunciado */}
               <div className="words-gradient absolute inset-0 bg-gradient-to-b from-neutral-900 via-transparent via-50% to-neutral-900 dark:from-neutral-950 dark:to-neutral-950 z-10 pointer-events-none" />
-              
-              <div className="words-list">
-                {wordElements}
-              </div>
+
+              <div className="words-list">{wordElements}</div>
             </div>
           </div>
 
@@ -48,9 +49,18 @@ const Loader: React.FC<LoaderProps> = ({
 
           {/* Puntos decorativos */}
           <div className="flex items-center justify-center gap-2 mt-4">
-            <span className="dot w-2.5 h-2.5 bg-purple-500 rounded-full" style={{ animationDelay: '0s' }} />
-            <span className="dot w-2.5 h-2.5 bg-pink-500 rounded-full" style={{ animationDelay: '0.2s' }} />
-            <span className="dot w-2.5 h-2.5 bg-purple-500 rounded-full" style={{ animationDelay: '0.4s' }} />
+            <span
+              className="dot w-2.5 h-2.5 bg-purple-500 rounded-full"
+              style={{ animationDelay: "0s" }}
+            />
+            <span
+              className="dot w-2.5 h-2.5 bg-pink-500 rounded-full"
+              style={{ animationDelay: "0.2s" }}
+            />
+            <span
+              className="dot w-2.5 h-2.5 bg-purple-500 rounded-full"
+              style={{ animationDelay: "0.4s" }}
+            />
           </div>
         </div>
       </div>

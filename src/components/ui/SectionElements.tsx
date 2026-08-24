@@ -26,15 +26,9 @@ export const SectionTitle = ({
           {badge}
         </span>
       )}
-      <h2 className={commonStyles.gradientHeading}>
-        {children}
-      </h2>
+      <h2 className={commonStyles.gradientHeading}>{children}</h2>
       <div className={commonStyles.headingDivider}></div>
-      {subtitle && (
-        <p className={commonStyles.sectionSubtitle}>
-          {subtitle}
-        </p>
-      )}
+      {subtitle && <p className={commonStyles.sectionSubtitle}>{subtitle}</p>}
     </motion.div>
   );
 };
@@ -42,18 +36,26 @@ export const SectionTitle = ({
 /**
  * Componente para efectos decorativos de fondo
  */
-export const DecorativeEffects = ({ positions }: { positions: { top?: string; bottom?: string; left?: string; right?: string }[] }) => {
+export const DecorativeEffects = ({
+  positions,
+}: {
+  positions: { top?: string; bottom?: string; left?: string; right?: string }[];
+}) => {
   return (
     <div className={commonStyles.blurEffectsContainer}>
       {positions.map((pos, index) => (
         <div
           key={`blur-effect-${index}`}
-          className={index % 2 === 0 ? commonStyles.primaryBlurEffect : commonStyles.accentBlurEffect}
+          className={
+            index % 2 === 0
+              ? commonStyles.primaryBlurEffect
+              : commonStyles.accentBlurEffect
+          }
           style={{
             position: "absolute",
             width: "24rem", // w-96
             height: "24rem", // h-96
-            ...pos
+            ...pos,
           }}
         />
       ))}
@@ -70,13 +72,12 @@ export const ContentCard = ({
 }: {
   children: ReactNode;
   className?: string;
-}) => {  return (
+}) => {
+  return (
     <div className={`${commonStyles.cardContainer} ${className}`}>
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-30 group-hover:opacity-50 transition-opacity duration-500 z-0" />
       <div className="absolute -bottom-1 -right-1 w-20 h-20 bg-gradient-to-tr from-transparent to-primary/20 rounded-tl-3xl transform rotate-45 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-      <div className="relative z-10 p-8">
-        {children}
-      </div>
+      <div className="relative z-10 p-8">{children}</div>
     </div>
   );
 };
@@ -97,7 +98,7 @@ export const FilterButton = ({
     <button
       onClick={onClick}
       className={`${commonStyles.filterButtonBase} ${
-        isActive 
+        isActive
           ? commonStyles.activeFilterButton
           : commonStyles.inactiveFilterButton
       }`}

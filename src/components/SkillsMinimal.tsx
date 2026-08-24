@@ -1,30 +1,37 @@
 import { motion } from "framer-motion";
-import { FiCode, FiLayers, FiDatabase, FiCpu, FiGlobe, FiZap } from "react-icons/fi";
+import {
+  FiCode,
+  FiCpu,
+  FiDatabase,
+  FiGlobe,
+  FiLayers,
+  FiZap,
+} from "react-icons/fi";
 
 const skills = {
   frontend: {
     title: "Frontend",
     icon: FiCode,
     color: "from-purple-500 to-pink-500",
-    items: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Next.js"]
+    items: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Next.js"],
   },
   backend: {
     title: "Backend",
     icon: FiDatabase,
     color: "from-blue-500 to-cyan-500",
-    items: ["Node.js", "Python", "PostgreSQL", "MongoDB", "REST APIs"]
+    items: ["Node.js", "Python", "PostgreSQL", "MongoDB", "REST APIs"],
   },
   systems: {
     title: "Sistemas",
     icon: FiCpu,
     color: "from-orange-500 to-red-500",
-    items: ["Linux", "Docker", "Bash", "Redes", "Seguridad"]
+    items: ["Linux", "Docker", "Bash", "Redes", "Seguridad"],
   },
   tools: {
     title: "Herramientas",
     icon: FiZap,
     color: "from-green-500 to-emerald-500",
-    items: ["Git", "VS Code", "Figma", "Vite", "npm/pnpm"]
+    items: ["Git", "VS Code", "Figma", "Vite", "npm/pnpm"],
   },
 };
 
@@ -32,7 +39,6 @@ const SkillsMinimal = () => {
   return (
     <section id="skills" className="relative px-6 py-32 md:py-40">
       <div className="container mx-auto max-w-6xl">
-        
         {/* Header minimalista */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -45,11 +51,11 @@ const SkillsMinimal = () => {
             <FiLayers className="w-4 h-4" />
             <span className="text-sm font-medium">Stack técnico</span>
           </div>
-          
+
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
             Tecnologías que domino
           </h2>
-          
+
           <p className="text-xl text-foreground/60 max-w-2xl mx-auto">
             Un conjunto versátil de herramientas para crear soluciones completas
           </p>
@@ -68,7 +74,9 @@ const SkillsMinimal = () => {
             >
               {/* Header de categoría */}
               <div className="flex items-center gap-4 mb-6">
-                <div className={`p-3 rounded-2xl bg-gradient-to-br ${category.color}`}>
+                <div
+                  className={`p-3 rounded-2xl bg-gradient-to-br ${category.color}`}
+                >
                   <category.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold">{category.title}</h3>
@@ -100,7 +108,8 @@ const SkillsMinimal = () => {
           <FiGlobe className="w-8 h-8 mx-auto mb-4 text-foreground/60" />
           <h3 className="text-xl font-bold mb-2">Siempre aprendiendo</h3>
           <p className="text-foreground/60">
-            Actualmente explorando: Machine Learning, Cloud Architecture y DevOps
+            Actualmente explorando: Machine Learning, Cloud Architecture y
+            DevOps
           </p>
         </motion.div>
       </div>

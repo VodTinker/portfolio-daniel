@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -9,7 +9,8 @@ export default function CustomCursor() {
 
   useEffect(() => {
     // Detectar si es dispositivo táctil
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) return;
 
     let animationFrameId: number;
@@ -17,10 +18,12 @@ export default function CustomCursor() {
     // Actualizar posición del mouse
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
-      
+
       // Detectar si está sobre elemento interactivo
       const target = e.target as HTMLElement;
-      const isInteractive = target.closest('a, button, input, textarea, [role="button"], .cursor-pointer');
+      const isInteractive = target.closest(
+        'a, button, input, textarea, [role="button"], .cursor-pointer',
+      );
       setIsPointer(!!isInteractive);
     };
 
@@ -45,16 +48,16 @@ export default function CustomCursor() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseenter", handleMouseEnter);
+
     animate();
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseenter", handleMouseEnter);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -64,18 +67,19 @@ export default function CustomCursor() {
       {/* Cursor tipo flecha/puntero */}
       <div
         ref={cursorRef}
-        className={`custom-cursor ${isHidden ? 'opacity-0' : 'opacity-100'} ${
-          isPointer ? 'scale-110' : 'scale-100'
+        className={`custom-cursor ${isHidden ? "opacity-0" : "opacity-100"} ${
+          isPointer ? "scale-110" : "scale-100"
         }`}
         style={{
-          position: 'fixed',
-          left: '0px',
-          top: '0px',
-          width: '24px',
-          height: '24px',
-          pointerEvents: 'none',
+          position: "fixed",
+          left: "0px",
+          top: "0px",
+          width: "24px",
+          height: "24px",
+          pointerEvents: "none",
           zIndex: 10000,
-          transition: 'opacity 0.3s ease, scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          transition:
+            "opacity 0.3s ease, scale 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
         }}
       >
         {/* Flecha SVG */}
@@ -86,7 +90,7 @@ export default function CustomCursor() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           style={{
-            filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
+            filter: "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))",
           }}
         >
           {/* Puntero estilo arrow */}

@@ -8,9 +8,7 @@ const FooterMinimal = () => {
   return (
     <footer className="bg-[#0D0D0D] text-[#F5F1E8] px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
       <div className="max-w-6xl mx-auto">
-
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-8 sm:gap-12 lg:gap-16 mb-10 sm:mb-14">
-
           {/* Wordmark + tagline */}
           <div>
             <p className="font-serif text-xl sm:text-2xl font-light text-[#F5F1E8] mb-3">
@@ -45,9 +43,30 @@ const FooterMinimal = () => {
               {(t.footer as any).colSocial ?? "Links"}
             </p>
             <nav className="flex flex-col gap-2.5">
-              <a href="https://github.com/VodTinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">GitHub</a>
-              <a href="https://www.linkedin.com/in/daniel-fonov-garcía" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">LinkedIn</a>
-              <a href="https://discord.com/users/vodtinker" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors">Discord</a>
+              <a
+                href="https://github.com/VodTinker"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/daniel-fonov-garcía"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://discord.com/users/vodtinker"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/50 hover:text-[#F5F1E8] transition-colors"
+              >
+                Discord
+              </a>
             </nav>
           </div>
         </div>
@@ -56,9 +75,7 @@ const FooterMinimal = () => {
           <p className="text-xs font-mono text-white/30">
             © {year} {t.footer.copyright}
           </p>
-          <p className="text-xs font-mono text-white/30">
-            {t.footer.built}
-          </p>
+          <p className="text-xs font-mono text-white/30">{t.footer.built}</p>
         </div>
       </div>
     </footer>

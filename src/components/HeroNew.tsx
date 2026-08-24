@@ -11,7 +11,6 @@ const HeroNew = () => {
       <div className="container mx-auto max-w-7xl">
         {/* Layout centrado */}
         <div className="flex flex-col items-center text-center space-y-8">
-          
           {/* Imagen de perfil grande y llamativa */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -21,11 +20,16 @@ const HeroNew = () => {
           >
             <div className="absolute -inset-6 rounded-full bg-gradient-to-r from-purple-500/30 via-blue-500/30 to-pink-500/30 opacity-75 blur-2xl group-hover:opacity-100 transition-opacity duration-500 animate-spin-slow"></div>
             <div className="relative">
-              <div className="absolute inset-0 rounded-full animate-glow" style={{ boxShadow: 'rgba(139, 92, 246, 0.4) 0px 0px 80px 40px' }}></div>
+              <div
+                className="absolute inset-0 rounded-full animate-glow"
+                style={{
+                  boxShadow: "rgba(139, 92, 246, 0.4) 0px 0px 80px 40px",
+                }}
+              ></div>
               <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 overflow-hidden rounded-full border-4 border-purple-500/60 dark:border-purple-400/60 bg-gradient-to-br from-white/10 to-white/20 dark:from-black/20 dark:to-black/40 shadow-2xl group-hover:border-purple-400/80 transition-all duration-500">
-                <img 
-                  src="Menhera-removebg-preview.webp" 
-                  alt="Daniel Fonov García" 
+                <img
+                  src="Menhera-removebg-preview.webp"
+                  alt="Daniel Fonov García"
                   className="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
@@ -72,9 +76,10 @@ const HeroNew = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground max-w-3xl leading-relaxed"
           >
-            Estudiante de <span className="font-semibold text-primary">ASIR</span> apasionado por la tecnología, 
-            el desarrollo web y la inteligencia artificial. Creando soluciones innovadoras y 
-            aprendiendo constantemente.
+            Estudiante de{" "}
+            <span className="font-semibold text-primary">ASIR</span> apasionado
+            por la tecnología, el desarrollo web y la inteligencia artificial.
+            Creando soluciones innovadoras y aprendiendo constantemente.
           </motion.p>
 
           {/* Botones de acción grandes */}
@@ -142,7 +147,12 @@ const HeroNew = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.2, repeat: Infinity, repeatType: "reverse" }}
+        transition={{
+          duration: 0.6,
+          delay: 1.2,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
       >
         <div className="flex flex-col items-center gap-2 text-muted-foreground">

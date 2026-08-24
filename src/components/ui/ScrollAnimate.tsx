@@ -17,10 +17,10 @@ const ScrollAnimate = ({
   direction = "up",
   delay = 0.1,
   duration = 0.7,
-  className = ""
+  className = "",
 }: ScrollAnimateProps) => {
-  let initial: any = { opacity: 0 };
-  let animate: any = { opacity: 1 };
+  const initial: any = { opacity: 0 };
+  const animate: any = { opacity: 1 };
   switch (direction) {
     case "up":
       initial.y = 40;

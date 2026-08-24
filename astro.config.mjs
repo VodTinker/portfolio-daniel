@@ -7,6 +7,10 @@ import tailwind from '@astrojs/tailwind';
 // La API /api/openai-chat corre como Cloudflare Pages Function (functions/api/openai-chat.ts)
 // Cloudflare Pages detecta el directorio functions/ automáticamente, sin adapter
 export default defineConfig({
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
   integrations: [
     react(),
     tailwind({

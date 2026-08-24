@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
+import { Code, MessageSquare, Terminal, Zap } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../utils/translations";
-import { Terminal, Code, Zap, MessageSquare } from "lucide-react";
 
 const BotCommands = () => {
   const { language } = useLanguage();
@@ -12,7 +12,10 @@ const BotCommands = () => {
       icon: <MessageSquare className="w-5 h-5" />,
       command: "!chat",
       description: t.commands.chat,
-      example: language === 'es' ? "!chat Hola, ¿cómo estás?" : "!chat Hello, how are you?",
+      example:
+        language === "es"
+          ? "!chat Hola, ¿cómo estás?"
+          : "!chat Hello, how are you?",
     },
     {
       icon: <Code className="w-5 h-5" />,
@@ -24,7 +27,10 @@ const BotCommands = () => {
       icon: <Zap className="w-5 h-5" />,
       command: "!image",
       description: t.commands.image,
-      example: language === 'es' ? "!image Un gato astronauta en el espacio" : "!image An astronaut cat in space",
+      example:
+        language === "es"
+          ? "!image Un gato astronauta en el espacio"
+          : "!image An astronaut cat in space",
     },
     {
       icon: <Terminal className="w-5 h-5" />,
@@ -38,7 +44,7 @@ const BotCommands = () => {
     <section className="relative py-20 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -75,7 +81,7 @@ const BotCommands = () => {
                 {t.videoNotSupported}
               </video>
             </div>
-            
+
             {/* Decorative elements */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/20 rounded-full blur-3xl" />
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />

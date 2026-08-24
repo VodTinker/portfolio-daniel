@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import type { Tweaks } from './PixelTweaks';
-import { playClick, playToggle } from '../utils/audio';
+import { useEffect } from "react";
+import { playClick, playToggle } from "../utils/audio";
+import type { Tweaks } from "./PixelTweaks";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -22,12 +22,12 @@ export default function MobileMenu({
   // Prevent scroll when open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -45,12 +45,32 @@ export default function MobileMenu({
   if (!isOpen) return null;
 
   const navItems = [
-    { id: 'about',    label: lang === 'es' ? 'ENTRAR EN LORE' : 'ENTER LORE',     n: '01' },
-    { id: 'projects', label: lang === 'es' ? 'REGISTRO QUESTS' : 'QUEST LOG',      n: '02' },
-    { id: 'stack',    label: lang === 'es' ? 'ABRIR INVENTARIO' : 'INVENTORY',    n: '03' },
-    { id: 'xp',       label: lang === 'es' ? 'CRONOLOGÍA' : 'TIMELINE',           n: '04' },
-    { id: 'labnotes', label: lang === 'es' ? 'NOTAS DE LAB' : 'LAB NOTES',        n: '05' },
-    { id: 'comms',    label: lang === 'es' ? 'ABRIR COMMS' : 'OPEN COMMS',        n: '06' },
+    {
+      id: "about",
+      label: lang === "es" ? "ENTRAR EN LORE" : "ENTER LORE",
+      n: "01",
+    },
+    {
+      id: "projects",
+      label: lang === "es" ? "REGISTRO QUESTS" : "QUEST LOG",
+      n: "02",
+    },
+    {
+      id: "stack",
+      label: lang === "es" ? "ABRIR INVENTARIO" : "INVENTORY",
+      n: "03",
+    },
+    { id: "xp", label: lang === "es" ? "CRONOLOGÍA" : "TIMELINE", n: "04" },
+    {
+      id: "labnotes",
+      label: lang === "es" ? "NOTAS DE LAB" : "LAB NOTES",
+      n: "05",
+    },
+    {
+      id: "comms",
+      label: lang === "es" ? "ABRIR COMMS" : "OPEN COMMS",
+      n: "06",
+    },
   ];
 
   return (
@@ -68,14 +88,14 @@ export default function MobileMenu({
             <span className="pda-led green" />
           </div>
           <span className="pda-title pixel">VODTINKER.PDA</span>
-          <button 
-            type="button" 
-            className="pda-close-btn" 
+          <button
+            type="button"
+            className="pda-close-btn"
             onClick={() => {
               if (tweaks.sfx) playToggle();
               onClose();
             }}
-            aria-label={lang === 'es' ? 'Cerrar menú' : 'Close menu'}
+            aria-label={lang === "es" ? "Cerrar menú" : "Close menu"}
           >
             ✕
           </button>
@@ -83,11 +103,10 @@ export default function MobileMenu({
 
         {/* Scrollable Content */}
         <div className="pda-content">
-          
           {/* Level Nav Section */}
           <div className="pda-section-title pixel">◆ SELECT LEVEL</div>
           <div className="pda-nav-list">
-            {navItems.map(it => (
+            {navItems.map((it) => (
               <button
                 key={it.id}
                 type="button"
@@ -102,22 +121,36 @@ export default function MobileMenu({
           </div>
 
           {/* Arcade Tweaks Controls Section */}
-          <div className="pda-section-title pixel" style={{ marginTop: '24px' }}>◆ SYSTEM SETTINGS</div>
-          
+          <div
+            className="pda-section-title pixel"
+            style={{ marginTop: "24px" }}
+          >
+            ◆ SYSTEM SETTINGS
+          </div>
+
           <div className="pda-tweaks-box">
-            
             {/* Color Theme Selector */}
             <div className="pda-tweak-group">
-              <span className="pda-tweak-label pixel">{lang === 'es' ? 'ESQUEMA DE COLOR' : 'COLOR PALETTE'}</span>
+              <span className="pda-tweak-label pixel">
+                {lang === "es" ? "ESQUEMA DE COLOR" : "COLOR PALETTE"}
+              </span>
               <div className="pda-theme-grid">
-                {(['midnight', 'sunset', 'terminal', 'gameboy', 'cyberneon'] as const).map(v => (
+                {(
+                  [
+                    "midnight",
+                    "sunset",
+                    "terminal",
+                    "gameboy",
+                    "cyberneon",
+                  ] as const
+                ).map((v) => (
                   <button
                     key={v}
                     type="button"
-                    className={`pda-theme-btn pixel ${v} ${tweaks.mode === v ? 'active' : ''}`}
-                    onClick={() => handleTweakChange('mode', v)}
+                    className={`pda-theme-btn pixel ${v} ${tweaks.mode === v ? "active" : ""}`}
+                    onClick={() => handleTweakChange("mode", v)}
                   >
-                    {v === 'cyberneon' ? 'cyberpunk' : v}
+                    {v === "cyberneon" ? "cyberpunk" : v}
                   </button>
                 ))}
               </div>
@@ -125,19 +158,21 @@ export default function MobileMenu({
 
             {/* Language Selection */}
             <div className="pda-tweak-group">
-              <span className="pda-tweak-label pixel">{lang === 'es' ? 'IDIOMA' : 'LANGUAGE'}</span>
+              <span className="pda-tweak-label pixel">
+                {lang === "es" ? "IDIOMA" : "LANGUAGE"}
+              </span>
               <div className="pda-lang-row">
                 <button
                   type="button"
-                  className={`pda-lang-btn pixel en ${lang === 'en' ? 'active' : ''}`}
-                  onClick={() => handleTweakChange('lang', 'en')}
+                  className={`pda-lang-btn pixel en ${lang === "en" ? "active" : ""}`}
+                  onClick={() => handleTweakChange("lang", "en")}
                 >
                   ENGLISH
                 </button>
                 <button
                   type="button"
-                  className={`pda-lang-btn pixel es ${lang === 'es' ? 'active' : ''}`}
-                  onClick={() => handleTweakChange('lang', 'es')}
+                  className={`pda-lang-btn pixel es ${lang === "es" ? "active" : ""}`}
+                  onClick={() => handleTweakChange("lang", "es")}
                 >
                   ESPAÑOL
                 </button>
@@ -146,33 +181,46 @@ export default function MobileMenu({
 
             {/* Scanline Toggle */}
             <div className="pda-toggle-row">
-              <span className="pda-tweak-label pixel">{lang === 'es' ? 'EFECTO SCANLINES' : 'CRT SCANLINES'}</span>
+              <span className="pda-tweak-label pixel">
+                {lang === "es" ? "EFECTO SCANLINES" : "CRT SCANLINES"}
+              </span>
               <button
                 type="button"
-                className={`pda-switch-btn pixel ${tweaks.scanlines ? 'on' : 'off'}`}
-                onClick={() => handleTweakChange('scanlines', !tweaks.scanlines)}
+                className={`pda-switch-btn pixel ${tweaks.scanlines ? "on" : "off"}`}
+                onClick={() =>
+                  handleTweakChange("scanlines", !tweaks.scanlines)
+                }
               >
-                {tweaks.scanlines ? 'ON' : 'OFF'}
+                {tweaks.scanlines ? "ON" : "OFF"}
               </button>
             </div>
 
             {/* Sound Toggle */}
             <div className="pda-toggle-row">
-              <span className="pda-tweak-label pixel">{lang === 'es' ? 'SONIDO CHIPTUNE' : 'CHIPTUNE SFX'}</span>
+              <span className="pda-tweak-label pixel">
+                {lang === "es" ? "SONIDO CHIPTUNE" : "CHIPTUNE SFX"}
+              </span>
               <button
                 type="button"
-                className={`pda-switch-btn pixel ${tweaks.sfx ? 'on' : 'off'}`}
-                onClick={() => handleTweakChange('sfx', !tweaks.sfx)}
+                className={`pda-switch-btn pixel ${tweaks.sfx ? "on" : "off"}`}
+                onClick={() => handleTweakChange("sfx", !tweaks.sfx)}
               >
-                {tweaks.sfx ? 'ON' : 'OFF'}
+                {tweaks.sfx ? "ON" : "OFF"}
               </button>
             </div>
 
             {/* Animation Speed Slider */}
-            <div className="pda-tweak-group" style={{ borderBottom: 'none', paddingBottom: '0' }}>
+            <div
+              className="pda-tweak-group"
+              style={{ borderBottom: "none", paddingBottom: "0" }}
+            >
               <div className="pda-slider-header">
-                <span className="pda-tweak-label pixel">{lang === 'es' ? 'VELOCIDAD DE ANIMACIÓN' : 'MOTION SPEED'}</span>
-                <span className="pda-slider-value pixel">{tweaks.animations.toFixed(1)}x</span>
+                <span className="pda-tweak-label pixel">
+                  {lang === "es" ? "VELOCIDAD DE ANIMACIÓN" : "MOTION SPEED"}
+                </span>
+                <span className="pda-slider-value pixel">
+                  {tweaks.animations.toFixed(1)}x
+                </span>
               </div>
               <input
                 type="range"
@@ -181,14 +229,14 @@ export default function MobileMenu({
                 max={2}
                 step={0.1}
                 value={tweaks.animations}
-                onChange={e => handleTweakChange('animations', parseFloat(e.target.value))}
+                onChange={(e) =>
+                  handleTweakChange("animations", parseFloat(e.target.value))
+                }
               />
             </div>
-
           </div>
-
         </div>
-        
+
         {/* Decorative D-Pad / Buttons inside PDA footer */}
         <div className="pda-footer">
           <div className="pda-dpad">

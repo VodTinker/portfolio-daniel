@@ -1,21 +1,29 @@
 import { motion } from "framer-motion";
-import { 
-  FiUser, FiHeart, FiCode, FiTrendingUp, 
-  FiTarget, FiBookOpen, FiCpu, FiZap 
+import {
+  FiBookOpen,
+  FiCode,
+  FiCpu,
+  FiHeart,
+  FiTarget,
+  FiTrendingUp,
+  FiUser,
+  FiZap,
 } from "react-icons/fi";
 
 const features = [
   {
     icon: FiUser,
     title: "Quién Soy",
-    description: "Estudiante de ASIR apasionado por la tecnología y la innovación. Me encanta resolver problemas complejos y crear soluciones elegantes.",
+    description:
+      "Estudiante de ASIR apasionado por la tecnología y la innovación. Me encanta resolver problemas complejos y crear soluciones elegantes.",
     gradient: "from-blue-500 to-cyan-500",
     size: "large", // ocupa 2 columnas
   },
   {
     icon: FiHeart,
     title: "Mis Pasiones",
-    description: "Desarrollo web, IA, sistemas, automatización y aprendizaje continuo.",
+    description:
+      "Desarrollo web, IA, sistemas, automatización y aprendizaje continuo.",
     gradient: "from-red-500 to-pink-500",
     size: "small",
   },
@@ -29,7 +37,8 @@ const features = [
   {
     icon: FiTarget,
     title: "Mi Objetivo",
-    description: "Convertirme en un profesional versátil capaz de desarrollar soluciones completas desde el backend hasta el frontend, con un enfoque especial en IA.",
+    description:
+      "Convertirme en un profesional versátil capaz de desarrollar soluciones completas desde el backend hasta el frontend, con un enfoque especial en IA.",
     gradient: "from-orange-500 to-amber-500",
     size: "large",
   },
@@ -71,8 +80,8 @@ const AboutNew = () => {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Soy Daniel, un estudiante apasionado por crear experiencias digitales 
-            innovadoras y sistemas robustos que marquen la diferencia.
+            Soy Daniel, un estudiante apasionado por crear experiencias
+            digitales innovadoras y sistemas robustos que marquen la diferencia.
           </p>
         </motion.div>
 
@@ -87,28 +96,36 @@ const AboutNew = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
               className={`group relative ${
-                feature.size === 'large' ? 'md:col-span-2' : 'md:col-span-1'
+                feature.size === "large" ? "md:col-span-2" : "md:col-span-1"
               }`}
             >
               {/* Card */}
               <div className="card h-full p-8 relative overflow-hidden">
                 {/* Gradient background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`} />
-                
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}
+                />
+
                 {/* Icono decorativo grande en el fondo */}
-                <div className={`absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500`}>
+                <div
+                  className={`absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500`}
+                >
                   <feature.icon className="w-40 h-40" />
                 </div>
 
                 {/* Contenido */}
                 <div className="relative z-10 h-full flex flex-col">
                   {/* Icono del título */}
-                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${feature.gradient} mb-6 w-fit`}>
+                  <div
+                    className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${feature.gradient} mb-6 w-fit`}
+                  >
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
 
                   {/* Título */}
-                  <h3 className={`text-2xl font-bold mb-3 bg-gradient-to-br ${feature.gradient} bg-clip-text text-transparent`}>
+                  <h3
+                    className={`text-2xl font-bold mb-3 bg-gradient-to-br ${feature.gradient} bg-clip-text text-transparent`}
+                  >
                     {feature.title}
                   </h3>
 
@@ -118,7 +135,9 @@ const AboutNew = () => {
                   </p>
 
                   {/* Decorative line */}
-                  <div className={`mt-6 h-1 w-20 bg-gradient-to-r ${feature.gradient} rounded-full`} />
+                  <div
+                    className={`mt-6 h-1 w-20 bg-gradient-to-r ${feature.gradient} rounded-full`}
+                  />
                 </div>
               </div>
             </motion.div>

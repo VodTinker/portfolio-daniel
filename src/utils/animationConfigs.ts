@@ -1,4 +1,4 @@
-import anime from 'animejs/lib/anime.es.js';
+import anime from "animejs/lib/anime.es.js";
 
 // Configuraciones de tiempos y velocidades
 export const timings = {
@@ -9,11 +9,11 @@ export const timings = {
 
 // Configuraciones de easing
 export const easings = {
-  smooth: 'easeOutQuad',
-  bounce: 'easeOutElastic(1, .5)',
-  sharp: 'cubicBezier(.17,.67,.83,.67)',
-  spring: 'spring(1, 80, 10, 0)',
-  snappy: 'easeOutExpo',
+  smooth: "easeOutQuad",
+  bounce: "easeOutElastic(1, .5)",
+  sharp: "cubicBezier(.17,.67,.83,.67)",
+  spring: "spring(1, 80, 10, 0)",
+  snappy: "easeOutExpo",
 };
 
 // Configuraciones de animaciones de entrada
@@ -77,7 +77,7 @@ export const entrancePresets = {
 // Configuraciones de animaciones para efectos hover
 export const hoverEffects = {
   float: (el: HTMLElement) => {
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener("mouseenter", () => {
       anime({
         targets: el,
         translateY: -8,
@@ -85,7 +85,7 @@ export const hoverEffects = {
         duration: timings.fast,
       });
     });
-    el.addEventListener('mouseleave', () => {
+    el.addEventListener("mouseleave", () => {
       anime({
         targets: el,
         translateY: 0,
@@ -96,15 +96,15 @@ export const hoverEffects = {
   },
   glow: (el: HTMLElement) => {
     const originalBoxShadow = el.style.boxShadow;
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener("mouseenter", () => {
       anime({
         targets: el,
-        boxShadow: '0 0 15px rgba(66, 153, 225, 0.6)',
+        boxShadow: "0 0 15px rgba(66, 153, 225, 0.6)",
         easing: easings.smooth,
         duration: timings.fast,
       });
     });
-    el.addEventListener('mouseleave', () => {
+    el.addEventListener("mouseleave", () => {
       anime({
         targets: el,
         boxShadow: originalBoxShadow,
@@ -114,7 +114,7 @@ export const hoverEffects = {
     });
   },
   scale: (el: HTMLElement) => {
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener("mouseenter", () => {
       anime({
         targets: el,
         scale: 1.05,
@@ -122,7 +122,7 @@ export const hoverEffects = {
         duration: timings.fast,
       });
     });
-    el.addEventListener('mouseleave', () => {
+    el.addEventListener("mouseleave", () => {
       anime({
         targets: el,
         scale: 1,
@@ -147,26 +147,28 @@ export const sequenceAnimations = {
   },
   letterByLetter: (element: HTMLElement, text: string, options: any = {}) => {
     // Guardar el texto original
-    element.textContent = '';
-    
+    element.textContent = "";
+
     // Crear un span para cada letra
-    const chars = text.split('');
-    chars.forEach(char => {
-      const span = document.createElement('span');
-      span.textContent = char === ' ' ? '\u00A0' : char;
-      span.style.opacity = '0';
-      span.style.display = 'inline-block';
+    const chars = text.split("");
+    chars.forEach((char) => {
+      const span = document.createElement("span");
+      span.textContent = char === " " ? "\u00A0" : char;
+      span.style.opacity = "0";
+      span.style.display = "inline-block";
       element.appendChild(span);
     });
-    
+
     // Animar cada letra
     return anime({
-      targets: element.querySelectorAll('span'),
+      targets: element.querySelectorAll("span"),
       opacity: [0, 1],
       translateY: [20, 0],
       duration: options.duration || timings.normal,
       easing: options.easing || easings.snappy,
-      delay: anime.stagger(options.staggerDelay || 30, { start: options.delay || 0 }),
+      delay: anime.stagger(options.staggerDelay || 30, {
+        start: options.delay || 0,
+      }),
     });
   },
 };
@@ -178,11 +180,11 @@ export const scrollAnimations = {
     selector: string,
     animationConfig: object,
     threshold = 0.1,
-    rootMargin = '0px 0px -100px 0px'
+    rootMargin = "0px 0px -100px 0px",
   ) => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const target = entry.target;
             anime({
@@ -193,25 +195,26 @@ export const scrollAnimations = {
           }
         });
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
-    document.querySelectorAll(selector).forEach(el => {
+    document.querySelectorAll(selector).forEach((el) => {
       observer.observe(el);
     });
-    
+
     return observer;
   },
-  
+
   // Crea un efecto de parallax al hacer scroll
   parallaxEffect: (selector: string, scrollFactor = 0.2) => {
     const elements = document.querySelectorAll(selector);
-    
-    window.addEventListener('scroll', () => {
+
+    window.addEventListener("scroll", () => {
       const scrollY = window.scrollY;
-      elements.forEach(element => {
+      elements.forEach((element) => {
         const translateY = scrollY * scrollFactor;
-        (element as HTMLElement).style.transform = `translateY(${translateY}px)`;
+        (element as HTMLElement).style.transform =
+          `translateY(${translateY}px)`;
       });
     });
   },
