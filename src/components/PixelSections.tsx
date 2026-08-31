@@ -113,7 +113,7 @@ function ProjectCard({
   t: I18n;
   onSelect: (p: (typeof PIXEL_DATA.projects)[number]) => void;
 }) {
-  const isMaintenance = p.stats.status === "maintenance";
+  const isMaintenance = (p.stats.status as string) === "maintenance";
   const statusColor = isMaintenance ? "var(--gold)" : "var(--green)";
   const sprite = SPRITES_MAP[p.id] ?? SPRITE_CHEST;
   const cardColor = COLOR_VAR[p.color] ?? "var(--cyan)";
@@ -169,7 +169,7 @@ function ProjectCard({
             {p.tags.map((tg) => (
               <span
                 key={tg}
-                className={`chip ${tg === "Migration" ? "gold" : ""}`}
+                className={`chip ${(tg as string) === "Migration" ? "gold" : ""}`}
               >
                 {tg}
               </span>
@@ -271,7 +271,7 @@ function QuestModal({
   onClose: () => void;
 }) {
   const [mounted, setMounted] = useState(false);
-  const isMaintenance = p.stats.status === "maintenance";
+  const isMaintenance = (p.stats.status as string) === "maintenance";
   const sprite = SPRITES_MAP[p.id] ?? SPRITE_CHEST;
   const cardColor = COLOR_VAR[p.color] ?? "var(--cyan)";
 
@@ -371,7 +371,7 @@ function QuestModal({
             {p.tags.map((tg) => (
               <span
                 key={tg}
-                className={`chip ${tg === "Migration" ? "gold" : ""}`}
+                className={`chip ${(tg as string) === "Migration" ? "gold" : ""}`}
               >
                 {tg}
               </span>
@@ -425,8 +425,8 @@ export function PixelProjects({ t, lang }: { t: I18n; lang: Lang }) {
 
   const filteredProjects = PIXEL_DATA.projects.filter((p) => {
     if (filter === "all") return true;
-    if (filter === "live") return p.stats.status === "live";
-    if (filter === "maintenance") return p.stats.status === "maintenance";
+    if (filter === "live") return (p.stats.status as string) === "live";
+    if (filter === "maintenance") return (p.stats.status as string) === "maintenance";
     if (filter === "saas")
       return p.tags.some((tag) =>
         ["SaaS", "Design Editor", "AI Tools", "Next.js / React"].includes(tag),
@@ -449,10 +449,10 @@ export function PixelProjects({ t, lang }: { t: I18n; lang: Lang }) {
   });
 
   const countLive = PIXEL_DATA.projects.filter(
-    (p) => p.stats.status === "live",
+    (p) => (p.stats.status as string) === "live",
   ).length;
   const countMaint = PIXEL_DATA.projects.filter(
-    (p) => p.stats.status === "maintenance",
+    (p) => (p.stats.status as string) === "maintenance",
   ).length;
 
   return (
@@ -687,34 +687,34 @@ const HL_BLADES: HomelabBlade[] = [
     unit: "2U",
     sprite: SPRITE_VPS_SERVER,
     color: "var(--cyan)",
-    status: "maint",
-    statusLabel: { en: "MIGRATING", es: "MIGRANDO" },
-    ip: "100.64.0.1 · cloud.remote",
-    tags: ["Stalwart Mail", "Rust", "Caddy Proxy", "DoH / DoQ DNS", "NetBird Relay"],
+    status: "online",
+    statusLabel: { en: "ONLINE", es: "ACTIVO" },
+    ip: "100.107.234.23 · vps-hetzner",
+    tags: ["Docker-Mailserver", "Ferrous DNS (Rust)", "DoQ/DoT", "Temps PaaS", "NetBird Relay"],
     description: {
-      en: "Public cloud VM serving as an edge reverse proxy, Stalwart JMAP/SMTP mail server, and encrypted DNS gateway.",
-      es: "Servidor cloud público como proxy inverso perimetral, servidor de correo Stalwart JMAP/SMTP (Rust) y DNS cifrado.",
+      en: "Public cloud VM serving as an edge reverse proxy (Temps), Docker-Mailserver, Ferrous DNS ad-blocker (Rust), and NetBird VPN node.",
+      es: "Servidor cloud público como proxy inverso (Temps), Docker-Mailserver, bloqueador DNS Ferrous (Rust) y nodo NetBird VPN.",
     },
     services: [
       {
-        name: "Stalwart Mail (Rust)",
-        port: "443 / 25",
-        desc: { en: "JMAP / IMAP / SMTP", es: "JMAP / IMAP / SMTP" },
+        name: "Docker-Mailserver",
+        port: "25 / 465 / 587 / 993",
+        desc: { en: "SMTP / IMAP / TLS", es: "SMTP / IMAP / TLS" },
       },
       {
-        name: "Encrypted DNS",
-        port: "853 / 443",
+        name: "Ferrous DNS (Rust)",
+        port: "53 / 853",
         desc: {
-          en: "DNS-over-HTTPS & QUIC",
-          es: "DNS seguro DoH / DoQ",
+          en: "DoQ / DoT + 455k AdBlock",
+          es: "DoQ / DoT + 455k Bloqueo",
         },
       },
       {
-        name: "Caddy Server",
+        name: "Temps Reverse Proxy",
         port: "80 / 443",
         desc: {
-          en: "Automated TLS Ingress",
-          es: "Ingress TLS Automatizado",
+          en: "Automated TLS & PaaS",
+          es: "Ingress TLS y PaaS",
         },
       },
     ],
@@ -910,7 +910,7 @@ export function PixelHomelab({ t, lang }: { t: I18n; lang: Lang }) {
             </span>
             <span className="hl-leg-item">
               <span className="hl-leg-dot amber" />
-              {lang === "es" ? "Migración de VPS" : "VPS Migration"}
+              {lang === "es" ? "Servicios Cloud (Hetzner)" : "Cloud Services (Hetzner)"}
             </span>
           </div>
         </div>
