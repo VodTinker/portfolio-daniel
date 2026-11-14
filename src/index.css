@@ -3797,6 +3797,62 @@ body:has(.quest-toast) .stage-toast { display: none; }
   .title-hi { display: none; }
 }
 
+/* ======= LUNA Y SOL (SVG pixel art, SkyBodies.tsx) ======= */
+.sky-body { position: absolute; top: 9%; right: 7%; z-index: 0; line-height: 0; }
+.sky-body svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sky-moon {
+  width: 102px;
+  --m-hi: #f6f3ff; --m-mid: #d4cdf2; --m-lo: #a79dd6; --m-dk: #7569b0; --m-earth: #2e2366; --m-earth-2: #41358a;
+  --m-halo: #a855f7; --m-halo-2: #22d3ee; --m-glow: rgba(168, 85, 247, 0.5);
+}
+.sky-moon svg { filter: drop-shadow(0 0 18px var(--m-glow)); }
+.sky-moon .halo-a, .sky-moon .halo-b { animation: moon-halo calc(2.4s / var(--anim-mult, 1)) steps(1) infinite; }
+.sky-moon .halo-b { animation-delay: calc(-1.2s / var(--anim-mult, 1)); }
+@keyframes moon-halo { 0%, 49.9% { opacity: 0.42; } 50%, 100% { opacity: 0.16; } }
+
+.sky-sun { display: none; width: 132px; }
+.sky-sun svg { animation: sun-glow calc(3s / var(--anim-mult, 1)) steps(3) infinite; }
+@keyframes sun-glow {
+  0%, 100% { filter: drop-shadow(0 0 14px rgba(251, 191, 36, 0.75)) drop-shadow(0 0 36px rgba(249, 115, 22, 0.45)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 56px rgba(249, 115, 22, 0.6)); }
+}
+/* 4 frames de franjas outrun: cada uno visible 1/4 del ciclo */
+.sun-f { opacity: 0; animation: sun-frame calc(1.6s / var(--anim-mult, 1)) steps(1) infinite; }
+.sun-f1 { animation-delay: calc(-1.2s / var(--anim-mult, 1)); }
+.sun-f2 { animation-delay: calc(-0.8s / var(--anim-mult, 1)); }
+.sun-f3 { animation-delay: calc(-0.4s / var(--anim-mult, 1)); }
+@keyframes sun-frame { 0%, 24.9% { opacity: 1; } 25%, 100% { opacity: 0; } }
+.sky-sun .rays-b { animation: sun-rays calc(1s / var(--anim-mult, 1)) steps(1) infinite; }
+@keyframes sun-rays { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+[data-mode="sunset"] .sky-moon { display: none; }
+[data-mode="sunset"] .sky-sun { display: block; }
+
+/* Paletas de la luna por tema */
+[data-mode="terminal"] .sky-moon {
+  --m-hi: #c8ffd2; --m-mid: #3df25d; --m-lo: #2cb546; --m-dk: #1a6b29; --m-earth: #0e2c13; --m-earth-2: #164a1f;
+  --m-halo: #3df25d; --m-halo-2: #1a6b29; --m-glow: rgba(61, 242, 93, 0.45);
+}
+[data-mode="gameboy"] .sky-moon {
+  --m-hi: #d8eaa0; --m-mid: #9bbc0f; --m-lo: #8bac0f; --m-dk: #306230; --m-earth: #1e4a1e; --m-earth-2: #2a5a26;
+  --m-halo: #9bbc0f; --m-halo-2: #306230; --m-glow: rgba(155, 188, 15, 0.35);
+}
+[data-mode="gameboy"] .sky-moon svg { filter: drop-shadow(0 0 12px var(--m-glow)); }
+[data-mode="cyberneon"] .sky-moon {
+  --m-hi: #ffffff; --m-mid: #9ffcff; --m-lo: #00e5ff; --m-dk: #b000ff; --m-earth: #2a0845; --m-earth-2: #400d66;
+  --m-halo: #ff007f; --m-halo-2: #00ffff; --m-glow: rgba(255, 0, 127, 0.55);
+}
+
+@media (max-width: 600px) {
+  .sky-body { top: 7%; right: 5%; }
+  .sky-moon { width: 68px; }
+  .sky-sun { width: 88px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sun-f, .sky-sun .rays-b, .sky-moon .halo-a, .sky-moon .halo-b, .sky-sun svg { animation: none !important; }
+  .sun-f0 { opacity: 1; }
+}
+
 /* ======= REDUCED MOTION ======= */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

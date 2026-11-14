@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { playClick, playHover } from "../utils/audio";
 import type { I18n, Lang } from "../utils/pixelData";
+import SkyBodies from "./SkyBodies";
 import { SPRITE_CLAW, SPRITE_CLOUD, Sprite } from "./Sprites";
 
 
-function Skyline() {
+function Skyline({ lang }: { lang: Lang }) {
   return (
     <div className="skyline">
       <div className="skyline-grad" />
@@ -44,8 +45,7 @@ function Skyline() {
           </div>
         ))}
       </div>
-      <div className="skyline-sun-rays" />
-      <div className="skyline-moon" />
+      <SkyBodies lang={lang} />
       <div className="skyline-grid" />
       {/* Skyline renderizado en Blender: blender/render_sprite.py --demo city */}
       <div className="skyline-city" />
@@ -309,7 +309,7 @@ export default function PixelHero({ t, lang, onNavigate, onOptions, sfx }: HeroP
 
   return (
     <section id="hero" ref={heroRef}>
-      <Skyline />
+      <Skyline lang={lang} />
       <div className="shell hero-shell title-screen">
         <p className="title-pre pixel">
           <span className="dot pulse" /> {es ? "1 JUGADOR · 2026" : "1 PLAYER · 2026"}
