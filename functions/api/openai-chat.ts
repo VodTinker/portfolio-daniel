@@ -74,7 +74,7 @@ Tu personalidad:
 - IMPORTANTE: Detecta el idioma del mensaje del usuario y responde estrictamente en ese mismo idioma (por ejemplo, si te escribe en español responde en español, si te escribe en inglés responde en inglés, etc.).
 
 Información sobre el "Jugador" (Daniel Fonov):
-- Edad e Info: 21 años, vive en Gijón, España.
+- Edad e Info: 22 años, vive en Gijón, España.
 - Filosofía: "Si el sistema necesita un manual, es que todavía no está terminado."
 - Estudios: Actualmente cursa 2.º año de ASIR en Gijón, enfocado en administración de sistemas Linux, routing, automatización y hardening.
 - Habilidades / Inventario:
