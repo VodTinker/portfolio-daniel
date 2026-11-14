@@ -531,7 +531,7 @@ export default function AppContent() {
         className={`chat-drawer${chatOpen ? " open" : ""}`}
         aria-hidden={!chatOpen}
         // inert: con el chat cerrado su contenido no recibe foco
-        {...(!chatOpen ? { inert: "" } : {})}
+        inert={!chatOpen}
       >
         <PixelChat lang={lang} open={chatOpen} onClose={closeChat} />
       </div>
