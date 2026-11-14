@@ -20,7 +20,8 @@ Opciones:
   --out PATH        PNG de salida (tira horizontal de frames)
   --size N          Lado del frame en píxeles (por defecto 96)
   --frames N        Nº de frames (por defecto: rango de la escena, o 24 en demo)
-  --demo NAME       Construye una escena demo: "server"
+  --demo NAME       Construye una escena demo: "server" | "city"
+  --width/--height  Frame no cuadrado (p.ej. city: --width 512 --height 128)
   --no-palette      No reducir a la paleta de la web
   --keep-camera     Usar la cámara del .blend tal cual
   --ortho-scale F   Encuadre de la cámara isométrica auto (por defecto 2.8)
@@ -36,12 +37,14 @@ Consejos para tus propios modelos:
 
 import argparse
 import math
+import random
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
 
+import bmesh
 import bpy
 
 # Paleta del tema "midnight" (src/index.css :root)
@@ -71,8 +74,10 @@ def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--out", required=True)
     p.add_argument("--size", type=int, default=96)
+    p.add_argument("--width", type=int, default=0, help="ancho del frame (por defecto = size)")
+    p.add_argument("--height", type=int, default=0, help="alto del frame (por defecto = size)")
     p.add_argument("--frames", type=int, default=0)
-    p.add_argument("--demo", choices=["server"], default=None)
+    p.add_argument("--demo", choices=["server", "city"], default=None)
     p.add_argument("--no-palette", action="store_true")
     p.add_argument("--keep-camera", action="store_true")
     p.add_argument("--ortho-scale", type=float, default=2.8)
@@ -187,6 +192,223 @@ def _fcurves(idblock):
     return out
 
 
+# ----------------------------------------------------------------------------
+# Escena demo: skyline pixel art en perspectiva para el fondo del hero.
+# Tres filas de edificios (cerca/medio/lejos), datacenter con parabólica,
+# torre de radio, depósitos de agua y ventanas que parpadean.
+# Iluminación FLAT: cada cara usa exactamente su color de paleta
+# (frontal / lateral / techo), como en pixel art hecho a mano.
+# ----------------------------------------------------------------------------
+CITY_ROWS = [
+    # depth, x half-span, height range, width range, front, side, top, window palette
+    dict(y=45, span=40, h=(5, 14), w=(2.0, 5.0), front="bg-2", side="panel-2", top="violet",
+         win=["violet", "violet", "ink-faint"], win_off="panel-2", density=0.35),
+    dict(y=20, span=31, h=(3.5, 11), w=(1.8, 4.5), front="panel-2", side="panel", top="bg-2",
+         win=["cyan", "violet-2", "gold"], win_off="panel", density=0.4),
+    dict(y=0, span=23, h=(2.5, 8.5), w=(1.6, 4.0), front="panel", side="bg-0", top="bg-2",
+         win=["cyan", "cyan", "gold", "magenta"], win_off="bg-0", density=0.45),
+]
+
+
+def _mat_cache():
+    cache = {}
+
+    def get(key):
+        if key not in cache:
+            cache[key] = material(f"c_{key}", PALETTE[key])
+        return cache[key]
+
+    return cache, get
+
+
+def _add_box(bm, x0, y0, z0, x1, y1, z1):
+    """Añade una caja al bmesh y devuelve sus caras."""
+    vs = [bm.verts.new(v) for v in [
+        (x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0),
+        (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1),
+    ]]
+    idx = [(0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7), (4, 5, 6, 7), (3, 2, 1, 0)]
+    return [bm.faces.new([vs[i] for i in f]) for f in idx]
+
+
+def _mesh_object(scene, name, bm, mats):
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    for m in mats:
+        me.materials.append(m)
+    ob = bpy.data.objects.new(name, me)
+    scene.collection.objects.link(ob)
+    return ob
+
+
+def _blink(mat, on_hex, off_hex, frames, pattern):
+    on, off = hex_to_rgba(PALETTE[on_hex]), hex_to_rgba(PALETTE[off_hex])
+    for f in range(frames):
+        mat.diffuse_color = on if pattern(f) else off
+        mat.keyframe_insert("diffuse_color", frame=f + 1)
+    for fc in _fcurves(mat):
+        for kp in fc.keyframe_points:
+            kp.interpolation = "CONSTANT"
+
+
+def build_demo_city(frames, width, height):
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    scene = bpy.context.scene
+    rng = random.Random(7)
+    _, M = _mat_cache()
+
+    # Grupos de parpadeo: materiales animados compartidos por muchas ventanas
+    flick = []
+    for g in range(4):
+        m = material(f"flick{g}", PALETTE["cyan"])
+        _blink(m, ["cyan", "gold", "magenta", "cyan-2"][g], "bg-0", frames,
+               lambda f, g=g: ((f * (g + 3) + g * 5) % 7) > 1)
+        flick.append(m)
+
+    near_roofs = []  # (cx, cy, h) de la fila cercana, sin remate
+    for ri, row in enumerate(CITY_ROWS):
+        bm_b = bmesh.new()
+        bm_w = bmesh.new()
+        body_mats = [M(row["front"]), M(row["side"]), M(row["top"])]
+        win_keys = row["win"] + [row["win_off"]]
+        win_mats = [M(k) for k in win_keys] + flick
+        x = -row["span"]
+        while x < row["span"]:
+            w = rng.uniform(*row["w"])
+            h = rng.uniform(*row["h"])
+            d = rng.uniform(2.0, 4.0)
+            y0 = row["y"] + rng.uniform(-1.5, 1.5)
+            for f in _add_box(bm_b, x, y0, 0, x + w, y0 + d, h):
+                f.normal_update(); n = f.normal
+                f.material_index = 0 if n.y < -0.5 else (2 if n.z > 0.5 else 1)
+            # Remate de azotea (escalonado) en algunos edificios
+            crowned = rng.random() < 0.35 and w > 2.2
+            if ri == len(CITY_ROWS) - 1 and not crowned and w > 1.8:
+                near_roofs.append((x + w / 2, y0 + d / 2, h))
+            if crowned:
+                inset = w * 0.22
+                h2 = h + rng.uniform(0.6, 1.6)
+                for f in _add_box(bm_b, x + inset, y0 + 0.4, h, x + w - inset, y0 + d - 0.4, h2):
+                    f.normal_update(); n = f.normal
+                    f.material_index = 0 if n.y < -0.5 else (2 if n.z > 0.5 else 1)
+            # Ventanas en la fachada frontal
+            ws, gap = 0.28, 0.62
+            cols = int((w - 0.5) / gap)
+            rows_n = int((h - 0.9) / gap)
+            ox = x + (w - (cols - 1) * gap) / 2 - ws / 2
+            for r in range(rows_n):
+                for c in range(cols):
+                    if rng.random() > row["density"] + 0.35:
+                        continue
+                    roll = rng.random()
+                    if roll < row["density"] * 0.25 and ri > 0:
+                        mi = len(win_keys) + rng.randrange(4)  # parpadea
+                    elif roll < row["density"]:
+                        mi = rng.randrange(len(row["win"]))  # encendida
+                    else:
+                        mi = len(win_keys) - 1  # apagada
+                    wx = ox + c * gap
+                    wz = 0.6 + r * gap
+                    for f in _add_box(bm_w, wx, y0 - 0.05, wz, wx + ws, y0 - 0.02, wz + ws * 1.3):
+                        f.material_index = mi
+            x += w + rng.uniform(0.15, 1.2)
+        _mesh_object(scene, f"row{ri}", bm_b, body_mats)
+        _mesh_object(scene, f"win{ri}", bm_w, win_mats)
+
+    # --- Datacenter (fila cercana, izquierda): bloque ancho y bajo con LEDs
+    dc = bmesh.new()
+    dcx, dcy, dcw, dch = -14.5, -3.0, 7.0, 3.2
+    for f in _add_box(dc, dcx, dcy, 0, dcx + dcw, dcy + 3.5, dch):
+        f.normal_update(); n = f.normal
+        f.material_index = 0 if n.y < -0.5 else (2 if n.z > 0.5 else 1)
+    # Unidades de clima en la azotea
+    for i in range(3):
+        ax = dcx + 0.6 + i * 1.3
+        for f in _add_box(dc, ax, dcy + 0.8, dch, ax + 0.9, dcy + 2.0, dch + 0.5):
+            f.normal_update(); n = f.normal
+            f.material_index = 0 if n.y < -0.5 else (2 if n.z > 0.5 else 1)
+    _mesh_object(scene, "datacenter", dc, [M("panel-2"), M("bg-0"), M("violet")])
+    # Franjas de LEDs de racks (parpadean)
+    leds = bmesh.new()
+    for r in range(3):
+        for c in range(14):
+            lx = dcx + 0.45 + c * 0.45
+            lz = 0.7 + r * 0.8
+            for f in _add_box(leds, lx, dcy - 0.05, lz, lx + 0.2, dcy - 0.02, lz + 0.18):
+                f.material_index = (r * 7 + c * 3) % 4
+    _mesh_object(scene, "dc_leds", leds, flick)
+    # Rótulo "DC" luminoso
+    sign = bmesh.new()
+    for f in _add_box(sign, dcx + 0.4, dcy - 0.06, dch - 0.55, dcx + dcw - 0.4, dcy - 0.03, dch - 0.35):
+        f.material_index = 0
+    _mesh_object(scene, "dc_sign", sign, [M("magenta")])
+    # Parabólica
+    bpy.ops.mesh.primitive_cone_add(vertices=12, radius1=0.6, radius2=0.1, depth=0.3,
+                                    location=(dcx + dcw - 1.0, dcy + 1.6, dch + 0.95),
+                                    rotation=(math.radians(55), 0, math.radians(-25)))
+    dish = bpy.context.active_object
+    dish.data.materials.append(M("ink-faint"))
+    bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.06, depth=0.8,
+                                        location=(dcx + dcw - 1.0, dcy + 1.6, dch + 0.4))
+    bpy.context.active_object.data.materials.append(M("ink-faint"))
+
+    # --- Torre de radio (fila media, derecha) con luz roja intermitente
+    bpy.ops.mesh.primitive_cone_add(vertices=4, radius1=0.9, radius2=0.12, depth=13,
+                                    location=(17.5, 19, 6.5))
+    tower = bpy.context.active_object
+    tower.data.materials.append(M("bg-2"))
+    for i, z in enumerate([4.5, 8.5, 12.6]):
+        bpy.ops.mesh.primitive_cube_add(size=0.32, location=(17.5, 18.6, z))
+        lamp = bpy.context.active_object
+        m = material(f"lamp{i}", PALETTE["red"])
+        _blink(m, "red", "bg-1", frames, lambda f, i=i: (f + i) % 4 < 2)
+        lamp.data.materials.append(m)
+
+    # --- Depósitos de agua y antenas en azoteas de la fila cercana
+    # (se descartan los que caen sobre el datacenter)
+    tops = sorted(
+        (r for r in near_roofs if not (dcx - 1 < r[0] < dcx + dcw + 1)),
+        key=lambda c: -c[2],
+    )
+    used = []
+    for (tx, ty, tz) in tops:
+        if len(used) >= 6:
+            break
+        if any(abs(tx - u) < 4 for u in used):
+            continue
+        used.append(tx)
+        if len(used) % 2:
+            bpy.ops.mesh.primitive_cylinder_add(vertices=8, radius=0.45, depth=0.8,
+                                                location=(tx, ty, tz + 0.4))
+            bpy.context.active_object.data.materials.append(M("bg-2"))
+        else:
+            bpy.ops.mesh.primitive_cube_add(size=1, location=(tx, ty, tz + 0.9))
+            ant = bpy.context.active_object
+            ant.scale = (0.07, 0.07, 1.8)
+            ant.data.materials.append(M("violet"))
+            bpy.ops.mesh.primitive_cube_add(size=0.2, location=(tx, ty, tz + 1.85))
+            m = material(f"antlamp{len(used)}", PALETTE["cyan"])
+            _blink(m, "cyan", "panel", frames, lambda f, k=len(used): (f + k) % 3 != 0)
+            bpy.context.active_object.data.materials.append(m)
+
+    # Cámara en perspectiva, ligeramente por debajo del centro mirando al skyline
+    cam_data = bpy.data.cameras.new("CityCam")
+    cam_data.lens = 50
+    cam_data.sensor_fit = "HORIZONTAL"
+    cam_data.sensor_width = 36
+    cam_data.clip_end = 500
+    cam = bpy.data.objects.new("CityCam", cam_data)
+    scene.collection.objects.link(cam)
+    cam.location = (0, -60, 3.2)
+    cam.rotation_euler = (math.radians(92.5), 0, 0)
+    scene.camera = cam
+
+    scene.frame_start = 1
+    scene.frame_end = frames
+    return scene
+
+
 def ensure_iso_camera(scene, ortho_scale, center_z=1.0):
     cam_data = bpy.data.cameras.new("IsoCam")
     cam_data.type = "ORTHO"
@@ -212,11 +434,11 @@ def ensure_iso_camera(scene, ortho_scale, center_z=1.0):
     scene.camera = cam
 
 
-def setup_render(scene, size):
+def setup_render(scene, width, height, flat=False):
     r = scene.render
     r.engine = "BLENDER_WORKBENCH"
-    r.resolution_x = size
-    r.resolution_y = size
+    r.resolution_x = width
+    r.resolution_y = height
     r.resolution_percentage = 100
     r.film_transparent = True
     r.image_settings.file_format = "PNG"
@@ -224,11 +446,11 @@ def setup_render(scene, size):
     # Sin antialiasing -> píxeles nítidos
     scene.display.render_aa = "OFF"
     sh = scene.display.shading
-    sh.light = "STUDIO"
+    sh.light = "FLAT" if flat else "STUDIO"
     sh.color_type = "MATERIAL"
-    sh.show_object_outline = True
+    sh.show_object_outline = not flat
     sh.object_outline_color = hex_to_rgba(PALETTE["bg-0"])[:3]
-    sh.show_cavity = True
+    sh.show_cavity = not flat
     sh.cavity_type = "WORLD"
     sh.show_specular_highlight = False
     try:
@@ -246,9 +468,13 @@ def magick(*args):
 
 def main():
     a = parse_args()
-    frames = a.frames or (24 if a.demo else 0)
+    frames = a.frames or {"server": 24, "city": 8}.get(a.demo, 0)
+    width = a.width or a.size
+    height = a.height or a.size
 
-    if a.demo == "server":
+    if a.demo == "city":
+        scene = build_demo_city(frames, width, height)
+    elif a.demo == "server":
         scene = build_demo_server(frames)
         ensure_iso_camera(scene, a.ortho_scale)
     else:
@@ -258,7 +484,7 @@ def main():
         if not a.keep_camera or scene.camera is None:
             ensure_iso_camera(scene, a.ortho_scale)
 
-    setup_render(scene, a.size)
+    setup_render(scene, width, height, flat=(a.demo == "city"))
 
     tmp = tempfile.mkdtemp(prefix="sprite_")
     scene.render.filepath = os.path.join(tmp, "f_")
@@ -295,7 +521,7 @@ def main():
         )
 
     shutil.rmtree(tmp, ignore_errors=True)
-    print(f"\n[sprite] {len(paths)} frames de {a.size}x{a.size} -> {out}")
+    print(f"\n[sprite] {len(paths)} frames de {width}x{height} -> {out}")
     print(f'[sprite] <PixelSprite src="/{os.path.relpath(out, "public")}" frames={{{len(paths)}}} size={{{a.size}}} />')
 
 

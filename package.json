@@ -42,7 +42,8 @@
     "deploy": "bun run build && wrangler pages deploy dist",
     "deploy:draft": "bun run build && wrangler pages deploy dist",
     "sprite": "blender -b -P blender/render_sprite.py --",
-    "sprite:demo": "blender -b -P blender/render_sprite.py -- --demo server --out public/sprites/server.png"
+    "sprite:demo": "blender -b -P blender/render_sprite.py -- --demo server --out public/sprites/server.png",
+    "sprite:city": "blender -b -P blender/render_sprite.py -- --demo city --width 512 --height 128 --out public/sprites/city.png"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

@@ -3621,6 +3621,24 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 .hl-intro-sprite { filter: drop-shadow(0 0 18px rgba(124, 58, 237, 0.35)); margin-right: 24px; }
 @media (max-width: 760px) { .hl-intro-sprite { display: none; } }
 
+/* ======= HERO CITY (Blender sprite sheet, 8 frames 512x128) ======= */
+.skyline-city {
+  position: absolute; left: 50%; bottom: 3%;
+  width: max(100%, 640px); aspect-ratio: 4 / 1;
+  opacity: 0.82;
+  transform: translateX(-50%);
+  background: url(/sprites/city.png) 0 0 / 800% 100% no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: city-frames calc(3.2s / var(--anim-mult, 1)) steps(8) infinite;
+}
+/* 8 frames: offset = p·(W − 8W) → p = 8/7 recorre los 8 frames */
+@keyframes city-frames { to { background-position-x: calc(100% * 8 / 7); } }
+[data-mode="sunset"] .skyline-city { filter: hue-rotate(-50deg) saturate(1.3); }
+[data-mode="terminal"] .skyline-city { filter: grayscale(1) sepia(1) hue-rotate(75deg) saturate(3.5) brightness(0.85); }
+[data-mode="gameboy"] .skyline-city { filter: grayscale(1) sepia(1) hue-rotate(45deg) saturate(1.6) brightness(0.9); }
+[data-mode="cyberneon"] .skyline-city { filter: saturate(1.4) contrast(1.1); }
+
 /* ======= REDUCED MOTION ======= */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

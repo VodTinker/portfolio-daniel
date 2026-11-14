@@ -2,20 +2,6 @@ import { useEffect, useState } from "react";
 import type { I18n, Lang } from "../utils/pixelData";
 import { SPRITE_AVATAR_S, SPRITE_CLAW, SPRITE_CLOUD, Sprite } from "./Sprites";
 
-const BUILDINGS = [
-  { h: 36, w: 7, c: "#0a031a", l: 4, glow: "cyan", antenna: false },
-  { h: 54, w: 6, c: "#080216", l: 12, glow: null, antenna: true },
-  { h: 30, w: 8, c: "#0d0422", l: 19, glow: "violet", antenna: false },
-  { h: 66, w: 7, c: "#060214", l: 28, glow: null, antenna: true },
-  { h: 42, w: 8, c: "#0b041c", l: 36, glow: "cyan", antenna: false },
-  { h: 58, w: 6, c: "#080216", l: 45, glow: null, antenna: false },
-  { h: 72, w: 7, c: "#050110", l: 53, glow: null, antenna: true },
-  { h: 38, w: 8, c: "#0a031a", l: 61, glow: "violet", antenna: false },
-  { h: 52, w: 6, c: "#080216", l: 70, glow: null, antenna: true },
-  { h: 34, w: 8, c: "#0d0422", l: 77, glow: "cyan", antenna: false },
-  { h: 60, w: 7, c: "#060214", l: 86, glow: null, antenna: false },
-  { h: 44, w: 7, c: "#0b041c", l: 94, glow: "violet", antenna: true },
-];
 
 function Skyline() {
   return (
@@ -60,40 +46,8 @@ function Skyline() {
       <div className="skyline-sun-rays" />
       <div className="skyline-moon" />
       <div className="skyline-grid" />
-      <div className="skyline-buildings">
-        {BUILDINGS.map((b, i) => (
-          <div
-            key={i}
-            className="bldg"
-            data-glow={b.glow ?? undefined}
-            style={{
-              height: `${b.h}%`,
-              width: `${b.w}%`,
-              left: `${b.l}%`,
-              background: b.c,
-            }}
-          >
-            {b.antenna && <div className="bldg-antenna" />}
-            {Array.from({ length: Math.floor(b.h / 6) }).map((_, j) => (
-              <div className="bldg-row" key={j}>
-                {Array.from({ length: Math.floor(b.w / 1.5) }).map((_, k) => (
-                  <div
-                    key={k}
-                    className="bldg-window"
-                    style={{
-                      opacity: ((i + j + k) * 17) % 10 > 6 ? 0.65 : 0.05,
-                      background:
-                        ((i + j + k) * 7) % 5 === 0
-                          ? "rgba(251, 191, 36, 0.75)"
-                          : "rgba(34, 211, 238, 0.6)",
-                    }}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+      {/* Skyline renderizado en Blender: blender/render_sprite.py --demo city */}
+      <div className="skyline-city" />
       <div className="skyline-fog" />
     </div>
   );
