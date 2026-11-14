@@ -477,11 +477,22 @@ export default function AppContent() {
         t={t}
         lang={lang}
         onNavigate={navigate}
+        sfx={tweaks.sfx}
+        onOptions={() => {
+          if (window.matchMedia("(max-width: 800px)").matches) {
+            setMobileMenuOpen(true);
+          } else {
+            document.querySelector<HTMLElement>(".tweaks-toggle")?.click();
+          }
+        }}
+      />
+      <PixelWorldMap t={t} lang={lang} onNavigate={navigate} />
+      <PixelAbout
+        t={t}
+        lang={lang}
         questStep={questStep}
         completeQuestStep={completeQuestStep}
       />
-      <PixelWorldMap t={t} lang={lang} onNavigate={navigate} />
-      <PixelAbout t={t} />
       <PixelProjects t={t} lang={lang} />
       <PixelStack t={t} lang={lang} />
       <PixelHomelab t={t} lang={lang} />

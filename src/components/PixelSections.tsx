@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { I18n, Lang } from "../utils/pixelData";
 import { PIXEL_DATA } from "../utils/pixelData";
+import { CrtTerminal } from "./PixelHero";
 import PixelSprite from "./PixelSprite";
 import {
   SPRITE_CHEST,
@@ -22,7 +23,17 @@ import {
 } from "./Sprites";
 
 /* ======= ABOUT ======= */
-export function PixelAbout({ t }: { t: I18n }) {
+export function PixelAbout({
+  t,
+  lang,
+  questStep,
+  completeQuestStep,
+}: {
+  t: I18n;
+  lang: Lang;
+  questStep: number;
+  completeQuestStep: (stepIndex: number) => void;
+}) {
   const stats = [
     { k: t.stat_focus, v: 90, c: "cyan" },
     { k: t.stat_curiosity, v: 97, c: "magenta" },
@@ -35,6 +46,7 @@ export function PixelAbout({ t }: { t: I18n }) {
         <div className="section-banner violet pixel">{t.about_banner}</div>
         <h2 className="section-title">{t.about_title}</h2>
         <div className="about-grid">
+          <div className="about-col">
           <div className="about-text">
             <p>{t.about_p1}</p>
             <p className="mt-16">{t.about_p2}</p>
@@ -46,29 +58,38 @@ export function PixelAbout({ t }: { t: I18n }) {
               <span className="chip green">automation</span>
             </div>
           </div>
-          <div className="about-card">
-            <div className="about-card-head pixel">{t.about_stats}</div>
-            <div className="about-stats-list">
-              {stats.map((s) => (
-                <div className="about-stat-row" key={s.k}>
-                  <div className="about-stat-k">{s.k}</div>
-                  <div className="about-stat-bar">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`bar-cell ${s.c}`}
-                        style={{ opacity: i < Math.round(s.v / 5) ? 1 : 0.15 }}
-                      />
-                    ))}
+            <div className="about-card">
+              <div className="about-card-head pixel">{t.about_stats}</div>
+              <div className="about-stats-list">
+                {stats.map((s) => (
+                  <div className="about-stat-row" key={s.k}>
+                    <div className="about-stat-k">{s.k}</div>
+                    <div className="about-stat-bar">
+                      {Array.from({ length: 20 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={`bar-cell ${s.c}`}
+                          style={{ opacity: i < Math.round(s.v / 5) ? 1 : 0.15 }}
+                        />
+                      ))}
+                    </div>
+                    <div className="about-stat-v">{s.v}</div>
                   </div>
-                  <div className="about-stat-v">{s.v}</div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="about-card-foot pixel">
+                <span style={{ color: "var(--gold)" }}>♥</span> 22yo · GJN ·
+                Sysadmin & Dev · ☕☕☕
+              </div>
             </div>
-            <div className="about-card-foot pixel">
-              <span style={{ color: "var(--gold)" }}>♥</span> 22yo · GJN ·
-              Sysadmin & Dev · ☕☕☕
-            </div>
+          </div>
+          <div className="about-crt">
+            <CrtTerminal
+              t={t}
+              lang={lang}
+              questStep={questStep}
+              completeQuestStep={completeQuestStep}
+            />
           </div>
         </div>
       </div>
