@@ -315,7 +315,11 @@ export default function PixelHero({ t, lang, onNavigate, onOptions, sfx }: HeroP
           <span className="dot pulse" /> {es ? "1 JUGADOR · 2026" : "1 PLAYER · 2026"}
         </p>
         <h1 className="title-logo">
-          <span className="title-logo-name">DANIEL FONOV</span>
+          {/* El nombre va en el h1 para SEO/lectores de pantalla, sin protagonismo visual */}
+          <span className="sr-only">Daniel Fonov — </span>
+          <span className="title-logo-name">
+            VOD<span className="title-logo-accent">TINKER</span>
+          </span>
           <span className="title-logo-tag">
             {t.hero_title} {t.hero_title_2}
           </span>
@@ -361,7 +365,7 @@ export default function PixelHero({ t, lang, onNavigate, onOptions, sfx }: HeroP
       </div>
 
       <div className="title-footer pixel" aria-hidden="true">
-        <span>© 2026 VODTINKER</span>
+        <span>© 2026 DANIEL FONOV</span>
         <span className="title-credit">CREDIT 01</span>
         <span className="title-hi">HI 013369</span>
       </div>
