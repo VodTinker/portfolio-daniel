@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { playClick, playHover, playLevelUp } from "../utils/audio";
 import type { I18n, Lang } from "../utils/pixelData";
 import { PIXEL_DATA } from "../utils/pixelData";
@@ -20,7 +20,13 @@ import {
 import PixelTweaks, { useTweaks } from "./PixelTweaks";
 import PixelWorldMap from "./PixelWorldMap";
 import QuestHelper from "./QuestHelper";
-import { SPRITE_COIN, SPRITE_HEART, Sprite } from "./Sprites";
+import { BackToTop, NavStats, ScrollProgress } from "./NavHud";
+
+/** Secciones sin entrada propia en el navbar → entrada que se resalta */
+const SECTION_PARENT: Record<string, string> = {
+  homelab: "stack",
+  certs: "xp",
+};
 
 const LEVEL_LABELS: Record<string, { en: string; es: string }> = {
   about: { en: "ENTER LORE", es: "ENTRAR EN LORE" },
@@ -52,14 +58,15 @@ export default function AppContent() {
     lang: "en",
     sfx: false,
   });
-  const [scrollPct, setScrollPct] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
+  /* Navbar: transparente arriba del todo, sólida al hacer scroll (sin re-render) */
   useEffect(() => {
     const onScroll = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollPct(total > 0 ? Math.round((window.scrollY / total) * 100) : 0);
+      navRef.current?.classList.toggle("scrolled", window.scrollY > 24);
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -189,12 +196,15 @@ export default function AppContent() {
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
+          if (e.isIntersecting)
+            setActive(SECTION_PARENT[e.target.id] ?? e.target.id);
         });
       },
-      { threshold: 0.4 },
+      // Activa la sección que cruza la línea central del viewport
+      // (funciona también con secciones más altas que la pantalla).
+      { rootMargin: "-45% 0px -54% 0px", threshold: 0 },
     );
-    NAV_SECTIONS.forEach((id) => {
+    [...NAV_SECTIONS, ...Object.keys(SECTION_PARENT)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) obs.observe(el);
     });
@@ -280,7 +290,8 @@ export default function AppContent() {
     { id: "projects", label: t.nav_projects, n: "02" },
     { id: "stack", label: t.nav_stack, n: "03" },
     { id: "xp", label: t.nav_xp, n: "04" },
-    { id: "comms", label: t.nav_comms, n: "05" },
+    { id: "labnotes", label: t.nav_notes, n: "05" },
+    { id: "comms", label: t.nav_comms, n: "06" },
   ];
 
   return (
@@ -296,17 +307,15 @@ export default function AppContent() {
         />
       )}
 
-      <nav
-        className="navbar"
-        style={{ "--scroll-pct": `${scrollPct}%` } as React.CSSProperties}
-      >
-        <div className="navbar-progress" />
+      <nav ref={navRef} className="navbar" aria-label="main">
+        <ScrollProgress />
         <button
           type="button"
           className="nav-logo"
           onClick={() => navigate("hero")}
+          aria-label="VodTinker.dev — home"
         >
-          <span className="v">V</span>
+          <span className="v" aria-hidden="true">V</span>
           <div className="nav-logo-meta">
             <span className="nav-logo-text">
               VODTINKER<span className="nav-logo-dot">.DEV</span>
@@ -315,43 +324,7 @@ export default function AppContent() {
           </div>
         </button>
 
-        <div className="nav-stats">
-          <div className="nav-stat-item score">
-            <span className="stat-label">SCORE</span>
-            <span className="stat-val">
-              {String(Math.floor(scrollPct * 133.7) + questScore).padStart(
-                6,
-                "0",
-              )}
-            </span>
-          </div>
-          <div className="nav-stat-item coins">
-            <div className="stat-coin">
-              <Sprite grid={SPRITE_COIN} scale={2} />
-            </div>
-            <span className="stat-val">
-              x{String(Math.floor(scrollPct) + questCoins).padStart(2, "0")}
-            </span>
-          </div>
-          <div className="nav-stat-item lives">
-            <span className="stat-label">LIVES</span>
-            <div className="stat-hearts">
-              <span className="stat-heart full">
-                <Sprite grid={SPRITE_HEART} scale={2} />
-              </span>
-              <span
-                className={`stat-heart ${scrollPct > 33 ? "full" : "empty"}`}
-              >
-                <Sprite grid={SPRITE_HEART} scale={2} />
-              </span>
-              <span
-                className={`stat-heart ${scrollPct > 66 ? "full" : "empty"}`}
-              >
-                <Sprite grid={SPRITE_HEART} scale={2} />
-              </span>
-            </div>
-          </div>
-        </div>
+        <NavStats questScore={questScore} questCoins={questCoins} />
 
         <div className="nav-links">
           {navItems.map((it) => (
@@ -360,19 +333,32 @@ export default function AppContent() {
               type="button"
               className={`nav-link${active === it.id ? " active" : ""}`}
               onClick={() => navigate(it.id)}
+              aria-current={active === it.id ? "location" : undefined}
             >
-              <span className="nav-num">{it.n}</span>
+              <span className="nav-num" aria-hidden="true">
+                {it.n}
+              </span>
               <span>{it.label}</span>
             </button>
           ))}
         </div>
 
         <div className="nav-right">
-          <div className="lang-toggle arcade-buttons">
+          <div
+            className="lang-toggle arcade-buttons"
+            role="group"
+            aria-label={lang === "es" ? "Tema" : "Theme"}
+          >
+            <span className="arcade-label" aria-hidden="true">
+              {lang === "es" ? "TEMA" : "THEME"}
+            </span>
             <button
               type="button"
               className={`lang-btn mode-btn mid${tweaks.mode === "midnight" ? " active" : ""}`}
               onClick={() => setTweak("mode", "midnight")}
+              aria-pressed={tweaks.mode === "midnight"}
+              aria-label="Midnight"
+              title="Midnight"
             >
               A
             </button>
@@ -380,15 +366,25 @@ export default function AppContent() {
               type="button"
               className={`lang-btn mode-btn sun${tweaks.mode === "sunset" ? " active" : ""}`}
               onClick={() => setTweak("mode", "sunset")}
+              aria-pressed={tweaks.mode === "sunset"}
+              aria-label="Sunset"
+              title="Sunset"
             >
               B
             </button>
           </div>
-          <div className="lang-toggle arcade-buttons">
+          <div
+            className="lang-toggle arcade-buttons"
+            role="group"
+            aria-label={lang === "es" ? "Idioma" : "Language"}
+          >
             <button
               type="button"
               className={`lang-btn lang-select en${lang === "en" ? " active" : ""}`}
               onClick={() => setTweak("lang", "en")}
+              aria-pressed={lang === "en"}
+              aria-label="English"
+              title="English"
             >
               EN
             </button>
@@ -396,6 +392,9 @@ export default function AppContent() {
               type="button"
               className={`lang-btn lang-select es${lang === "es" ? " active" : ""}`}
               onClick={() => setTweak("lang", "es")}
+              aria-pressed={lang === "es"}
+              aria-label="Español"
+              title="Español"
             >
               ES
             </button>
@@ -405,6 +404,8 @@ export default function AppContent() {
         <button
           type="button"
           className="mobile-menu-btn pixel"
+          aria-haspopup="dialog"
+          aria-expanded={mobileMenuOpen}
           onClick={() => {
             if (tweaks.sfx) playClick();
             setMobileMenuOpen(true);
@@ -459,14 +460,10 @@ export default function AppContent() {
         {chatOpen ? "✕" : "AI"}
       </button>
 
-      <button
-        type="button"
-        className={`back-to-top-fab${scrollPct > 8 ? " visible" : ""}`}
+      <BackToTop
         onClick={() => navigate("hero")}
-        aria-label={lang === "es" ? "Volver al inicio" : "Return to top"}
-      >
-        ▲
-      </button>
+        label={lang === "es" ? "Volver al inicio" : "Return to top"}
+      />
 
       <div
         className={`chat-drawer${chatOpen ? " open" : ""}`}

@@ -463,13 +463,20 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   display: flex; align-items: center; gap: 24px;
   padding: 0 24px;
   height: 52px;
+  background: rgba(11, 4, 32, 0.45);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid rgba(124, 58, 237, 0.35);
+  box-shadow: none;
+  image-rendering: pixelated;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, backdrop-filter 0.25s;
+}
+.navbar.scrolled {
   background: rgba(11, 4, 32, 0.94);
   backdrop-filter: blur(16px);
-  border-bottom: 2px solid var(--violet);
-  box-shadow: 
+  border-bottom-color: var(--violet);
+  box-shadow:
     inset 0 -1px 0 rgba(124, 58, 237, 0.3),
     0 4px 20px rgba(0, 0, 0, 0.7);
-  image-rendering: pixelated;
 }
 .navbar::before {
   content: '';
@@ -486,7 +493,6 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   height: 2px;
   width: var(--scroll-pct, 0%);
   background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--gold));
-  transition: width 0.1s linear;
   box-shadow: 0 0 8px var(--magenta);
 }
 .nav-logo {
@@ -551,7 +557,7 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   gap: 2px;
 }
 .stat-label {
-  font-size: 5px;
+  font-size: 6px;
   color: var(--ink-dim);
   letter-spacing: 0.05em;
 }
@@ -570,10 +576,13 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   display: flex;
   align-items: center;
 }
+/* Giro pixel en 4 poses; nunca pasa por scaleX(0), así la moneda no desaparece */
+.stat-coin { animation-timing-function: steps(1); }
 @keyframes coin-spin {
-  0% { transform: scaleX(1); }
-  50% { transform: scaleX(-1); }
-  100% { transform: scaleX(1); }
+  0%, 100% { transform: scaleX(1); }
+  25% { transform: scaleX(0.55); }
+  50% { transform: scaleX(0.2); }
+  75% { transform: scaleX(0.55); }
 }
 .nav-stat-item.lives {
   flex-direction: row;
@@ -609,13 +618,13 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 /* NAV LINKS WITH PIXEL CURSOR */
 .nav-links { display: flex; gap: 8px; flex: 1; justify-content: flex-end; margin-right: 12px; }
 .nav-link {
-  font-family: var(--pixel-font); font-size: 8px; color: var(--ink-faint);
-  background: transparent; border: 0; padding: 0 16px; height: 52px;
+  font-family: var(--pixel-font); font-size: 9px; color: var(--ink-dim);
+  background: transparent; border: 0; padding: 0 14px; height: 52px;
   cursor: pointer; letter-spacing: 0.06em; text-transform: lowercase;
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 6px; white-space: nowrap;
   position: relative; transition: color 0.15s, transform 0.1s steps(2);
 }
-.nav-num { font-size: 7px; color: var(--ink-faint); opacity: 0.5; }
+.nav-num { font-size: 7px; color: var(--violet-2); opacity: 0.8; }
 .nav-link::before {
   content: '▶';
   position: absolute;
@@ -669,14 +678,14 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 }
 .lang-btn {
   font-family: var(--pixel-font); 
-  font-size: 6px; 
+  font-size: 7px; 
   font-weight: bold;
   background: transparent;
   border: 0; 
   cursor: pointer; 
   white-space: nowrap;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   padding: 0;
   display: grid;
@@ -708,10 +717,34 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   display: none;
 }
 
+.arcade-label {
+  font-family: var(--pixel-font); font-size: 6px; color: var(--ink-faint);
+  letter-spacing: 0.08em; margin-right: 2px;
+}
+
+/* Foco visible para teclado en toda la navegación */
+.navbar button:focus-visible,
+.scroll-dot:focus-visible,
+.back-to-top-fab:focus-visible,
+.chat-fab:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.nav-link:focus-visible { outline-offset: -6px; }
+
+/* 6 enlaces: compactar en anchos intermedios antes de pasar al menú móvil */
+@media (max-width: 1500px) {
+  .nav-num { display: none; }
+  .nav-link { padding: 0 10px; }
+  .arcade-label { display: none; }
+}
+@media (min-width: 1001px) and (max-width: 1200px) {
+  .nav-stats { display: none; }
+}
 @media (max-width: 960px) { 
   .nav-stats .lives { display: none !important; } 
 }
-@media (max-width: 800px) { 
+@media (max-width: 1000px) { 
   .navbar { gap: 12px; padding: 0 14px; justify-content: space-between; } 
   .nav-links { display: none; } 
   .nav-right { display: none !important; }

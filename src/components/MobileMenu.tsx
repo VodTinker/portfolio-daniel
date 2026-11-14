@@ -19,6 +19,16 @@ export default function MobileMenu({
 }: MobileMenuProps) {
   const lang = tweaks.lang;
 
+  // Cerrar con Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
+
   // Prevent scroll when open
   useEffect(() => {
     if (isOpen) {
