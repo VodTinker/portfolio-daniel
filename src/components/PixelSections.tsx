@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { I18n, Lang } from "../utils/pixelData";
 import { PIXEL_DATA } from "../utils/pixelData";
+import PixelSprite from "./PixelSprite";
 import {
   SPRITE_CHEST,
   SPRITE_DESKTOP,
@@ -796,11 +797,23 @@ export function PixelHomelab({ t, lang }: { t: I18n; lang: Lang }) {
   return (
     <section id="homelab">
       <div className="shell">
-        <div className="section-banner violet pixel">{t.homelab_banner}</div>
-        <h2 className="section-title">{t.homelab_title}</h2>
-        <p className="muted" style={{ marginBottom: 32 }}>
-          {t.homelab_sub}
-        </p>
+        <div className="hl-intro">
+          <div>
+            <div className="section-banner violet pixel">{t.homelab_banner}</div>
+            <h2 className="section-title">{t.homelab_title}</h2>
+            <p className="muted" style={{ marginBottom: 32 }}>
+              {t.homelab_sub}
+            </p>
+          </div>
+          <PixelSprite
+            src="/sprites/server.png"
+            frames={24}
+            size={96}
+            scale={2}
+            fps={10}
+            className="hl-intro-sprite"
+          />
+        </div>
 
         <div className="hl-frame">
           {/* Top Chassis HUD Header */}

@@ -3603,6 +3603,24 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 
 
 
+/* ======= PIXEL SPRITE (Blender sprite sheets) ======= */
+.pixel-sprite {
+  flex: none;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  animation: sprite-play var(--sprite-duration, 2s) steps(var(--sprite-frames, 24)) infinite;
+}
+.pixel-sprite.on-hover { animation-play-state: paused; }
+.pixel-sprite.on-hover:hover,
+*:focus-visible > .pixel-sprite.on-hover { animation-play-state: running; }
+.pixel-sprite[data-offscreen="true"] { animation-play-state: paused; }
+@keyframes sprite-play { to { background-position: var(--sprite-end) 0; } }
+
+.hl-intro { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.hl-intro-sprite { filter: drop-shadow(0 0 18px rgba(124, 58, 237, 0.35)); margin-right: 24px; }
+@media (max-width: 760px) { .hl-intro-sprite { display: none; } }
+
 /* ======= REDUCED MOTION ======= */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

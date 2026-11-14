@@ -40,7 +40,9 @@
     "format": "bunx biome format --write",
     "preview": "astro preview --port 3000",
     "deploy": "bun run build && wrangler pages deploy dist",
-    "deploy:draft": "bun run build && wrangler pages deploy dist"
+    "deploy:draft": "bun run build && wrangler pages deploy dist",
+    "sprite": "blender -b -P blender/render_sprite.py --",
+    "sprite:demo": "blender -b -P blender/render_sprite.py -- --demo server --out public/sprites/server.png"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
