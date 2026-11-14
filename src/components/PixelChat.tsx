@@ -223,7 +223,7 @@ export default function PixelChat({ lang, open, onClose }: Props) {
               <Sprite grid={SPRITE_AVATAR_S} scale={1.5} />
             </div>
             <div className="pixel-chat-bubble">
-              <div className="pixel-chat-typing" aria-label={es ? "Escribiendo" : "Typing"}>
+              <div className="pixel-chat-typing" role="status" aria-label={es ? "Escribiendo" : "Typing"}>
                 <span />
                 <span />
                 <span />
