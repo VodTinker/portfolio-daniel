@@ -314,23 +314,43 @@ button, input, textarea, select { font-family: inherit; }
 }
 
 /* ======= SECTION REVEAL ======= */
+/* Movimiento por pasos = sensación de 8 bits */
+:root { --reveal-ease: steps(6, jump-end); }
 @keyframes reveal-up   { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
 @keyframes reveal-left { from { opacity:0; transform:translateX(-14px); } to { opacity:1; transform:none; } }
 
-/* Header elements stagger */
-section:not(#hero).in-view .section-banner { animation: reveal-left 0.35s ease-out both; }
-section:not(#hero).in-view .section-title  { animation: reveal-up  0.38s ease-out 0.07s both; }
-section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-out 0.13s both; }
+/* Header: el banner y el título se "imprimen" por pasos, como un texto de RPG */
+section:not(#hero).in-view .section-banner { animation: print-in 0.32s steps(8, jump-end) both; }
+section:not(#hero).in-view .section-title  { animation: print-in 0.5s steps(14, jump-end) 0.12s both; }
+section:not(#hero).in-view .muted          { animation: reveal-up 0.36s var(--reveal-ease) 0.4s both; }
+@keyframes print-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Haz de escaneo que barre la sección la primera vez que entra en pantalla */
+section:not(#hero)::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px;
+  pointer-events: none; opacity: 0; z-index: 3;
+  background: linear-gradient(90deg, transparent, var(--cyan) 20%, var(--magenta) 50%, var(--cyan) 80%, transparent);
+  box-shadow: 0 0 12px var(--cyan), 0 0 28px rgba(34, 211, 238, 0.35);
+}
+section:not(#hero).in-view::after { animation: scan-sweep 0.9s steps(18) both; }
+@keyframes scan-sweep {
+  0%   { opacity: 1; transform: translateY(0); }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(min(520px, 70vh)); }
+}
 
 /* Worldmap */
-#worldmap.in-view .worldmap-frame { animation: reveal-up 0.45s ease-out 0.15s both; }
+#worldmap.in-view .worldmap-frame { animation: reveal-up 0.45s var(--reveal-ease) 0.15s both; }
 
 /* About */
-#about.in-view .about-text  { animation: reveal-up 0.4s ease-out 0.15s both; }
-#about.in-view .about-card  { animation: reveal-up 0.4s ease-out 0.28s both; }
+#about.in-view .about-text  { animation: reveal-up 0.4s var(--reveal-ease) 0.15s both; }
+#about.in-view .about-card  { animation: reveal-up 0.4s var(--reveal-ease) 0.28s both; }
 
 /* Projects — stagger cards */
-#projects.in-view .project-wrap { animation: reveal-up 0.4s ease-out both; }
+#projects.in-view .project-wrap { animation: reveal-up 0.4s var(--reveal-ease) both; }
 #projects.in-view .project-wrap:nth-child(1) { animation-delay: 0.10s; }
 #projects.in-view .project-wrap:nth-child(2) { animation-delay: 0.15s; }
 #projects.in-view .project-wrap:nth-child(3) { animation-delay: 0.20s; }
@@ -341,35 +361,35 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 #projects.in-view .project-wrap:nth-child(8) { animation-delay: 0.45s; }
 
 /* Stack */
-#stack.in-view .inv-cat { animation: reveal-up 0.4s ease-out both; }
+#stack.in-view .inv-cat { animation: reveal-up 0.4s var(--reveal-ease) both; }
 
 /* XP */
-#xp.in-view .xp-item { animation: reveal-up 0.4s ease-out both; }
+#xp.in-view .xp-item { animation: reveal-up 0.4s var(--reveal-ease) both; }
 #xp.in-view .xp-item:nth-child(1) { animation-delay: 0.15s; }
 #xp.in-view .xp-item:nth-child(2) { animation-delay: 0.22s; }
 #xp.in-view .xp-item:nth-child(3) { animation-delay: 0.29s; }
 #xp.in-view .xp-item:nth-child(4) { animation-delay: 0.36s; }
 
 /* Homelab */
-#homelab.in-view .hl-diagram { animation: reveal-up 0.4s ease-out 0.1s both; }
-#homelab.in-view .hl-panel   { animation: reveal-up 0.4s ease-out 0.22s both; }
+#homelab.in-view .hl-diagram { animation: reveal-up 0.4s var(--reveal-ease) 0.1s both; }
+#homelab.in-view .hl-panel   { animation: reveal-up 0.4s var(--reveal-ease) 0.22s both; }
 
 /* Certs */
-#certs.in-view .cert-card:nth-child(1) { animation: reveal-up 0.4s ease-out 0.08s both; }
-#certs.in-view .cert-card:nth-child(2) { animation: reveal-up 0.4s ease-out 0.14s both; }
-#certs.in-view .cert-card:nth-child(3) { animation: reveal-up 0.4s ease-out 0.20s both; }
-#certs.in-view .cert-card:nth-child(4) { animation: reveal-up 0.4s ease-out 0.26s both; }
-#certs.in-view .cert-card:nth-child(5) { animation: reveal-up 0.4s ease-out 0.32s both; }
-#certs.in-view .cert-card:nth-child(6) { animation: reveal-up 0.4s ease-out 0.38s both; }
-#certs.in-view .cert-card:nth-child(7) { animation: reveal-up 0.4s ease-out 0.44s both; }
+#certs.in-view .cert-card:nth-child(1) { animation: reveal-up 0.4s var(--reveal-ease) 0.08s both; }
+#certs.in-view .cert-card:nth-child(2) { animation: reveal-up 0.4s var(--reveal-ease) 0.14s both; }
+#certs.in-view .cert-card:nth-child(3) { animation: reveal-up 0.4s var(--reveal-ease) 0.20s both; }
+#certs.in-view .cert-card:nth-child(4) { animation: reveal-up 0.4s var(--reveal-ease) 0.26s both; }
+#certs.in-view .cert-card:nth-child(5) { animation: reveal-up 0.4s var(--reveal-ease) 0.32s both; }
+#certs.in-view .cert-card:nth-child(6) { animation: reveal-up 0.4s var(--reveal-ease) 0.38s both; }
+#certs.in-view .cert-card:nth-child(7) { animation: reveal-up 0.4s var(--reveal-ease) 0.44s both; }
 
 /* Comms */
-#comms.in-view .comms-channels { animation: reveal-up 0.4s ease-out 0.15s both; }
-#comms.in-view .comms-cta { animation: reveal-up 0.4s ease-out 0.27s both; }
+#comms.in-view .comms-channels { animation: reveal-up 0.4s var(--reveal-ease) 0.15s both; }
+#comms.in-view .comms-cta { animation: reveal-up 0.4s var(--reveal-ease) 0.27s both; }
 
 /* Footer */
-#footer.in-view .footer-grid   { animation: reveal-up 0.4s ease-out 0.1s both; }
-#footer.in-view .footer-bottom { animation: reveal-up 0.4s ease-out 0.25s both; }
+#footer.in-view .footer-grid   { animation: reveal-up 0.4s var(--reveal-ease) 0.1s both; }
+#footer.in-view .footer-bottom { animation: reveal-up 0.4s var(--reveal-ease) 0.25s both; }
 
 /* Section banners */
 .section-banner {
@@ -3699,6 +3719,103 @@ body:has(.chat-drawer.open) .back-to-top-fab { opacity: 0; pointer-events: none;
 [data-mode="terminal"] .skyline-city { filter: grayscale(1) sepia(1) hue-rotate(75deg) saturate(3.5) brightness(0.85); }
 [data-mode="gameboy"] .skyline-city { filter: grayscale(1) sepia(1) hue-rotate(45deg) saturate(1.6) brightness(0.9); }
 [data-mode="cyberneon"] .skyline-city { filter: saturate(1.4) contrast(1.1); }
+
+/* ======= STAGE TRANSITION (navegación) ======= */
+.stage-tx {
+  position: fixed; inset: 0; z-index: 9000; pointer-events: auto;
+  display: grid; place-items: center;
+}
+.stage-tx-grid {
+  position: absolute; inset: 0;
+  display: grid; grid-template-columns: repeat(16, 1fr); grid-template-rows: repeat(9, 1fr);
+}
+.stage-tx-cell {
+  background: var(--bg-0);
+  box-shadow: inset 0 0 0 1px rgba(124, 58, 237, 0.18);
+  transform: scale(0);
+}
+.stage-tx.cover .stage-tx-cell {
+  animation: tx-cell-in calc(var(--cover-ms) * 0.45) steps(3, jump-end) both;
+  animation-delay: calc(var(--d) * var(--cover-ms) * 0.55);
+}
+.stage-tx.reveal .stage-tx-cell {
+  transform: scale(1);
+  animation: tx-cell-out calc(var(--reveal-ms) * 0.45) steps(3, jump-end) both;
+  animation-delay: calc((1 - var(--d)) * var(--reveal-ms) * 0.55);
+}
+@keyframes tx-cell-in  { from { transform: scale(0); } to { transform: scale(1.02); } }
+@keyframes tx-cell-out { from { transform: scale(1.02); } to { transform: scale(0); } }
+
+.stage-tx-card {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  font-family: var(--pixel-font); text-align: center;
+  animation: tx-card 0.62s steps(1) both;
+}
+.stage-tx.reveal .stage-tx-card { animation: tx-card-out 0.12s steps(2) both; }
+.stage-tx-n { font-size: 10px; color: var(--cyan); letter-spacing: 0.2em; }
+.stage-tx-label {
+  font-size: clamp(16px, 3vw, 28px); color: var(--gold);
+  text-shadow: 3px 3px 0 var(--bg-0), 0 0 18px rgba(251, 191, 36, 0.45);
+}
+.stage-tx-bar {
+  width: 180px; height: 10px; margin-top: 4px;
+  box-shadow: 0 0 0 2px var(--violet);
+  background: linear-gradient(90deg, var(--cyan), var(--magenta)) 0 0 / 0% 100% no-repeat;
+  animation: tx-bar 0.3s steps(6) 0.16s both;
+}
+@keyframes tx-card {
+  0%, 30% { opacity: 0; }
+  31%, 100% { opacity: 1; }
+}
+@keyframes tx-card-out { to { opacity: 0; } }
+@keyframes tx-bar { to { background-size: 100% 100%; } }
+
+/* ======= STAGE TOAST (cambio de sección con scroll) ======= */
+.stage-toast {
+  position: fixed; top: 64px; left: 50%; z-index: 120;
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--pixel-font); font-size: 8px; letter-spacing: 0.08em;
+  color: var(--ink); background: var(--panel);
+  padding: 8px 12px;
+  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 4px var(--violet), 4px 4px 0 4px rgba(0, 0, 0, 0.45);
+  pointer-events: none; white-space: nowrap;
+  animation: toast-life 1.7s steps(1) both;
+}
+.stage-toast-arrow { color: var(--cyan); animation: blink 0.5s steps(2) infinite; }
+.stage-toast-n { color: var(--gold); }
+.stage-toast-sep { color: var(--ink-faint); }
+@keyframes toast-life {
+  0%   { transform: translate(-50%, -14px); opacity: 0; }
+  6%   { transform: translate(-50%, -7px);  opacity: 1; }
+  12%  { transform: translate(-50%, 0); }
+  86%  { transform: translate(-50%, 0); opacity: 1; }
+  93%  { transform: translate(-50%, -7px); opacity: 1; }
+  100% { transform: translate(-50%, -14px); opacity: 0; }
+}
+
+/* ======= HERO PARALLAX (scroll-driven, mejora progresiva) ======= */
+/* Usa `translate` (no `transform`) para no pisar el centrado de la ciudad,
+   y una lista de animaciones para conservar los frames del sprite. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    #hero { view-timeline: --hero block; }
+    #hero .skyline-city {
+      animation:
+        city-frames calc(3.2s / var(--anim-mult, 1)) steps(8) infinite,
+        hero-city-px linear both;
+      animation-timeline: auto, --hero;
+      animation-range: normal, exit 0% exit 100%;
+    }
+    #hero .hero-shell {
+      animation: hero-content-px linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
+@keyframes hero-city-px { to { translate: 0 18%; } }
+@keyframes hero-content-px { to { translate: 0 -80px; opacity: 0.25; } }
 
 /* ======= REDUCED MOTION ======= */
 @media (prefers-reduced-motion: reduce) {

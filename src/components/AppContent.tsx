@@ -21,11 +21,31 @@ import PixelTweaks, { useTweaks } from "./PixelTweaks";
 import PixelWorldMap from "./PixelWorldMap";
 import QuestHelper from "./QuestHelper";
 import { BackToTop, NavStats, ScrollProgress } from "./NavHud";
+import {
+  COVER_MS,
+  HOLD_MS,
+  REVEAL_MS,
+  type StageInfo,
+  StageToast,
+  StageTransition,
+} from "./StageTransition";
 
 /** Secciones sin entrada propia en el navbar → entrada que se resalta */
 const SECTION_PARENT: Record<string, string> = {
   homelab: "stack",
   certs: "xp",
+};
+
+/** Número de "stage" que se muestra en transiciones y avisos */
+const STAGE_NUM: Record<string, string> = {
+  hero: "00",
+  worldmap: "★",
+  about: "01",
+  projects: "02",
+  stack: "03",
+  xp: "04",
+  labnotes: "05",
+  comms: "06",
 };
 
 const LEVEL_LABELS: Record<string, { en: string; es: string }> = {
@@ -135,7 +155,11 @@ export default function AppContent() {
   }, [tweaks.mode, booted]);
 
   const [active, setActive] = useState("hero");
-  const [levelup, setLevelup] = useState<string | null>(null);
+  const [stage, setStage] = useState<StageInfo | null>(null);
+  const [stagePhase, setStagePhase] = useState<"idle" | "cover" | "reveal">(
+    "idle",
+  );
+  const txBusy = useRef(false);
   const [chatOpen, setChatOpen] = useState(false);
 
   const lang = tweaks.lang as Lang;
@@ -267,7 +291,6 @@ export default function AppContent() {
 
   const navigate = (id: string) => {
     const label = LEVEL_LABELS[id];
-    setLevelup(label ? label[lang] : id.toUpperCase());
     if (tweaks.sfx) {
       if (label) {
         playLevelUp();
@@ -275,14 +298,37 @@ export default function AppContent() {
         playClick();
       }
     }
-    setTimeout(() => {
+    const jump = (behavior: ScrollBehavior) => {
       const el = document.getElementById(id);
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY - 60;
-        window.scrollTo({ top, behavior: "smooth" });
+        window.scrollTo({ top, behavior });
       }
-    }, 120);
-    setTimeout(() => setLevelup(null), 900);
+    };
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduced || tweaks.animations === 0) {
+      jump("instant");
+      return;
+    }
+    if (txBusy.current) return;
+    txBusy.current = true;
+    // 1) cubrir con bloques pixel → 2) saltar sin scroll suave → 3) descubrir
+    setStage({
+      n: STAGE_NUM[id] ?? "--",
+      label: label ? label[lang] : id.toUpperCase(),
+      key: Date.now(),
+    });
+    setStagePhase("cover");
+    setTimeout(() => {
+      jump("instant");
+      setStagePhase("reveal");
+    }, COVER_MS + HOLD_MS);
+    setTimeout(() => {
+      setStagePhase("idle");
+      txBusy.current = false;
+    }, COVER_MS + HOLD_MS + REVEAL_MS);
   };
 
   const navItems = [
@@ -485,13 +531,12 @@ export default function AppContent() {
         }}
       />
 
-      <div id="levelup" className={levelup ? "active" : ""}>
-        {levelup && (
-          <div className="lu-card">
-            ★ LEVEL UP ★<span className="sub">▸ {levelup}</span>
-          </div>
-        )}
-      </div>
+      <StageTransition stage={stage} phase={stagePhase} />
+      <StageToast
+        n={STAGE_NUM[active] ?? null}
+        label={LEVEL_LABELS[active]?.[lang] ?? null}
+        suppressed={stagePhase !== "idle"}
+      />
 
       <div id="konami-toast">★ CHEAT UNLOCKED · 30 LIVES GRANTED ★</div>
 
