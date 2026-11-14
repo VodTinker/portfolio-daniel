@@ -67,22 +67,27 @@
   --scanline-opacity: 0.45;
 }
 
+/* Game Boy DMG: superficies en los 2 tonos oscuros, texto/acentos en los 2 claros.
+   Regla: nada que se use como fondo puede coincidir con algo que se use como texto. */
 [data-mode="gameboy"] {
   --bg-0: #0f380f;
-  --bg-1: #0f380f;
-  --bg-2: #306230;
-  --panel: #306230;
-  --panel-2: #8bac0f;
-  --ink: #9bbc0f;
-  --ink-dim: #8bac0f;
-  --ink-faint: #306230;
+  --bg-1: #133f13;
+  --bg-2: #1e4a1e;
+  --panel: #173f17;
+  --panel-2: #22501f;
+  --ink: #c4dc6e;
+  --ink-dim: #9bbc0f;
+  --ink-faint: #7a9a2a;
   --violet: #8bac0f;
   --violet-2: #9bbc0f;
-  --magenta: #306230;
-  --pink: #8bac0f;
-  --cyan: #8bac0f;
-  --cyan-2: #9bbc0f;
-  --gold: #306230;
+  --magenta: #8bac0f;
+  --pink: #9bbc0f;
+  --cyan: #9bbc0f;
+  --cyan-2: #c4dc6e;
+  --gold: #d8eaa0;
+  --green: #9bbc0f;
+  --red: #d8eaa0;
+  --orange: #8bac0f;
   --scanline-opacity: 0.5;
 }
 
@@ -1450,8 +1455,8 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   .section-title { font-size: 20px; text-shadow: 2px 2px 0 var(--violet), 4px 4px 0 var(--bg-0); }
   .hero-stats { grid-template-columns: auto auto 1fr; gap: 12px; padding: 10px 12px; }
   .neutral-logo { display: none; }
-  .chat-fab { bottom: 24px; }
-  .chat-drawer { bottom: 88px; }
+  .chat-fab { bottom: 16px; }
+  .chat-drawer { bottom: 80px; }
 }
 @media (max-width: 800px) {
   .tweaks-toggle { display: none; }
@@ -2316,7 +2321,7 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 
 /* ======= FLOATING CHAT ======= */
 .chat-fab {
-  position: fixed; bottom: 80px; right: 16px; z-index: 190;
+  position: fixed; bottom: 24px; right: 24px; z-index: 190;
   width: 52px; height: 52px;
   background: var(--cyan); color: var(--bg-0);
   border: 0; cursor: pointer;
@@ -2333,7 +2338,7 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   animation: blink 2s steps(2) infinite;
 }
 .chat-drawer {
-  position: fixed; bottom: 144px; right: 16px; z-index: 189;
+  position: fixed; bottom: 92px; right: 24px; z-index: 191;
   width: 380px;
   transform: translateY(16px); opacity: 0; pointer-events: none;
   transition: transform 0.2s steps(4), opacity 0.15s;
@@ -2409,9 +2414,38 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 }
 
 /* Gameboy Mode (Vintage 4-Shade Monochrome Green) */
-[data-mode="gameboy"] {
-  filter: contrast(1.1) brightness(0.95);
+/* Arte con colores fijos (sprites, ilustraciones, imágenes): monocromo verde */
+[data-mode="gameboy"] .sprite-box,
+[data-mode="gameboy"] .pixel-sprite,
+[data-mode="gameboy"] .project-art-bg,
+[data-mode="gameboy"] .stat-bar-fill,
+[data-mode="gameboy"] .stat-bar-text,
+[data-mode="gameboy"] .inv-slot-dots,
+[data-mode="gameboy"] img,
+[data-mode="gameboy"] svg {
+  filter: grayscale(1) sepia(1) hue-rotate(40deg) saturate(1.8) brightness(0.95);
 }
+/* Botones con fondo de acento: texto oscuro para que se lea */
+[data-mode="gameboy"] .lang-btn,
+[data-mode="gameboy"] .mobile-menu-btn,
+[data-mode="gameboy"] .chat-fab,
+[data-mode="gameboy"] .back-to-top-fab { color: var(--bg-0) !important; }
+[data-mode="gameboy"] .section-banner,
+[data-mode="gameboy"] .filter-btn.active,
+[data-mode="gameboy"] .filter-btn.active .filter-count,
+[data-mode="gameboy"] .tweak-radio.selected { color: var(--bg-0) !important; text-shadow: none !important; }
+[data-mode="gameboy"] .inv-slot-icon { color: var(--ink) !important; }
+[data-mode="gameboy"] .inv-slot { --slot-c: var(--cyan) !important; }
+[data-mode="gameboy"] .navbar { background: rgba(15, 56, 15, 0.55); border-bottom-color: rgba(139, 172, 15, 0.35); }
+[data-mode="gameboy"] .navbar.scrolled { background: rgba(15, 56, 15, 0.95); border-bottom-color: var(--violet); }
+[data-mode="gameboy"] .navbar::before { background: linear-gradient(rgba(15, 56, 15, 0.3) 50%, rgba(0, 0, 0, 0.3) 50%); background-size: 100% 4px; }
+[data-mode="gameboy"] .pixel-btn.primary-cta { border-color: var(--violet); border-bottom-color: #306230; box-shadow: none; }
+[data-mode="gameboy"] .pixel-btn.primary-cta:hover { background: var(--cyan-2); }
+[data-mode="gameboy"] .hero-stats { background: radial-gradient(circle, #173f17 0%, #0f380f 100%); }
+[data-mode="gameboy"] .crt-bezel-frame { background: linear-gradient(135deg, #2c4a24 0%, #1d3418 100%); border-color: #0b2a0b; }
+[data-mode="gameboy"] .skyline-fog { background: linear-gradient(transparent 0%, rgba(15, 56, 15, 0.8) 60%, var(--bg-0) 100%); }
+[data-mode="gameboy"] .quest-hud-toggle-btn,
+[data-mode="gameboy"] .quest-hud-close-btn { color: var(--ink-dim) !important; }
 [data-mode="gameboy"] .skyline-grad {
   background: #0f380f !important;
 }
@@ -2464,11 +2498,11 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
 /* ======= BACK TO TOP BUTTON ======= */
 .back-to-top-fab {
   position: fixed;
-  bottom: 24px;
-  left: 50%;
+  bottom: 92px;
+  right: 28px;
   z-index: 190;
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   background: var(--violet);
   color: var(--bg-0);
   border: 0;
@@ -2483,34 +2517,27 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   display: grid;
   place-items: center;
   opacity: 0;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateY(12px);
   pointer-events: none;
   transition: opacity 0.2s steps(4), transform 0.2s steps(4), filter 0.1s;
 }
 
 .back-to-top-fab.visible {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
 .back-to-top-fab.visible:hover {
   filter: brightness(1.25);
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .back-to-top-fab.visible:active {
-  transform: translateX(-50%) translateY(1px);
+  transform: translateY(1px);
 }
-
-@media (max-width: 600px) {
-  .back-to-top-fab {
-    bottom: 20px;
-    width: 44px;
-    height: 44px;
-    font-size: 12px;
-  }
-}
+/* Con el chat abierto, el ▲ se aparta para no tapar el drawer */
+body:has(.chat-drawer.open) .back-to-top-fab { opacity: 0; pointer-events: none; }
 
 /* ======= QUEST ONBOARDING SYSTEM HUD ======= */
 .quest-hud {
@@ -2782,7 +2809,9 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
     z-index: 150 !important;
   }
   .quest-hud.minimized {
-    width: calc(100vw - 24px) !important;
+    bottom: 16px !important;
+    width: auto !important;
+    max-width: calc(100vw - 100px) !important;
   }
   .quest-hud-header {
     padding: 6px 10px !important;
@@ -2832,13 +2861,12 @@ section:not(#hero).in-view .muted          { animation: reveal-up  0.38s ease-ou
   }
   
   .back-to-top-fab {
-    bottom: 16px !important;
-    left: 16px !important;
-    transform: none !important;
+    bottom: 78px !important;
+    right: 18px !important;
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 12px !important;
     z-index: 160 !important;
-  }
-  .back-to-top-fab.visible:hover {
-    transform: none !important;
   }
   
   /* CRT Monitor Cabinet adaptions on mobile */

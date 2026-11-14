@@ -73,7 +73,14 @@ interface QuestHelperProps {
 }
 
 export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
-  const [minimized, setMinimized] = useState(false);
+  // En pantallas pequeñas arranca plegado para no tapar el contenido
+  const [minimized, setMinimized] = useState(() => {
+    try {
+      return window.matchMedia("(max-width: 1000px)").matches;
+    } catch {
+      return false;
+    }
+  });
   const [alertText, setAlertText] = useState<string | null>(null);
   const [dismissed, setDismissed] = useState(() => {
     try {
