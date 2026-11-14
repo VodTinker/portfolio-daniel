@@ -44,7 +44,20 @@ export const onRequestPost = async ({
 
   try {
     const body = await request.json();
-    const message = typeof body?.message === 'string' ? body.message.trim() : '';
+    const message = typeof body?.message === 'string' ? body.message.trim().slice(0, 500) : '';
+    // Historial opcional para que el bot recuerde la conversación (validado y acotado)
+    const history: { role: 'user' | 'assistant'; content: string }[] = Array.isArray(body?.history)
+      ? body.history
+          .filter(
+            (m: unknown): m is { role: 'user' | 'assistant'; content: string } =>
+              !!m &&
+              typeof m === 'object' &&
+              ((m as { role?: unknown }).role === 'user' || (m as { role?: unknown }).role === 'assistant') &&
+              typeof (m as { content?: unknown }).content === 'string',
+          )
+          .slice(-10)
+          .map((m) => ({ role: m.role, content: m.content.slice(0, 1500) }))
+      : [];
     if (!message) {
       return new Response(
         JSON.stringify({ error: 'message is required' }),
@@ -104,6 +117,7 @@ Sugerencias de interacción:
         model: MODEL,
         messages: [
           { role: 'system', content: systemPrompt },
+          ...history,
           { role: 'user', content: message },
         ],
         max_tokens: 1024,

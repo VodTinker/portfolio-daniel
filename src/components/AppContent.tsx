@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { playClick, playHover, playLevelUp } from "../utils/audio";
 import type { I18n, Lang } from "../utils/pixelData";
 import { PIXEL_DATA } from "../utils/pixelData";
@@ -289,6 +289,11 @@ export default function AppContent() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const closeChat = useCallback(() => {
+    setChatOpen(false);
+    document.querySelector<HTMLElement>(".chat-fab")?.focus();
+  }, []);
+
   const navigate = (id: string) => {
     const label = LEVEL_LABELS[id];
     if (tweaks.sfx) {
@@ -525,8 +530,10 @@ export default function AppContent() {
       <div
         className={`chat-drawer${chatOpen ? " open" : ""}`}
         aria-hidden={!chatOpen}
+        // inert: con el chat cerrado su contenido no recibe foco
+        {...(!chatOpen ? { inert: "" } : {})}
       >
-        <PixelChat lang={lang} />
+        <PixelChat lang={lang} open={chatOpen} onClose={closeChat} />
       </div>
 
       <QuestHelper

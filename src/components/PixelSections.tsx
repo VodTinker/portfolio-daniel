@@ -1388,47 +1388,133 @@ interface FooterProps {
   onNavigate?: (id: string) => void;
 }
 
+/** Ping real a la propia web (Cloudflare Pages Function) para el panel de estado */
+function useSitePing() {
+  const [ms, setMs] = useState<number | null>(null);
+  const [ok, setOk] = useState<boolean | null>(null);
+  useEffect(() => {
+    let alive = true;
+    const t0 = performance.now();
+    fetch("/api/status", { cache: "no-store" })
+      .then((r) => {
+        if (!alive) return;
+        setOk(r.ok);
+        setMs(Math.round(performance.now() - t0));
+      })
+      .catch(() => alive && setOk(false));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return { ms, ok };
+}
+
+const BUILD_DATE: string =
+  typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : "";
+
 export function PixelFooter({ t, lang, onNavigate }: FooterProps) {
+  const es = lang === "es";
+  const { ms, ok } = useSitePing();
+  const built = BUILD_DATE
+    ? new Date(BUILD_DATE).toLocaleDateString(es ? "es-ES" : "en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : "—";
+
   return (
-    <footer className="footer">
+    <footer className="footer" id="footer">
       <div className="footer-scanline" />
       <div className="shell">
+        {/* Pantalla final: THANKS FOR PLAYING + CONTINUE? */}
+        <div className="footer-end">
+          <p className="footer-end-pre pixel">{es ? "FIN DE LA PARTIDA" : "END OF LEVEL"}</p>
+          <h2 className="footer-end-title">
+            {es ? "¡GRACIAS POR JUGAR!" : "THANKS FOR PLAYING!"}
+          </h2>
+          <p className="footer-end-sub">
+            {es
+              ? "¿Tienes un proyecto, unas prácticas o simplemente quieres hablar de homelabs?"
+              : "Got a project, an internship, or just want to talk homelabs?"}
+          </p>
+          <div className="footer-end-actions">
+            <button
+              type="button"
+              className="footer-end-btn primary"
+              onClick={() => onNavigate?.("comms")}
+            >
+              <span className="footer-end-coin" aria-hidden="true" />
+              {es ? "INSERTAR MONEDA · CONTACTAR" : "INSERT COIN · CONTACT"}
+            </button>
+            <button
+              type="button"
+              className="footer-end-btn"
+              onClick={() => onNavigate?.("hero")}
+            >
+              {es ? "↑ CONTINUAR" : "↑ CONTINUE"}
+              <span className="footer-end-count pixel" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
         <div className="footer-grid">
-          {/* col 1 — brand */}
+          {/* col 1 — marca + estado */}
           <div className="footer-brand">
-            <div className="nav-logo" style={{ marginBottom: 12 }}>
-              <span className="v">V</span>VODTINKER.DEV
+            <div className="footer-logo pixel">
+              <span className="v">V</span>
+              <span>
+                VODTINKER<span className="nav-logo-dot">.DEV</span>
+              </span>
             </div>
             <p className="footer-tagline">{t.footer_built}</p>
-            <div className="footer-badge pixel">
-              <span style={{ color: "var(--gold)" }}>◆</span> v2.4.1 · GJN ·
-              ASIR
+            <div className="footer-status" aria-live="polite">
+              <div className="footer-status-row">
+                <span className={`footer-led${ok === false ? " down" : ok ? " up" : ""}`} />
+                <span className="footer-status-k">STATUS</span>
+                <span className="footer-status-v">
+                  {ok === null ? "…" : ok ? "ONLINE" : "OFFLINE"}
+                </span>
+              </div>
+              <div className="footer-status-row">
+                <span className="footer-status-k">PING</span>
+                <span className="footer-status-v">{ms === null ? "…" : `${ms} ms`}</span>
+              </div>
+              <div className="footer-status-row">
+                <span className="footer-status-k">EDGE</span>
+                <span className="footer-status-v">Cloudflare Pages</span>
+              </div>
+              <div className="footer-status-row">
+                <span className="footer-status-k">BUILD</span>
+                <span className="footer-status-v">{built}</span>
+              </div>
             </div>
           </div>
 
-          {/* col 2 — nav */}
-          <div className="footer-nav-col">
-            <div className="footer-col-head pixel">NAVIGATE</div>
-            {FOOTER_NAV.map((id) => (
+          {/* col 2 — navegación */}
+          <nav className="footer-nav-col" aria-label={es ? "Pie de página" : "Footer"}>
+            <div className="footer-col-head pixel">{es ? "NIVELES" : "LEVELS"}</div>
+            {FOOTER_NAV.map((id, i) => (
               <button
                 key={id}
                 type="button"
                 className="footer-nav-link"
                 onClick={() => onNavigate?.(id)}
               >
-                ▸ {FOOTER_NAV_LABELS[id][lang]}
+                <span className="footer-nav-n">{String(i + 1).padStart(2, "0")}</span>
+                {FOOTER_NAV_LABELS[id][lang]}
               </button>
             ))}
-          </div>
+          </nav>
 
-          {/* col 3 — socials */}
+          {/* col 3 — canales */}
           <div className="footer-socials-col">
-            <div className="footer-col-head pixel">CHANNELS</div>
+            <div className="footer-col-head pixel">{es ? "CANALES" : "CHANNELS"}</div>
             {PIXEL_DATA.socials.map((s) => (
               <a
                 key={s.id}
                 href={s.url}
-                target="_blank"
+                target={s.url.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 className="footer-social-link"
               >
@@ -1439,15 +1525,11 @@ export function PixelFooter({ t, lang, onNavigate }: FooterProps) {
           </div>
         </div>
 
-        {/* bottom bar */}
         <div className="footer-bottom">
-          <div
-            className="pixel"
-            style={{ color: "var(--ink-faint)", fontSize: 7 }}
-          >
-            {t.footer_year} DANIEL FONOV · ALL SYSTEMS NOMINAL
+          <div className="footer-copy pixel">
+            {t.footer_year} DANIEL FONOV · {es ? "TODOS LOS SISTEMAS OK" : "ALL SYSTEMS NOMINAL"}
           </div>
-          <div className="pixel" style={{ color: "var(--cyan)", fontSize: 7 }}>
+          <div className="footer-konami pixel" title="Konami code">
             {t.easter_hint}
           </div>
         </div>

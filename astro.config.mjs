@@ -18,6 +18,9 @@ export default defineConfig({
     }),
   ],
   vite: {
+    define: {
+      __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    },
     resolve: {
       alias: {
         '@': '/src',
