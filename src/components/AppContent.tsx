@@ -449,7 +449,7 @@ export default function AppContent() {
 
         <button
           type="button"
-          className="mobile-menu-btn pixel"
+          className={`mobile-menu-btn pixel${questStep === 3 ? " quest-highlight" : ""}`}
           aria-haspopup="dialog"
           aria-expanded={mobileMenuOpen}
           onClick={() => {

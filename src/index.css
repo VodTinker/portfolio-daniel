@@ -2558,251 +2558,148 @@ section:not(#hero).in-view::after { animation: scan-sweep 0.9s steps(18) both; }
 }
 /* Con el chat abierto, el ▲ se aparta para no tapar el drawer */
 body:has(.chat-drawer.open) .back-to-top-fab { opacity: 0; pointer-events: none; }
+@media (max-width: 600px) {
+  body:has(.quest-hud:not(.minimized)) .back-to-top-fab,
+  body:has(.quest-hud:not(.minimized)) .chat-fab { opacity: 0; pointer-events: none; }
+}
 
 /* ======= QUEST ONBOARDING SYSTEM HUD ======= */
 .quest-hud {
-  position: fixed;
-  left: 24px;
-  bottom: 24px;
-  z-index: 195;
-  width: 320px;
+  position: fixed; left: 24px; bottom: 24px; z-index: 195;
+  width: 340px;
   background: var(--panel);
-  border: 0;
-  box-shadow: 
-    0 0 0 2px var(--bg-0), 
-    0 0 0 4px var(--violet), 
-    4px 4px 0 var(--bg-0), 
+  box-shadow:
+    0 0 0 2px var(--bg-0),
+    0 0 0 4px var(--violet),
+    4px 4px 0 4px rgba(0, 0, 0, 0.45),
     0 0 24px rgba(124, 58, 237, 0.25);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s steps(4), opacity 0.2s;
+  display: flex; flex-direction: column;
   image-rendering: pixelated;
-  animation: hud-reveal 0.4s steps(6) cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation: hud-reveal 0.4s steps(6) both;
 }
-
 @keyframes hud-reveal {
   from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(0); opacity: 1; }
 }
-
-.quest-hud.minimized {
-  width: 200px;
-}
-
+.quest-hud.minimized { width: auto; min-width: 210px; }
 .quest-hud.completed {
-  box-shadow: 
-    0 0 0 2px var(--bg-0), 
-    0 0 0 4px var(--gold), 
-    4px 4px 0 var(--bg-0), 
-    0 0 24px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 4px var(--gold), 4px 4px 0 4px rgba(0, 0, 0, 0.45), 0 0 24px rgba(245, 158, 11, 0.35);
 }
 
 .quest-hud-header {
   background: var(--panel-2);
-  border-bottom: 2px solid var(--violet);
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8px 0 0; min-height: 40px;
 }
-
-.quest-hud.completed .quest-hud-header {
-  border-bottom: 2px solid var(--gold);
+.quest-hud.completed .quest-hud-header { padding-left: 14px; border-bottom: 2px solid var(--gold); }
+.quest-hud-head-btn {
+  flex: 1; min-width: 0; align-self: stretch;
+  display: flex; align-items: center; gap: 10px;
+  background: transparent; border: 0; cursor: pointer; text-align: left;
+  padding: 10px 6px 10px 14px; color: inherit;
 }
-
-.quest-hud-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--cyan);
-  margin-right: 8px;
-  display: inline-block;
-  box-shadow: 0 0 6px var(--cyan);
-}
-
-.quest-hud-indicator.pulse {
-  animation: indicator-flash 1s infinite alternate steps(2);
-}
-
-@keyframes indicator-flash {
-  from { opacity: 0.3; }
-  to { opacity: 1; box-shadow: 0 0 8px var(--cyan); }
-}
-
-.quest-hud.completed .quest-hud-indicator {
-  background: var(--gold);
-  box-shadow: 0 0 6px var(--gold);
-}
-
-.quest-hud-toggle-btn {
-  background: transparent;
-  border: 0;
-  color: var(--ink-faint);
-  font-family: var(--pixel-font);
-  font-size: 14px;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0 4px;
-}
-
-.quest-hud-toggle-btn:hover {
-  color: var(--ink);
-}
-
-.quest-hud-ctrls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 8px;
-}
-
-.quest-hud-close-btn {
-  background: transparent;
-  border: 0;
-  color: var(--ink-faint);
-  font-family: var(--pixel-font);
-  font-size: 13px;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0 4px;
-  transition: color 0.15s;
-}
-
-.quest-hud-close-btn:hover {
-  color: var(--red);
-}
+.quest-hud-indicator { width: 8px; height: 8px; flex: none; background: var(--cyan); }
+.quest-hud-indicator.pulse { animation: blink 1s steps(2) infinite; box-shadow: 0 0 6px var(--cyan); }
+.quest-hud.completed .quest-hud-indicator { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
 
 .quest-title {
-  font-family: var(--pixel-font);
-  font-size: 9px;
-  font-weight: bold;
-  color: var(--ink);
-  letter-spacing: 0.04em;
-  flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-family: var(--pixel-font); font-size: 9px; color: var(--ink);
+  letter-spacing: 0.04em; line-height: 1.5;
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.quest-num { color: var(--gold); margin-right: 4px; }
+.quest-hud.completed .quest-title { color: var(--gold); }
 
-.quest-hud.completed .quest-title {
-  color: var(--gold);
+.quest-hud-ctrls { display: flex; align-items: center; gap: 2px; flex: none; }
+.quest-hud-toggle-btn, .quest-hud-close-btn {
+  width: 28px; height: 28px; display: grid; place-items: center;
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--ink-dim); font-family: var(--pixel-font); font-size: 12px; line-height: 1;
 }
+.quest-hud-toggle-btn:hover { color: var(--ink); background: rgba(255, 255, 255, 0.06); }
+.quest-hud-close-btn:hover { color: var(--red); background: rgba(255, 84, 112, 0.08); }
+
+/* Barra de progreso de 5 segmentos */
+.quest-progress { display: flex; gap: 3px; padding: 0 14px 0; background: var(--panel-2); height: 6px; }
+.quest-hud.minimized .quest-progress { padding-bottom: 8px; height: 14px; }
+.quest-progress-seg { flex: 1; height: 6px; background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--ink-faint); }
+.quest-progress-seg.done { background: var(--gold); box-shadow: none; }
+.quest-progress-seg.current { background: var(--cyan); box-shadow: none; animation: blink 1.2s steps(2) infinite; }
 
 .quest-hud-body {
-  padding: 14px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: var(--panel);
+  padding: 14px; display: flex; gap: 12px; align-items: flex-start;
+  background: var(--panel); border-top: 2px solid var(--violet);
 }
-
 .quest-avatar {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  background: var(--bg-0);
-  box-shadow: inset 0 0 0 2px var(--ink-faint);
-  animation: avatar-bob 2s infinite ease-in-out;
+  flex: none; width: 48px; height: 48px; display: grid; place-items: center;
+  background: var(--bg-0); box-shadow: inset 0 0 0 2px var(--ink-faint);
+  animation: avatar-bob 2s steps(4) infinite;
 }
-
-@keyframes avatar-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-.quest-details {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-}
-
-.quest-desc {
-  font-size: 10px;
-  color: var(--ink-dim);
-  line-height: 1.4;
-  margin: 0 0 8px 0;
-}
-
+@keyframes avatar-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.quest-details { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.quest-desc { font-size: 12px; color: var(--ink); line-height: 1.5; margin: 0 0 8px; }
 .quest-hint {
-  font-size: 8px;
-  color: var(--gold);
-  border-left: 2px solid var(--gold);
-  padding-left: 6px;
-  margin-bottom: 12px;
-  font-family: var(--pixel-font);
-  line-height: 1.3;
+  font-size: 11px; color: var(--gold); line-height: 1.5;
+  border-left: 2px solid var(--gold); padding-left: 8px; margin: 0 0 12px;
+}
+.hint-label { font-family: var(--pixel-font); font-size: 8px; }
+
+.quest-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.quest-locate-btn, .quest-skip-btn {
+  font-family: var(--pixel-font); font-size: 8px; letter-spacing: 0.04em;
+  min-height: 32px; padding: 0 12px; border: 0; cursor: pointer;
+}
+.quest-locate-btn {
+  background: var(--cyan); color: var(--bg-0);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3), 0 0 0 2px var(--bg-0);
+}
+.quest-locate-btn:hover { filter: brightness(1.15); }
+.quest-locate-btn:active { transform: translateY(1px); }
+.quest-skip-btn { background: var(--bg-0); color: var(--ink-dim); box-shadow: inset 0 0 0 2px var(--ink-faint); }
+.quest-skip-btn:hover { color: var(--red); box-shadow: inset 0 0 0 2px var(--red); }
+.quest-rewards-preview { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.reward-text { font-size: 9px; font-family: var(--pixel-font); color: var(--cyan); }
+
+.quest-hud button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* "MOSTRAR": el objetivo parpadea con un anillo dorado */
+.quest-ping { animation: quest-ping 0.65s steps(2) 4 !important; position: relative; z-index: 5; }
+@keyframes quest-ping {
+  0%   { outline: 3px solid var(--gold); outline-offset: 4px; box-shadow: 0 0 0 8px rgba(251, 191, 36, 0.25), 0 0 24px var(--gold); }
+  100% { outline: 3px solid transparent; outline-offset: 8px; }
 }
 
-.quest-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.quest-skip-btn {
-  background: var(--bg-0);
-  color: var(--ink-faint);
-  border: 0;
-  padding: 6px 12px;
-  font-size: 8px;
-  cursor: pointer;
-  box-shadow: inset 0 0 0 2px var(--ink-faint);
-  transition: all 0.15s;
-}
-
-.quest-skip-btn:hover {
-  color: var(--red);
-  box-shadow: inset 0 0 0 2px var(--red);
-  background: rgba(239, 68, 68, 0.05);
-}
-
-.quest-rewards-preview {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.reward-text {
-  font-size: 9px;
-  font-family: var(--pixel-font);
-  color: var(--cyan);
-  font-weight: bold;
-}
-
-/* Alert/Toast bubbles */
-.quest-alert-bubble {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 0;
-  right: 0;
-  background: var(--cyan);
-  color: var(--bg-0);
-  font-size: 9px;
-  font-weight: bold;
-  padding: 8px 12px;
-  box-shadow: 
-    0 0 0 2px var(--bg-0), 
-    0 0 0 4px var(--cyan),
-    4px 4px 0 var(--bg-0);
-  text-align: center;
-  z-index: 200;
+/* ======= QUEST TOAST (misión completada) ======= */
+.quest-toast {
+  position: fixed; top: 66px; left: 50%; z-index: 9500;
+  display: flex; align-items: center; gap: 12px;
+  min-width: 320px; max-width: min(460px, calc(100vw - 24px));
+  padding: 10px 14px 10px 10px;
+  background: var(--panel);
+  box-shadow: 0 0 0 2px var(--bg-0), 0 0 0 4px var(--gold), 6px 6px 0 4px rgba(0, 0, 0, 0.5), 0 0 28px rgba(251, 191, 36, 0.35);
   pointer-events: none;
-  animation: alert-slide-fade 3s forwards steps(10);
+  animation: quest-toast-life 3.2s steps(1) both;
 }
-
-@keyframes alert-slide-fade {
-  0% { transform: translateY(10px); opacity: 0; }
-  10% { transform: translateY(0); opacity: 1; }
-  80% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-10px); opacity: 0; }
+.quest-toast-icon {
+  flex: none; width: 36px; height: 36px; display: grid; place-items: center;
+  background: var(--bg-0); box-shadow: inset 0 0 0 2px var(--gold);
+  animation: quest-toast-spin 0.8s steps(4) 2;
 }
+.quest-toast-text { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
+.quest-toast-title { font-family: var(--pixel-font); font-size: 11px; color: var(--gold); text-shadow: 2px 2px 0 var(--bg-0); }
+.quest-toast-sub { font-size: 11px; color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.quest-toast-count { flex: none; font-family: var(--pixel-font); font-size: 10px; color: var(--cyan); }
+@keyframes quest-toast-life {
+  0%   { transform: translate(-50%, -24px) scale(0.9); opacity: 0; }
+  4%   { transform: translate(-50%, -8px) scale(1.04); opacity: 1; }
+  8%   { transform: translate(-50%, 0) scale(1); }
+  90%  { transform: translate(-50%, 0); opacity: 1; }
+  95%  { transform: translate(-50%, -10px); opacity: 1; }
+  100% { transform: translate(-50%, -24px); opacity: 0; }
+}
+@keyframes quest-toast-spin { 50% { transform: scaleX(0.3); } }
+/* Mientras sale una misión completada, el aviso de sección se calla */
+body:has(.quest-toast) .stage-toast { display: none; }
 
 /* Pulsating highlights for active quest targets */
 .quest-highlight {
@@ -2821,55 +2718,19 @@ body:has(.chat-drawer.open) .back-to-top-fab { opacity: 0; pointer-events: none;
 
 /* Responsive adjustment to prevent overlap on mobile */
 @media (max-width: 600px) {
-  /* Quest HUD placement & Compact layout */
-  .quest-hud {
-    left: 12px !important;
-    bottom: 84px !important;
-    width: calc(100vw - 24px) !important;
-    z-index: 150 !important;
+  /* Quest HUD en móvil: pastilla plegada / hoja inferior desplegada */
+  .quest-hud { left: 12px; bottom: 16px; z-index: 170; }
+  .quest-hud.minimized { min-width: 0; max-width: calc(100vw - 100px); }
+  .quest-hud:not(.minimized) {
+    left: 8px; right: 8px; bottom: 8px; width: auto;
   }
-  .quest-hud.minimized {
-    bottom: 16px !important;
-    width: auto !important;
-    max-width: calc(100vw - 100px) !important;
-  }
-  .quest-hud-header {
-    padding: 6px 10px !important;
-  }
-  .quest-hud-body {
-    padding: 8px 10px !important;
-    gap: 8px !important;
-  }
-  .quest-avatar {
-    transform: scale(0.8) !important;
-    transform-origin: center center !important;
-    margin: 0 !important;
-  }
-  .quest-desc {
-    font-size: 9px !important;
-    margin-bottom: 4px !important;
-    line-height: 1.3 !important;
-  }
-  .quest-hint {
-    font-size: 7.5px !important;
-    margin-bottom: 6px !important;
-    padding-left: 4px !important;
-  }
-  .quest-actions {
-    margin-top: 2px !important;
-  }
-  .quest-skip-btn {
-    padding: 4px 8px !important;
-    font-size: 7.5px !important;
-  }
-  .quest-hud.completed {
-    box-shadow: 
-      0 0 0 2px var(--bg-0), 
-      0 0 0 4px var(--gold), 
-      2px 2px 0 var(--bg-0), 
-      0 0 12px rgba(245, 158, 11, 0.25) !important;
-  }
-  
+  .quest-hud-body { padding: 12px; gap: 10px; }
+  .quest-avatar { width: 40px; height: 40px; }
+  .quest-desc { font-size: 12px; }
+  .quest-hint { font-size: 11px; }
+  .quest-toast { top: 60px; min-width: 0; width: calc(100vw - 24px); }
+  .quest-toast-title { font-size: 10px; }
+
   /* Chat FAB and Back to Top placement to avoid clash */
   .chat-fab {
     bottom: 16px !important;
