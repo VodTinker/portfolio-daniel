@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PIXEL_DATA } from "../utils/pixelData";
 
 interface BootProps {
@@ -10,8 +10,18 @@ export default function Boot({ onDone }: BootProps) {
     Array<(typeof PIXEL_DATA.bootSeq)[number]>
   >([]);
   const [done, setDone] = useState(false);
+  const onDoneRef = useRef(onDone);
+  onDoneRef.current = onDone;
 
   useEffect(() => {
+    const finish = () => onDoneRef.current();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finish();
+      return;
+    }
+    const skip = () => finish();
+    window.addEventListener("keydown", skip, { once: true });
+    window.addEventListener("pointerdown", skip, { once: true });
     const seq = PIXEL_DATA.bootSeq;
     const timers: ReturnType<typeof setTimeout>[] = [];
     seq.forEach((l) => {
@@ -21,11 +31,15 @@ export default function Boot({ onDone }: BootProps) {
         }, l.t),
       );
     });
-    const doneTimer = setTimeout(() => onDone(), 1500);
+    const doneTimer = setTimeout(finish, 1500);
     timers.push(setTimeout(() => setDone(true), 900));
     timers.push(doneTimer);
-    return () => timers.forEach(clearTimeout);
-  }, [onDone]);
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener("keydown", skip);
+      window.removeEventListener("pointerdown", skip);
+    };
+  }, []);
 
   return (
     <div id="boot" className={done ? "done" : ""}>
@@ -41,6 +55,9 @@ export default function Boot({ onDone }: BootProps) {
         ))}
         <div className="line">
           <span className="cursor">▌</span>
+        </div>
+        <div className="line" style={{ color: "#666", marginTop: 16 }}>
+          [ press any key to skip ]
         </div>
       </div>
     </div>

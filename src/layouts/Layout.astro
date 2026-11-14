@@ -1,12 +1,9 @@
 ---
-import '@fontsource/press-start-2p';
-import '@fontsource/vt323';
-import '@fontsource/pixelify-sans';
-import '@fontsource/silkscreen';
-import '@fontsource/silkscreen/700.css';
-import '@fontsource/jetbrains-mono';
-import '@fontsource/jetbrains-mono/500.css';
-import '@fontsource/jetbrains-mono/700.css';
+// Solo el subset latin (cubre ES/EN). Pixelify/Silkscreen/VT323 no se usan.
+import '@fontsource/press-start-2p/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-500.css';
+import '@fontsource/jetbrains-mono/latin-700.css';
 
 interface Props {
   title: string;
@@ -26,14 +23,15 @@ const { title, description = "Portfolio Asir-Daniel Fonov " } = Astro.props;
   <link rel="icon" type="image/webp" href="/Vodtinker-removebg-preview.webp" />
   <!-- Icono para dispositivos Apple -->
   <link rel="apple-touch-icon" href="/Vodtinker-removebg-preview.webp" />
-  <!-- Fallback SVG (mantener si ya existía) -->
-  <link rel="icon" type="image/svg+xml" href="/logo-option-1.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:title" content="VodTinker — Sysadmin & Web Dev" />
     <meta property="og:description" content="Portfolio de Daniel Fonov — ASIR student, Linux sysadmin & web developer from Gijón, Spain." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://vodtinker.dev" />
     <meta property="og:image" content="https://vodtinker.dev/og-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="VodTinker — Between servers and code." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="VodTinker — Sysadmin & Web Dev" />
     <meta name="twitter:description" content="Daniel Fonov · ASIR · Linux · Web" />
