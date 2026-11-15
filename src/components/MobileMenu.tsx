@@ -8,6 +8,8 @@ interface MobileMenuProps {
   tweaks: Tweaks;
   setTweak: (key: keyof Tweaks, value: Tweaks[keyof Tweaks]) => void;
   navigate: (id: string) => void;
+  questsVisible: boolean;
+  setQuestsVisible: (v: boolean) => void;
 }
 
 export default function MobileMenu({
@@ -16,6 +18,8 @@ export default function MobileMenu({
   tweaks,
   setTweak,
   navigate,
+  questsVisible,
+  setQuestsVisible,
 }: MobileMenuProps) {
   const lang = tweaks.lang;
 
@@ -216,6 +220,24 @@ export default function MobileMenu({
                 onClick={() => handleTweakChange("sfx", !tweaks.sfx)}
               >
                 {tweaks.sfx ? "ON" : "OFF"}
+              </button>
+            </div>
+
+            {/* Quests */}
+            <div className="pda-toggle-row">
+              <span className="pda-tweak-label pixel">
+                {lang === "es" ? "MISIONES" : "QUESTS"}
+              </span>
+              <button
+                type="button"
+                className={`pda-switch-btn pixel ${questsVisible ? "on" : "off"}`}
+                aria-pressed={questsVisible}
+                onClick={() => {
+                  setQuestsVisible(!questsVisible);
+                  if (tweaks.sfx) playToggle();
+                }}
+              >
+                {questsVisible ? "ON" : "OFF"}
               </button>
             </div>
 

@@ -118,6 +118,30 @@ export default function AppContent() {
     }
   });
 
+  const [questDismissed, setQuestDismissed] = useState(() => {
+    try {
+      return localStorage.getItem("vod-quest-dismissed") === "1";
+    } catch {
+      return false;
+    }
+  });
+  const setQuestVisible = useCallback((visible: boolean) => {
+    setQuestDismissed(!visible);
+    try {
+      localStorage.setItem("vod-quest-dismissed", visible ? "0" : "1");
+    } catch {}
+  }, []);
+  const dismissQuests = useCallback(() => setQuestVisible(false), [setQuestVisible]);
+  const restartQuests = () => {
+    setQuestStep(0);
+    setQuestCoins(0);
+    setQuestScore(0);
+    try {
+      localStorage.setItem("vod-quest-step", "0");
+    } catch {}
+    setQuestVisible(true);
+  };
+
   const completeQuestStep = (stepIndex: number) => {
     if (questStep === stepIndex) {
       const nextStep = stepIndex + 1;
@@ -547,6 +571,9 @@ export default function AppContent() {
           setQuestCoins(25);
           setQuestScore(5000);
         }}
+        dismissed={questDismissed}
+        onDismiss={dismissQuests}
+        onRestart={restartQuests}
       />
 
       <StageTransition stage={stage} phase={stagePhase} />
@@ -558,7 +585,13 @@ export default function AppContent() {
 
       <div id="konami-toast">★ CHEAT UNLOCKED · 30 LIVES GRANTED ★</div>
 
-      <PixelTweaks tweaks={tweaks} setTweak={setTweak} questStep={questStep} />
+      <PixelTweaks
+        tweaks={tweaks}
+        setTweak={setTweak}
+        questStep={questStep}
+        questsVisible={!questDismissed}
+        setQuestsVisible={setQuestVisible}
+      />
 
       <MobileMenu
         isOpen={mobileMenuOpen}
@@ -566,6 +599,8 @@ export default function AppContent() {
         tweaks={tweaks}
         setTweak={setTweak}
         navigate={navigate}
+        questsVisible={!questDismissed}
+        setQuestsVisible={setQuestVisible}
       />
     </>
   );

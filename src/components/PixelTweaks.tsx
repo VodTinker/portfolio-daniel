@@ -39,12 +39,16 @@ interface TweaksProps {
   tweaks: Tweaks;
   setTweak: (key: keyof Tweaks, value: Tweaks[keyof Tweaks]) => void;
   questStep?: number;
+  questsVisible: boolean;
+  setQuestsVisible: (v: boolean) => void;
 }
 
 export default function PixelTweaks({
   tweaks,
   setTweak,
   questStep,
+  questsVisible,
+  setQuestsVisible,
 }: TweaksProps) {
   const [open, setOpen] = useState(false);
 
@@ -149,6 +153,23 @@ export default function PixelTweaks({
                 }}
               />
               <span className="tweak-label">{tweaks.sfx ? "ON" : "OFF"}</span>
+            </div>
+          </div>
+
+          <div className="tweak-row">
+            <span className="tweak-label">Quests</span>
+            <div className="tweak-toggle-wrap">
+              <button
+                type="button"
+                className={`tweak-toggle-btn${questsVisible ? " on" : ""}`}
+                aria-pressed={questsVisible}
+                aria-label="Quests"
+                onClick={() => {
+                  setQuestsVisible(!questsVisible);
+                  if (tweaks.sfx) playToggle();
+                }}
+              />
+              <span className="tweak-label">{questsVisible ? "ON" : "OFF"}</span>
             </div>
           </div>
 

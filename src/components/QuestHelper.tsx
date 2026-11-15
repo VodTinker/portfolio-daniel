@@ -142,9 +142,20 @@ interface QuestHelperProps {
   lang: Lang;
   step: number;
   onSkip: () => void;
+  /** Panel cerrado por el usuario (se puede reabrir desde Tweaks / MENU) */
+  dismissed: boolean;
+  onDismiss: () => void;
+  onRestart: () => void;
 }
 
-export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
+export default function QuestHelper({
+  lang,
+  step,
+  onSkip,
+  dismissed,
+  onDismiss,
+  onRestart,
+}: QuestHelperProps) {
   const isMobile = useIsMobile();
   // En pantallas pequeñas arranca plegado para no tapar el contenido
   const [minimized, setMinimized] = useState(() => {
@@ -155,20 +166,7 @@ export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
     }
   });
   const [toast, setToast] = useState<{ step: number; k: number } | null>(null);
-  const [dismissed, setDismissed] = useState(() => {
-    try {
-      return localStorage.getItem("vod-quest-dismissed") === "1";
-    } catch {
-      return false;
-    }
-  });
-
-  const handleDismiss = () => {
-    setDismissed(true);
-    try {
-      localStorage.setItem("vod-quest-dismissed", "1");
-    } catch {}
-  };
+  const handleDismiss = onDismiss;
 
   // Notificación solo cuando el paso AVANZA (no al cargar ni al cambiar idioma)
   const prevStep = useRef(step);
@@ -185,13 +183,13 @@ export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
     return () => clearTimeout(t);
   }, [toast]);
 
-  // Al terminar todas: el panel se cierra solo tras unos segundos
+  // Al terminar todas (en este momento, no al reabrir): se cierra solo
   useEffect(() => {
-    if (step >= TOTAL && !dismissed) {
-      const t = setTimeout(handleDismiss, 8000);
+    if (toast && toast.step >= TOTAL) {
+      const t = setTimeout(onDismiss, 8000);
       return () => clearTimeout(t);
     }
-  }, [step, dismissed]);
+  }, [toast, onDismiss]);
 
   const locate = () => {
     const q = QUESTS[step];
@@ -281,6 +279,11 @@ export default function QuestHelper({ lang, step, onSkip }: QuestHelperProps) {
                   ? "Has completado las 5 misiones. ¡Disfruta del portfolio!"
                   : "All 5 quests completed. Enjoy the portfolio!"}
               </p>
+              <div className="quest-actions">
+                <button type="button" className="quest-skip-btn" onClick={onRestart}>
+                  {lang === "es" ? "⟲ JUGAR OTRA VEZ" : "⟲ PLAY AGAIN"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
