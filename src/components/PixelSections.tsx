@@ -1409,6 +1409,11 @@ function useSitePing() {
   return { ms, ok };
 }
 
+// En local (astro dev/preview) no corren las Pages Functions → /api/status da 404
+const IS_LOCAL =
+  typeof location !== "undefined" &&
+  /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname);
+
 const BUILD_DATE: string =
   typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : "";
 
@@ -1470,10 +1475,12 @@ export function PixelFooter({ t, lang, onNavigate }: FooterProps) {
             <p className="footer-tagline">{t.footer_built}</p>
             <div className="footer-status" aria-live="polite">
               <div className="footer-status-row">
-                <span className={`footer-led${ok === false ? " down" : ok ? " up" : ""}`} />
+                <span
+                  className={`footer-led${ok ? " up" : ok === false && !IS_LOCAL ? " down" : ""}`}
+                />
                 <span className="footer-status-k">STATUS</span>
                 <span className="footer-status-v">
-                  {ok === null ? "…" : ok ? "ONLINE" : "OFFLINE"}
+                  {ok === null ? "…" : ok ? "ONLINE" : IS_LOCAL ? "LOCAL DEV" : "OFFLINE"}
                 </span>
               </div>
               <div className="footer-status-row">
