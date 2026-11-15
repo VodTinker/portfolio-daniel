@@ -303,10 +303,6 @@ button, input, textarea, select { font-family: inherit; }
   0%   { opacity: 0.6; transform: scale(0.6); }
   100% { opacity: 0;   transform: scale(1.6); }
 }
-@keyframes boot-out {
-  0%   { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.05); pointer-events: none; }
-}
 @keyframes term-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes tweaks-slide {
   from { opacity: 0; transform: translateX(40px); }
@@ -438,17 +434,87 @@ section:not(#hero).in-view::after { animation: scan-sweep 0.9s steps(18) both; }
 ::selection { background: var(--cyan); color: var(--bg-0); }
 
 /* ======= BOOT ======= */
-#boot {
+/* Paleta fija: siempre un CRT negro, sea cual sea el tema */
+#boot, #preboot {
+  --b-bg: #05020d; --b-ink: #c9f7d8; --b-dim: #5d7a6a; --b-green: #4ade80;
+  --b-cyan: #22d3ee; --b-mag: #ec4899; --b-gold: #fbbf24;
   position: fixed; inset: 0; z-index: 99999;
-  background: #000; color: var(--green);
-  font-family: var(--mono-font); font-size: 13px;
-  padding: 32px; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--b-bg); color: var(--b-ink);
+  font-family: var(--mono-font, "JetBrains Mono", monospace); font-size: 13px;
+  overflow: hidden;
 }
-#boot.done { animation: boot-out 0.6s steps(6) forwards; }
-#boot .line { white-space: pre-wrap; }
-#boot .ok   { color: var(--green); }
-#boot .warn { color: var(--gold); }
-#boot .info { color: var(--cyan); }
+#boot .boot-screen::after, #preboot::before { /* scanlines + viñeta */
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.65) 100%);
+}
+#preboot .cursor, #boot .boot-cursor { animation: boot-blink 1s steps(1) infinite; color: var(--b-green); }
+#preboot { padding: 32px; }
+html[data-booted] #preboot { display: none; }
+
+.boot-screen {
+  position: absolute; inset: 0; padding: clamp(20px, 5vw, 56px);
+  display: flex; flex-direction: column; gap: 14px;
+  background: var(--b-bg);
+  animation: boot-power-on .42s steps(7) both;
+  transform-origin: center;
+}
+#boot.exit .boot-screen { animation: boot-wipe .4s steps(8) forwards; }
+#boot.exit { background: transparent; pointer-events: none; }
+.boot-screen > * { position: relative; z-index: 3; width: 100%; max-width: 760px; }
+
+.boot-head { display: flex; flex-direction: column; gap: 8px; margin-bottom: 6px; }
+.boot-logo {
+  font-family: "Press Start 2P", monospace; font-size: clamp(20px, 4.6vw, 38px);
+  color: var(--b-cyan); letter-spacing: .04em; line-height: 1;
+  text-shadow: 3px 3px 0 var(--b-mag), 0 0 18px rgba(34,211,238,.35);
+}
+.boot-logo span { color: var(--b-mag); text-shadow: 3px 3px 0 var(--b-cyan), 0 0 18px rgba(236,72,153,.35); }
+.boot-sub { color: var(--b-dim); font-size: 12px; letter-spacing: .06em; }
+
+.boot-mem, .boot-checks li {
+  display: flex; align-items: baseline; gap: 10px; max-width: 520px;
+}
+.boot-k { color: var(--b-cyan); min-width: 9ch; letter-spacing: .08em; }
+.boot-v { white-space: pre; }
+.boot-dots { flex: 1; border-bottom: 2px dotted var(--b-dim); transform: translateY(-4px); opacity: .6; }
+.boot-ok   { color: var(--b-green); font-weight: 700; }
+.boot-warn { color: var(--b-gold); font-weight: 700; animation: boot-blink .5s steps(1) 3; }
+.boot-checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.boot-checks li { animation: boot-line .12s steps(3) both; }
+.boot-checks li.warn .boot-v { color: var(--b-gold); }
+
+.boot-bar { display: flex; align-items: center; gap: 3px; margin-top: 8px; max-width: 520px; }
+.boot-bar span { flex: 1; height: 14px; background: #14261c; box-shadow: inset 0 0 0 1px #1f3a2a; }
+.boot-bar span.on { background: var(--b-green); box-shadow: 0 0 6px rgba(74,222,128,.55); }
+.boot-bar em { font-style: normal; color: var(--b-green); min-width: 4.5ch; text-align: right; margin-left: 8px; }
+
+.boot-ready {
+  font-family: "Press Start 2P", monospace; font-size: 13px; color: var(--b-gold);
+  margin-top: 10px; min-height: 1.4em;
+}
+.boot-ready.show { animation: boot-blink .9s steps(1) infinite; }
+.boot-skip { margin-top: auto; color: var(--b-dim); font-size: 12px; }
+
+@keyframes boot-power-on {
+  0%   { transform: scale(1, .004); filter: brightness(6); opacity: 1; }
+  45%  { transform: scale(1, .004); filter: brightness(6); }
+  70%  { transform: scale(1, 1.04); filter: brightness(2); }
+  100% { transform: scale(1, 1); filter: none; }
+}
+@keyframes boot-wipe {
+  from { clip-path: inset(0 0 0 0); }
+  to   { clip-path: inset(0 0 100% 0); }
+}
+@keyframes boot-line { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+@keyframes boot-blink { 50% { opacity: 0; } }
+
+@media (max-width: 520px) {
+  #boot { font-size: 12px; }
+  .boot-k { min-width: 8ch; }
+  .boot-ready { font-size: 11px; }
+}
 
 /* ======= LEVEL-UP OVERLAY ======= */
 #levelup {

@@ -65,12 +65,15 @@ const { title, description = "Portfolio Asir-Daniel Fonov " } = Astro.props;
         if (t.scanlines === false) document.documentElement.dataset.scanlines = 'off';
         if (t.lang) document.documentElement.lang = t.lang;
       }
+      if (sessionStorage.getItem('vod-booted')) document.documentElement.dataset.booted = '';
     } catch(e) {}
   })();
 </script>
     <title>{title}</title>
   </head>
   <body>
+    <!-- Se ve mientras carga el JS; Boot.tsx lo sustituye -->
+    <div id="preboot" aria-hidden="true">VOD-OS BIOS v2.5<br /><span class="cursor">▌</span></div>
     <slot />
   </body>
 </html>
