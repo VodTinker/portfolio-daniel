@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { I18n, Lang } from "../utils/pixelData";
 import { PIXEL_DATA } from "../utils/pixelData";
@@ -124,160 +124,108 @@ const LVL_COLOR: Record<string, string> = {
   C: "var(--ink-dim)",
 };
 
+type Project = (typeof PIXEL_DATA.projects)[number];
+
+const SAAS_TAGS = ["SaaS", "Design Editor", "AI Tools", "Next.js / React"];
+const INFRA_TAGS = [
+  "Rust",
+  "Stalwart",
+  "DNS",
+  "Netbird",
+  "WireGuard",
+  "Linux",
+  "Automation",
+  "Python",
+  "n8n",
+];
+
+/**
+ * Tarjeta de proyecto. Toda la tarjeta abre el detalle (botón del título
+ * estirado con ::after); el enlace OPEN queda por encima y va directo al sitio.
+ */
 function ProjectCard({
   p,
   lang,
   t,
+  variant,
   onSelect,
 }: {
-  p: (typeof PIXEL_DATA.projects)[number];
+  p: Project;
   lang: Lang;
   t: I18n;
-  onSelect: (p: (typeof PIXEL_DATA.projects)[number]) => void;
+  variant: "main" | "side";
+  onSelect: (p: Project) => void;
 }) {
+  const es = lang === "es";
   const isMaintenance = (p.stats.status as string) === "maintenance";
-  const statusColor = isMaintenance ? "var(--gold)" : "var(--green)";
   const sprite = SPRITES_MAP[p.id] ?? SPRITE_CHEST;
-  const cardColor = COLOR_VAR[p.color] ?? "var(--cyan)";
+  const cardColor = isMaintenance
+    ? "var(--gold)"
+    : (COLOR_VAR[p.color] ?? "var(--cyan)");
+  const host = p.link.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const maxTags = variant === "main" ? 6 : 3;
+  const extra = p.tags.length - maxTags;
 
   return (
-    <div
-      className={`project-wrap${isMaintenance ? " is-maint" : ""}`}
+    <article
+      className={`project-wrap qcard qcard-${variant}${isMaintenance ? " is-maint" : ""}`}
       style={{ "--project-c": cardColor } as React.CSSProperties}
     >
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => onSelect(p)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") onSelect(p);
-        }}
-        className={`project-card hover-lift project-card-${p.color}${isMaintenance ? " project-card-maint" : ""}`}
-      >
-        <div className="project-art">
-          <div className="project-art-bg" />
-          <div className="project-art-icon">
-            <Sprite grid={sprite} scale={3} />
-          </div>
-          <div
-            className="project-lvl pixel"
-            style={{ color: LVL_COLOR[p.stats.lvl] ?? "var(--ink)" }}
-          >
-            LV {p.stats.lvl}
-          </div>
-          {isMaintenance && (
-            <div className="project-maint-tag pixel">
-              <span className="dot-blink gold" /> {t.projects_maint_badge}
-            </div>
-          )}
-        </div>
-        <div className="project-body">
-          <div className="project-head">
-            <h3 className="project-title">{p.title}</h3>
-            <div
-              className={`project-status ${isMaintenance ? "maintenance" : "live"}`}
-              style={{ color: statusColor }}
-            >
-              <span
-                className={`dot-blink ${isMaintenance ? "gold" : "green"}`}
-                style={{ background: statusColor }}
-              />
-              {isMaintenance ? t.projects_status_maint : t.projects_status_live}
-            </div>
-          </div>
-          <p className="project-tag pixel">{p.tagline[lang]}</p>
-          <p className="project-desc">{p.desc[lang]}</p>
-          <div className="project-tags">
-            {p.tags.map((tg) => (
-              <span
-                key={tg}
-                className={`chip ${(tg as string) === "Migration" ? "gold" : ""}`}
-              >
-                {tg}
-              </span>
-            ))}
-          </div>
-          <div className="project-footer">
-            <span className="project-stat">
-              <span className="pixel">★</span> {p.stats.lvl}
-            </span>
-            <span className="project-arrow pixel">
-              {t.projects_btn_details}
-            </span>
-          </div>
+      <div className={`qcard-art project-art-bg-${p.color}`} aria-hidden="true">
+        <div className="project-art-bg" />
+        <div className="project-art-icon">
+          <Sprite grid={sprite} scale={variant === "main" ? 4 : 3} />
         </div>
       </div>
 
-      {/* Desktop hover side panel */}
-      <div className="project-panel">
-        <div className="project-panel-head pixel">
-          ◆ QUEST LOG {isMaintenance ? "· [MIGRATING]" : ""}
+      <div className="qcard-body">
+        <div className="qcard-meta pixel">
+          <span
+            className="qcard-lvl"
+            style={{ color: LVL_COLOR[p.stats.lvl] ?? "var(--ink)" }}
+          >
+            LV {p.stats.lvl}
+          </span>
+          <span className={`qcard-status ${isMaintenance ? "maint" : "live"}`}>
+            <span className={`dot-blink ${isMaintenance ? "gold" : "green"}`} />
+            {isMaintenance ? t.projects_status_maint : t.projects_status_live}
+          </span>
+          <span className="qcard-date">{p.details.date}</span>
         </div>
-        {isMaintenance && (
-          <div className="project-panel-maint-alert pixel">
-            <span className="maint-alert-icon">⚠</span>
-            <span>
-              {lang === "es"
-                ? "Migración de VPS en curso"
-                : "VPS migration in progress"}
-            </span>
-          </div>
-        )}
-        <ul className="project-panel-features">
-          {p.details.features[lang].map((f, i) => (
-            <li key={i} className={f.startsWith("⚠") ? "maint-feature" : ""}>
-              {f}
+
+        <h3 className="qcard-title">
+          <button type="button" className="qcard-hit" onClick={() => onSelect(p)}>
+            {p.title}
+          </button>
+        </h3>
+        <p className="qcard-tagline">{p.tagline[lang]}</p>
+        {variant === "main" && <p className="qcard-desc">{p.desc[lang]}</p>}
+
+        <ul className="qcard-tags" aria-label={es ? "Tecnologías" : "Tech"}>
+          {p.tags.slice(0, maxTags).map((tg) => (
+            <li key={tg} className={`chip${(tg as string) === "Migration" ? " gold" : ""}`}>
+              {tg}
             </li>
           ))}
+          {extra > 0 && <li className="chip qcard-more">+{extra}</li>}
         </ul>
-        <div className="project-panel-meta pixel">
-          <span style={{ color: "var(--gold)" }}>◷</span> {p.details.date}
-        </div>
-        <div className="project-panel-rewards pixel">
-          <span style={{ color: "var(--project-c)" }}>★ XP GAINED</span>
-          <div className="project-panel-xp">
-            {p.details.rewards.map((r) => (
-              <span key={r} className="chip">
-                {r}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="row" style={{ gap: 8, marginTop: 4 }}>
-          <button
-            type="button"
-            className="project-panel-cta pixel"
-            style={{
-              flex: 1,
-              textAlign: "center",
-              cursor: "pointer",
-              background: "transparent",
-              border: "none",
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelect(p);
-            }}
-          >
-            {t.projects_btn_details}
-          </button>
+
+        <div className="qcard-foot pixel">
+          <span className="qcard-details" aria-hidden="true">
+            {es ? "VER MISIÓN ▶" : "VIEW QUEST ▶"}
+          </span>
           <a
             href={p.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="project-panel-cta pixel"
-            style={{ flex: 1, textAlign: "center" }}
-            onClick={(e) => e.stopPropagation()}
+            className="qcard-open"
+            aria-label={`${es ? "Abrir" : "Open"} ${p.title} (${host})`}
           >
-            {isMaintenance
-              ? lang === "es"
-                ? "REPO ▶"
-                : "REPO ▶"
-              : t.projects_btn_open}
+            {variant === "main" ? host : es ? "ABRIR" : "OPEN"} ↗
           </a>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -287,12 +235,13 @@ function QuestModal({
   t,
   onClose,
 }: {
-  p: (typeof PIXEL_DATA.projects)[number];
+  p: Project;
   lang: Lang;
   t: I18n;
   onClose: () => void;
 }) {
   const [mounted, setMounted] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
   const isMaintenance = (p.stats.status as string) === "maintenance";
   const sprite = SPRITES_MAP[p.id] ?? SPRITE_CHEST;
   const cardColor = COLOR_VAR[p.color] ?? "var(--cyan)";
@@ -305,11 +254,17 @@ function QuestModal({
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKeyDown);
+    const opener = document.activeElement as HTMLElement | null;
     return () => {
+      opener?.focus?.();
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [onClose]);
+
+  useEffect(() => {
+    if (mounted) closeRef.current?.focus();
+  }, [mounted]);
 
   if (!mounted || typeof document === "undefined") return null;
 
@@ -319,6 +274,7 @@ function QuestModal({
       onClick={onClose}
       role="dialog"
       aria-modal="true"
+      aria-labelledby="quest-modal-title"
     >
       <div
         className="quest-modal-box"
@@ -342,6 +298,7 @@ function QuestModal({
           </div>
           <button
             type="button"
+            ref={closeRef}
             className="quest-modal-close-btn pixel"
             onClick={onClose}
             aria-label={t.quest_modal_close}
@@ -357,7 +314,7 @@ function QuestModal({
               <Sprite grid={sprite} scale={3} />
             </div>
             <div className="quest-modal-meta">
-              <h3>{p.title}</h3>
+              <h3 id="quest-modal-title">{p.title}</h3>
               <p>{p.tagline[lang]}</p>
             </div>
           </div>
@@ -437,45 +394,38 @@ function QuestModal({
   );
 }
 
+type ProjectFilter = "all" | "live" | "maintenance" | "saas" | "infra";
+
+const PROJECT_FILTERS: Record<ProjectFilter, (p: Project) => boolean> = {
+  all: () => true,
+  live: (p) => (p.stats.status as string) === "live",
+  maintenance: (p) => (p.stats.status as string) === "maintenance",
+  saas: (p) => p.tags.some((tag) => SAAS_TAGS.includes(tag)),
+  infra: (p) => p.tags.some((tag) => INFRA_TAGS.includes(tag)),
+};
+
 export function PixelProjects({ t, lang }: { t: I18n; lang: Lang }) {
-  const [filter, setFilter] = useState<
-    "all" | "live" | "maintenance" | "saas" | "infra"
-  >("all");
-  const [selectedQuest, setSelectedQuest] = useState<
-    (typeof PIXEL_DATA.projects)[number] | null
-  >(null);
+  const es = lang === "es";
+  const [filter, setFilter] = useState<ProjectFilter>("all");
+  const [selectedQuest, setSelectedQuest] = useState<Project | null>(null);
+  const closeQuest = useCallback(() => setSelectedQuest(null), []);
 
-  const filteredProjects = PIXEL_DATA.projects.filter((p) => {
-    if (filter === "all") return true;
-    if (filter === "live") return (p.stats.status as string) === "live";
-    if (filter === "maintenance") return (p.stats.status as string) === "maintenance";
-    if (filter === "saas")
-      return p.tags.some((tag) =>
-        ["SaaS", "Design Editor", "AI Tools", "Next.js / React"].includes(tag),
-      );
-    if (filter === "infra")
-      return p.tags.some((tag) =>
-        [
-          "Rust",
-          "Stalwart",
-          "DNS",
-          "Netbird",
-          "WireGuard",
-          "Linux",
-          "Automation",
-          "Python",
-          "n8n",
-        ].includes(tag),
-      );
-    return true;
-  });
+  const all = PIXEL_DATA.projects;
+  const count = (f: ProjectFilter) => all.filter(PROJECT_FILTERS[f]).length;
+  // Solo filtros que realmente filtran algo (ni vacíos ni iguales a "todos")
+  const filters = (
+    [
+      ["all", t.projects_filter_all, ""],
+      ["saas", t.projects_filter_saas, "saas"],
+      ["infra", t.projects_filter_infra, "infra"],
+      ["live", t.projects_filter_live, "live"],
+      ["maintenance", t.projects_filter_maint, "maint"],
+    ] as const
+  ).filter(([f]) => f === "all" || (count(f) > 0 && count(f) < all.length));
 
-  const countLive = PIXEL_DATA.projects.filter(
-    (p) => (p.stats.status as string) === "live",
-  ).length;
-  const countMaint = PIXEL_DATA.projects.filter(
-    (p) => (p.stats.status as string) === "maintenance",
-  ).length;
+  const shown = all.filter(PROJECT_FILTERS[filter]);
+  const main = shown.filter((p) => p.stats.lvl === "S");
+  const side = shown.filter((p) => p.stats.lvl !== "S");
 
   return (
     <section id="projects">
@@ -486,68 +436,72 @@ export function PixelProjects({ t, lang }: { t: I18n; lang: Lang }) {
           {t.projects_sub}
         </p>
 
-        {/* Quest Filter Bar */}
-        <div className="projects-filter-bar pixel">
-          <button
-            type="button"
-            className={`filter-btn ${filter === "all" ? "active" : ""}`}
-            onClick={() => setFilter("all")}
-          >
-            {t.projects_filter_all}{" "}
-            <span className="filter-count">({PIXEL_DATA.projects.length})</span>
-          </button>
-          <button
-            type="button"
-            className={`filter-btn live ${filter === "live" ? "active" : ""}`}
-            onClick={() => setFilter("live")}
-          >
-            <span className="dot-mini green" /> {t.projects_filter_live}{" "}
-            <span className="filter-count">({countLive})</span>
-          </button>
-          <button
-            type="button"
-            className={`filter-btn maint ${filter === "maintenance" ? "active" : ""}`}
-            onClick={() => setFilter("maintenance")}
-          >
-            <span className="dot-mini gold" /> {t.projects_filter_maint}{" "}
-            <span className="filter-count">({countMaint})</span>
-          </button>
-          <button
-            type="button"
-            className={`filter-btn saas ${filter === "saas" ? "active" : ""}`}
-            onClick={() => setFilter("saas")}
-          >
-            {t.projects_filter_saas}
-          </button>
-          <button
-            type="button"
-            className={`filter-btn infra ${filter === "infra" ? "active" : ""}`}
-            onClick={() => setFilter("infra")}
-          >
-            {t.projects_filter_infra}
-          </button>
-        </div>
-
-        <div className="projects-grid">
-          {filteredProjects.map((p) => (
-            <ProjectCard
-              key={p.id}
-              p={p}
-              lang={lang}
-              t={t}
-              onSelect={setSelectedQuest}
-            />
+        <div
+          className="projects-filter-bar pixel"
+          role="toolbar"
+          aria-label={es ? "Filtrar proyectos" : "Filter projects"}
+        >
+          {filters.map(([f, label, cls]) => (
+            <button
+              key={f}
+              type="button"
+              className={`filter-btn ${cls} ${filter === f ? "active" : ""}`}
+              aria-pressed={filter === f}
+              onClick={() => setFilter(f)}
+            >
+              {f === "live" && <span className="dot-mini green" />}
+              {f === "maintenance" && <span className="dot-mini gold" />}
+              {label} <span className="filter-count">({count(f)})</span>
+            </button>
           ))}
         </div>
 
-        {/* Quest Details Modal */}
+        {main.length > 0 && (
+          <>
+            <h3 className="qgroup-head pixel">
+              <span className="qgroup-icon" aria-hidden="true">◆</span>
+              {es ? "MISIONES PRINCIPALES" : "MAIN QUESTS"}
+              <span className="qgroup-count">{main.length}</span>
+            </h3>
+            <div className="qgrid qgrid-main">
+              {main.map((p) => (
+                <ProjectCard
+                  key={p.id}
+                  p={p}
+                  lang={lang}
+                  t={t}
+                  variant="main"
+                  onSelect={setSelectedQuest}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {side.length > 0 && (
+          <>
+            <h3 className="qgroup-head pixel side">
+              <span className="qgroup-icon" aria-hidden="true">◇</span>
+              {es ? "MISIONES SECUNDARIAS" : "SIDE QUESTS"}
+              <span className="qgroup-count">{side.length}</span>
+            </h3>
+            <div className="qgrid qgrid-side">
+              {side.map((p) => (
+                <ProjectCard
+                  key={p.id}
+                  p={p}
+                  lang={lang}
+                  t={t}
+                  variant="side"
+                  onSelect={setSelectedQuest}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
         {selectedQuest && (
-          <QuestModal
-            p={selectedQuest}
-            lang={lang}
-            t={t}
-            onClose={() => setSelectedQuest(null)}
-          />
+          <QuestModal p={selectedQuest} lang={lang} t={t} onClose={closeQuest} />
         )}
       </div>
     </section>
@@ -1075,6 +1029,7 @@ function LabReaderModal({
   onClose: () => void;
 }) {
   const [mounted, setMounted] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -1084,11 +1039,17 @@ function LabReaderModal({
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKeyDown);
+    const opener = document.activeElement as HTMLElement | null;
     return () => {
+      opener?.focus?.();
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [onClose]);
+
+  useEffect(() => {
+    if (mounted) closeRef.current?.focus();
+  }, [mounted]);
 
   if (!mounted || typeof document === "undefined") return null;
 
@@ -1115,6 +1076,7 @@ function LabReaderModal({
           </span>
           <button
             type="button"
+            ref={closeRef}
             className="quest-modal-close-btn pixel"
             onClick={onClose}
             aria-label={t.notes_btn_close}
@@ -1249,6 +1211,7 @@ export function PixelLabNotes({ t, lang }: { t: I18n; lang: Lang }) {
   const [selectedNote, setSelectedNote] = useState<
     (typeof PIXEL_DATA.labNotes)[number] | null
   >(null);
+  const closeNote = useCallback(() => setSelectedNote(null), []);
 
   return (
     <section id="labnotes">
@@ -1304,7 +1267,7 @@ export function PixelLabNotes({ t, lang }: { t: I18n; lang: Lang }) {
             note={selectedNote}
             lang={lang}
             t={t}
-            onClose={() => setSelectedNote(null)}
+            onClose={closeNote}
           />
         )}
       </div>
